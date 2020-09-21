@@ -93,7 +93,7 @@ std::unordered_map<std::string, protocol::Prop> as_prop_map(
 ) {
     std::unordered_map<std::string, protocol::Prop> result;
     
-    for (size_t i = 0; i < props.size(); i++) {
+    for (int i = 0; i < props.size(); i++) {
         auto prop = props[i];
         
         result[prop.key()] = prop;
@@ -126,8 +126,21 @@ void update_settings(
                 obs_data_set_obj(settings, "font", font_data);
             }
             
-            obs_data_set_string(font_data, "face", "Arial");
-            obs_data_set_string(font_data, "style", "Normal");
+            auto font_face = props["fontFace"];
+            if (!font_face.undefined()) {
+                auto value = as_string(font_face);
+                obs_data_set_string(font_data, "face", value.c_str());
+            } else {
+                obs_data_set_string(font_data, "face", "Arial");
+            }
+            
+            auto font_style = props["fontStyle"];
+            if (!font_style.undefined()) {
+                auto value = as_string(font_style);
+                obs_data_set_string(font_data, "style", value.c_str());
+            } else {
+                obs_data_set_string(font_data, "style", "Normal");
+            }
             
             auto font_size = props["fontSize"];
             if (!font_size.undefined()) {
@@ -227,19 +240,63 @@ void update_element(const protocol::UpdateElement &update) {
     obs_source_update(source, settings);
 }
 
+bool enum_scene_item_remove_child(obs_scene_t* scene, obs_sceneitem_t* item, void* child_source_void) {
+    auto child_source = (obs_source_t*)child_source_void;
+    
+    if (obs_sceneitem_get_source(item) == child_source) {
+        obs_sceneitem_remove(item);
+        return false;
+    }
+    
+    return true;
+}
+
+void remove_child(const protocol::RemoveChild &remove) {
+    blog(LOG_DEBUG, "[react-obs] Removing child %s", remove.child_name().c_str());
+    
+    auto parent = obs_get_source_by_name(remove.parent_name().c_str());
+    if (!parent) {
+        blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", remove.parent_name().c_str());
+        return;
+    }
+    
+    auto scene = obs_scene_from_source(parent);
+    if (!scene) {
+        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", remove.parent_name().c_str());
+        return;
+    }
+    
+    auto child_source = obs_get_source_by_name(remove.child_name().c_str());
+    if (!child_source) {
+        blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", remove.child_name().c_str());
+        return;
+    }
+    
+    obs_scene_enum_items(scene, &enum_scene_item_remove_child, (void*)child_source);
+    
+    // TODO: This is not exactly correct - this source may be a child of multiple scenes.
+    obs_source_remove(child_source);
+
+    obs_source_release(child_source);
+}
+
 void apply_updates(protocol::ApplyUpdate &update) {
     try {
         switch (update.change_case()) {
             case protocol::ApplyUpdate::ChangeCase::kCreateElement:
                 create_element(update.create_element());
                 break;
-            
+                
+            case protocol::ApplyUpdate::ChangeCase::kUpdateElement:
+                update_element(update.update_element());
+                break;
+                
             case protocol::ApplyUpdate::ChangeCase::kAppendChild:
                 append_child(update.append_child());
                 break;
                 
-            case protocol::ApplyUpdate::ChangeCase::kUpdateElement:
-                update_element(update.update_element());
+            case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
+                remove_child(update.remove_child());
                 break;
 
             case protocol::ApplyUpdate::ChangeCase::CHANGE_NOT_SET:

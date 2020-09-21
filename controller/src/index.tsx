@@ -26,12 +26,16 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter(count => count + 1);
-    }, 16.6);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  return <Text fontSize={42}>Counter: {counter}</Text>;
+  // if (counter % 2 === 0) {
+  //   return null;
+  // }
+
+  return <Text fontSize={42} fontFace="Fira Code" fontStyle="Bold">Counter: {counter}</Text>;
 }
 
 const socket = createConnection({ port: 6666 }, () => {
@@ -288,17 +292,17 @@ const reconciler = Reconciler<
   },
 
   removeChild(
-    parentInstance: Instance,
+    parent: Instance,
     child: Instance | TextInstance
   ): void {
-
+    api.removeChild(parent, child);
   },
 
   removeChildFromContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
-
+    api.removeChild(container, child);
   },
 
   resetTextContent(instance: Instance): void {
@@ -397,11 +401,19 @@ const reconciler = Reconciler<
 //   return null;
 // }
 
-function Text({ children, fontSize }: {
+function Text({ children, fontSize, fontFace, fontStyle }: {
   children: string | number | (string | number)[],
-  fontSize?: number
+  fontSize?: number,
+  fontFace?: string,
+  fontStyle?: string
 }) {
   const text = children instanceof Array ? children.join('') : children;
 
-  return <obs_text fontSize={fontSize}>{text}</obs_text>;
+  return (
+    <obs_text
+      fontSize={fontSize}
+      fontFace={fontFace}
+      fontStyle={fontStyle}
+    >{text}</obs_text>
+  );
 }

@@ -142,15 +142,20 @@ export class ApplyUpdate extends jspb.Message {
   getCreateElement(): CreateElement | undefined;
   setCreateElement(value?: CreateElement): void;
 
+  hasUpdateElement(): boolean;
+  clearUpdateElement(): void;
+  getUpdateElement(): UpdateElement | undefined;
+  setUpdateElement(value?: UpdateElement): void;
+
   hasAppendChild(): boolean;
   clearAppendChild(): void;
   getAppendChild(): AppendChild | undefined;
   setAppendChild(value?: AppendChild): void;
 
-  hasUpdateElement(): boolean;
-  clearUpdateElement(): void;
-  getUpdateElement(): UpdateElement | undefined;
-  setUpdateElement(value?: UpdateElement): void;
+  hasRemoveChild(): boolean;
+  clearRemoveChild(): void;
+  getRemoveChild(): RemoveChild | undefined;
+  setRemoveChild(value?: RemoveChild): void;
 
   getChangeCase(): ApplyUpdate.ChangeCase;
   serializeBinary(): Uint8Array;
@@ -166,15 +171,17 @@ export class ApplyUpdate extends jspb.Message {
 export namespace ApplyUpdate {
   export type AsObject = {
     createElement?: CreateElement.AsObject,
-    appendChild?: AppendChild.AsObject,
     updateElement?: UpdateElement.AsObject,
+    appendChild?: AppendChild.AsObject,
+    removeChild?: RemoveChild.AsObject,
   }
 
   export enum ChangeCase {
     CHANGE_NOT_SET = 0,
     CREATE_ELEMENT = 1,
-    APPEND_CHILD = 2,
     UPDATE_ELEMENT = 3,
+    APPEND_CHILD = 2,
+    REMOVE_CHILD = 4,
   }
 }
 
@@ -208,30 +215,6 @@ export namespace CreateElement {
   }
 }
 
-export class AppendChild extends jspb.Message {
-  getParentName(): string;
-  setParentName(value: string): void;
-
-  getChildName(): string;
-  setChildName(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): AppendChild.AsObject;
-  static toObject(includeInstance: boolean, msg: AppendChild): AppendChild.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: AppendChild, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): AppendChild;
-  static deserializeBinaryFromReader(message: AppendChild, reader: jspb.BinaryReader): AppendChild;
-}
-
-export namespace AppendChild {
-  export type AsObject = {
-    parentName: string,
-    childName: string,
-  }
-}
-
 export class UpdateElement extends jspb.Message {
   getType(): ElementTypeMap[keyof ElementTypeMap];
   setType(value: ElementTypeMap[keyof ElementTypeMap]): void;
@@ -259,6 +242,54 @@ export namespace UpdateElement {
     type: ElementTypeMap[keyof ElementTypeMap],
     name: string,
     changedPropsList: Array<Prop.AsObject>,
+  }
+}
+
+export class AppendChild extends jspb.Message {
+  getParentName(): string;
+  setParentName(value: string): void;
+
+  getChildName(): string;
+  setChildName(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AppendChild.AsObject;
+  static toObject(includeInstance: boolean, msg: AppendChild): AppendChild.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: AppendChild, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AppendChild;
+  static deserializeBinaryFromReader(message: AppendChild, reader: jspb.BinaryReader): AppendChild;
+}
+
+export namespace AppendChild {
+  export type AsObject = {
+    parentName: string,
+    childName: string,
+  }
+}
+
+export class RemoveChild extends jspb.Message {
+  getParentName(): string;
+  setParentName(value: string): void;
+
+  getChildName(): string;
+  setChildName(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RemoveChild.AsObject;
+  static toObject(includeInstance: boolean, msg: RemoveChild): RemoveChild.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: RemoveChild, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RemoveChild;
+  static deserializeBinaryFromReader(message: RemoveChild, reader: jspb.BinaryReader): RemoveChild;
+}
+
+export namespace RemoveChild {
+  export type AsObject = {
+    parentName: string,
+    childName: string,
   }
 }
 

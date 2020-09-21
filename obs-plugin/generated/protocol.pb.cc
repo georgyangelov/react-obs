@@ -15,11 +15,12 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AppendChild_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_ApplyUpdate_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_ApplyUpdate_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateElement_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_InitRequest_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_InitResponse_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Object_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RemoveChild_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Scene_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UpdateElement_protocol_2eproto;
 namespace protocol {
@@ -50,21 +51,26 @@ class ApplyUpdateDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ApplyUpdate> _instance;
   const ::protocol::CreateElement* create_element_;
-  const ::protocol::AppendChild* append_child_;
   const ::protocol::UpdateElement* update_element_;
+  const ::protocol::AppendChild* append_child_;
+  const ::protocol::RemoveChild* remove_child_;
 } _ApplyUpdate_default_instance_;
 class CreateElementDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CreateElement> _instance;
 } _CreateElement_default_instance_;
-class AppendChildDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AppendChild> _instance;
-} _AppendChild_default_instance_;
 class UpdateElementDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdateElement> _instance;
 } _UpdateElement_default_instance_;
+class AppendChildDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AppendChild> _instance;
+} _AppendChild_default_instance_;
+class RemoveChildDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RemoveChild> _instance;
+} _RemoveChild_default_instance_;
 class PropDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Prop> _instance;
@@ -105,11 +111,12 @@ static void InitDefaultsscc_info_ApplyUpdate_protocol_2eproto() {
   ::protocol::ApplyUpdate::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_ApplyUpdate_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 3, 0, InitDefaultsscc_info_ApplyUpdate_protocol_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_ApplyUpdate_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_ApplyUpdate_protocol_2eproto}, {
       &scc_info_CreateElement_protocol_2eproto.base,
+      &scc_info_UpdateElement_protocol_2eproto.base,
       &scc_info_AppendChild_protocol_2eproto.base,
-      &scc_info_UpdateElement_protocol_2eproto.base,}};
+      &scc_info_RemoveChild_protocol_2eproto.base,}};
 
 static void InitDefaultsscc_info_ClientMessage_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -191,6 +198,20 @@ static void InitDefaultsscc_info_Object_protocol_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Object_protocol_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_Object_protocol_2eproto}, {}};
 
+static void InitDefaultsscc_info_RemoveChild_protocol_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::protocol::_RemoveChild_default_instance_;
+    new (ptr) ::protocol::RemoveChild();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::protocol::RemoveChild::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RemoveChild_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RemoveChild_protocol_2eproto}, {}};
+
 static void InitDefaultsscc_info_Scene_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -235,7 +256,7 @@ static void InitDefaultsscc_info_UpdateElement_protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_UpdateElement_protocol_2eproto}, {
       &scc_info_Object_protocol_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protocol_2eproto[11];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protocol_2eproto[12];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_protocol_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_protocol_2eproto = nullptr;
 
@@ -281,8 +302,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::protocol::ApplyUpdate, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, create_element_),
-  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, append_child_),
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, update_element_),
+  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, append_child_),
+  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, remove_child_),
   PROTOBUF_FIELD_OFFSET(::protocol::ApplyUpdate, change_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, _internal_metadata_),
@@ -293,13 +315,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, name_),
   PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, props_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, parent_name_),
-  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, child_name_),
-  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -307,6 +322,20 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, type_),
   PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, name_),
   PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, changed_props_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, parent_name_),
+  PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, child_name_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::RemoveChild, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::protocol::RemoveChild, parent_name_),
+  PROTOBUF_FIELD_OFFSET(::protocol::RemoveChild, child_name_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::Prop, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -334,11 +363,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 21, -1, sizeof(::protocol::InitResponse)},
   { 29, -1, sizeof(::protocol::Scene)},
   { 35, -1, sizeof(::protocol::ApplyUpdate)},
-  { 44, -1, sizeof(::protocol::CreateElement)},
-  { 52, -1, sizeof(::protocol::AppendChild)},
-  { 59, -1, sizeof(::protocol::UpdateElement)},
-  { 67, -1, sizeof(::protocol::Prop)},
-  { 80, -1, sizeof(::protocol::Object)},
+  { 45, -1, sizeof(::protocol::CreateElement)},
+  { 53, -1, sizeof(::protocol::UpdateElement)},
+  { 61, -1, sizeof(::protocol::AppendChild)},
+  { 68, -1, sizeof(::protocol::RemoveChild)},
+  { 75, -1, sizeof(::protocol::Prop)},
+  { 88, -1, sizeof(::protocol::Object)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -349,8 +379,9 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Scene_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_ApplyUpdate_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_CreateElement_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_AppendChild_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_UpdateElement_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_AppendChild_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_RemoveChild_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Prop_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Object_default_instance_),
 };
@@ -365,28 +396,31 @@ const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\022\021\n\tclient_id\030\001 \001(\t\"\\\n\014InitResponse\022\024\n\014c"
   "anvas_width\030\001 \001(\r\022\025\n\rcanvas_height\030\002 \001(\r"
   "\022\037\n\006scenes\030\003 \003(\0132\017.protocol.Scene\"\025\n\005Sce"
-  "ne\022\014\n\004name\030\001 \001(\t\"\254\001\n\013ApplyUpdate\0221\n\016crea"
+  "ne\022\014\n\004name\030\001 \001(\t\"\333\001\n\013ApplyUpdate\0221\n\016crea"
   "te_element\030\001 \001(\0132\027.protocol.CreateElemen"
-  "tH\000\022-\n\014append_child\030\002 \001(\0132\025.protocol.App"
-  "endChildH\000\0221\n\016update_element\030\003 \001(\0132\027.pro"
-  "tocol.UpdateElementH\000B\010\n\006change\"a\n\rCreat"
-  "eElement\022#\n\004type\030\001 \001(\0162\025.protocol.Elemen"
-  "tType\022\014\n\004name\030\002 \001(\t\022\035\n\005props\030\003 \003(\0132\016.pro"
-  "tocol.Prop\"6\n\013AppendChild\022\023\n\013parent_name"
-  "\030\001 \001(\t\022\022\n\nchild_name\030\002 \001(\t\"i\n\rUpdateElem"
-  "ent\022#\n\004type\030\001 \001(\0162\025.protocol.ElementType"
-  "\022\014\n\004name\030\002 \001(\t\022%\n\rchanged_props\030\003 \003(\0132\016."
-  "protocol.Prop\"\265\001\n\004Prop\022\013\n\003key\030\001 \001(\t\022\026\n\014s"
-  "tring_value\030\002 \001(\tH\000\022\023\n\tint_value\030\003 \001(\003H\000"
-  "\022\025\n\013float_value\030\004 \001(\001H\000\022\024\n\nbool_value\030\005 "
-  "\001(\010H\000\022(\n\014object_value\030\006 \001(\0132\020.protocol.O"
-  "bjectH\000\022\023\n\tundefined\030\007 \001(\010H\000B\007\n\005value\"\'\n"
-  "\006Object\022\035\n\005props\030\001 \003(\0132\016.protocol.Prop* "
-  "\n\013ElementType\022\010\n\004TEXT\020\000\022\007\n\003BOX\020\001b\006proto3"
+  "tH\000\0221\n\016update_element\030\003 \001(\0132\027.protocol.U"
+  "pdateElementH\000\022-\n\014append_child\030\002 \001(\0132\025.p"
+  "rotocol.AppendChildH\000\022-\n\014remove_child\030\004 "
+  "\001(\0132\025.protocol.RemoveChildH\000B\010\n\006change\"a"
+  "\n\rCreateElement\022#\n\004type\030\001 \001(\0162\025.protocol"
+  ".ElementType\022\014\n\004name\030\002 \001(\t\022\035\n\005props\030\003 \003("
+  "\0132\016.protocol.Prop\"i\n\rUpdateElement\022#\n\004ty"
+  "pe\030\001 \001(\0162\025.protocol.ElementType\022\014\n\004name\030"
+  "\002 \001(\t\022%\n\rchanged_props\030\003 \003(\0132\016.protocol."
+  "Prop\"6\n\013AppendChild\022\023\n\013parent_name\030\001 \001(\t"
+  "\022\022\n\nchild_name\030\002 \001(\t\"6\n\013RemoveChild\022\023\n\013p"
+  "arent_name\030\001 \001(\t\022\022\n\nchild_name\030\002 \001(\t\"\265\001\n"
+  "\004Prop\022\013\n\003key\030\001 \001(\t\022\026\n\014string_value\030\002 \001(\t"
+  "H\000\022\023\n\tint_value\030\003 \001(\003H\000\022\025\n\013float_value\030\004"
+  " \001(\001H\000\022\024\n\nbool_value\030\005 \001(\010H\000\022(\n\014object_v"
+  "alue\030\006 \001(\0132\020.protocol.ObjectH\000\022\023\n\tundefi"
+  "ned\030\007 \001(\010H\000B\007\n\005value\"\'\n\006Object\022\035\n\005props\030"
+  "\001 \003(\0132\016.protocol.Prop* \n\013ElementType\022\010\n\004"
+  "TEXT\020\000\022\007\n\003BOX\020\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protocol_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_protocol_2eproto_sccs[10] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_protocol_2eproto_sccs[11] = {
   &scc_info_AppendChild_protocol_2eproto.base,
   &scc_info_ApplyUpdate_protocol_2eproto.base,
   &scc_info_ClientMessage_protocol_2eproto.base,
@@ -394,16 +428,17 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
   &scc_info_InitRequest_protocol_2eproto.base,
   &scc_info_InitResponse_protocol_2eproto.base,
   &scc_info_Object_protocol_2eproto.base,
+  &scc_info_RemoveChild_protocol_2eproto.base,
   &scc_info_Scene_protocol_2eproto.base,
   &scc_info_ServerMessage_protocol_2eproto.base,
   &scc_info_UpdateElement_protocol_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto = {
-  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1080,
-  &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 10, 0,
+  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1183,
+  &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 11, 0,
   schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
-  file_level_metadata_protocol_2eproto, 11, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
+  file_level_metadata_protocol_2eproto, 12, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1695,29 +1730,36 @@ void Scene::InternalSwap(Scene* other) {
 void ApplyUpdate::InitAsDefaultInstance() {
   ::protocol::_ApplyUpdate_default_instance_.create_element_ = const_cast< ::protocol::CreateElement*>(
       ::protocol::CreateElement::internal_default_instance());
-  ::protocol::_ApplyUpdate_default_instance_.append_child_ = const_cast< ::protocol::AppendChild*>(
-      ::protocol::AppendChild::internal_default_instance());
   ::protocol::_ApplyUpdate_default_instance_.update_element_ = const_cast< ::protocol::UpdateElement*>(
       ::protocol::UpdateElement::internal_default_instance());
+  ::protocol::_ApplyUpdate_default_instance_.append_child_ = const_cast< ::protocol::AppendChild*>(
+      ::protocol::AppendChild::internal_default_instance());
+  ::protocol::_ApplyUpdate_default_instance_.remove_child_ = const_cast< ::protocol::RemoveChild*>(
+      ::protocol::RemoveChild::internal_default_instance());
 }
 class ApplyUpdate::_Internal {
  public:
   static const ::protocol::CreateElement& create_element(const ApplyUpdate* msg);
-  static const ::protocol::AppendChild& append_child(const ApplyUpdate* msg);
   static const ::protocol::UpdateElement& update_element(const ApplyUpdate* msg);
+  static const ::protocol::AppendChild& append_child(const ApplyUpdate* msg);
+  static const ::protocol::RemoveChild& remove_child(const ApplyUpdate* msg);
 };
 
 const ::protocol::CreateElement&
 ApplyUpdate::_Internal::create_element(const ApplyUpdate* msg) {
   return *msg->change_.create_element_;
 }
+const ::protocol::UpdateElement&
+ApplyUpdate::_Internal::update_element(const ApplyUpdate* msg) {
+  return *msg->change_.update_element_;
+}
 const ::protocol::AppendChild&
 ApplyUpdate::_Internal::append_child(const ApplyUpdate* msg) {
   return *msg->change_.append_child_;
 }
-const ::protocol::UpdateElement&
-ApplyUpdate::_Internal::update_element(const ApplyUpdate* msg) {
-  return *msg->change_.update_element_;
+const ::protocol::RemoveChild&
+ApplyUpdate::_Internal::remove_child(const ApplyUpdate* msg) {
+  return *msg->change_.remove_child_;
 }
 void ApplyUpdate::set_allocated_create_element(::protocol::CreateElement* create_element) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
@@ -1734,6 +1776,21 @@ void ApplyUpdate::set_allocated_create_element(::protocol::CreateElement* create
   }
   // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.create_element)
 }
+void ApplyUpdate::set_allocated_update_element(::protocol::UpdateElement* update_element) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  clear_change();
+  if (update_element) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(update_element);
+    if (message_arena != submessage_arena) {
+      update_element = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, update_element, submessage_arena);
+    }
+    set_has_update_element();
+    change_.update_element_ = update_element;
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.update_element)
+}
 void ApplyUpdate::set_allocated_append_child(::protocol::AppendChild* append_child) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   clear_change();
@@ -1749,20 +1806,20 @@ void ApplyUpdate::set_allocated_append_child(::protocol::AppendChild* append_chi
   }
   // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.append_child)
 }
-void ApplyUpdate::set_allocated_update_element(::protocol::UpdateElement* update_element) {
+void ApplyUpdate::set_allocated_remove_child(::protocol::RemoveChild* remove_child) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   clear_change();
-  if (update_element) {
+  if (remove_child) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(update_element);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(remove_child);
     if (message_arena != submessage_arena) {
-      update_element = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, update_element, submessage_arena);
+      remove_child = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, remove_child, submessage_arena);
     }
-    set_has_update_element();
-    change_.update_element_ = update_element;
+    set_has_remove_child();
+    change_.remove_child_ = remove_child;
   }
-  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.update_element)
+  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.remove_child)
 }
 ApplyUpdate::ApplyUpdate(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -1779,12 +1836,16 @@ ApplyUpdate::ApplyUpdate(const ApplyUpdate& from)
       _internal_mutable_create_element()->::protocol::CreateElement::MergeFrom(from._internal_create_element());
       break;
     }
+    case kUpdateElement: {
+      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+      break;
+    }
     case kAppendChild: {
       _internal_mutable_append_child()->::protocol::AppendChild::MergeFrom(from._internal_append_child());
       break;
     }
-    case kUpdateElement: {
-      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+    case kRemoveChild: {
+      _internal_mutable_remove_child()->::protocol::RemoveChild::MergeFrom(from._internal_remove_child());
       break;
     }
     case CHANGE_NOT_SET: {
@@ -1836,15 +1897,21 @@ void ApplyUpdate::clear_change() {
       }
       break;
     }
+    case kUpdateElement: {
+      if (GetArena() == nullptr) {
+        delete change_.update_element_;
+      }
+      break;
+    }
     case kAppendChild: {
       if (GetArena() == nullptr) {
         delete change_.append_child_;
       }
       break;
     }
-    case kUpdateElement: {
+    case kRemoveChild: {
       if (GetArena() == nullptr) {
-        delete change_.update_element_;
+        delete change_.remove_child_;
       }
       break;
     }
@@ -1892,6 +1959,13 @@ const char* ApplyUpdate::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_update_element(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .protocol.RemoveChild remove_child = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_remove_child(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1947,6 +2021,14 @@ failure:
         3, _Internal::update_element(this), target, stream);
   }
 
+  // .protocol.RemoveChild remove_child = 4;
+  if (_internal_has_remove_child()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::remove_child(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1971,6 +2053,13 @@ size_t ApplyUpdate::ByteSizeLong() const {
           *change_.create_element_);
       break;
     }
+    // .protocol.UpdateElement update_element = 3;
+    case kUpdateElement: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *change_.update_element_);
+      break;
+    }
     // .protocol.AppendChild append_child = 2;
     case kAppendChild: {
       total_size += 1 +
@@ -1978,11 +2067,11 @@ size_t ApplyUpdate::ByteSizeLong() const {
           *change_.append_child_);
       break;
     }
-    // .protocol.UpdateElement update_element = 3;
-    case kUpdateElement: {
+    // .protocol.RemoveChild remove_child = 4;
+    case kRemoveChild: {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *change_.update_element_);
+          *change_.remove_child_);
       break;
     }
     case CHANGE_NOT_SET: {
@@ -2025,12 +2114,16 @@ void ApplyUpdate::MergeFrom(const ApplyUpdate& from) {
       _internal_mutable_create_element()->::protocol::CreateElement::MergeFrom(from._internal_create_element());
       break;
     }
+    case kUpdateElement: {
+      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+      break;
+    }
     case kAppendChild: {
       _internal_mutable_append_child()->::protocol::AppendChild::MergeFrom(from._internal_append_child());
       break;
     }
-    case kUpdateElement: {
-      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+    case kRemoveChild: {
+      _internal_mutable_remove_child()->::protocol::RemoveChild::MergeFrom(from._internal_remove_child());
       break;
     }
     case CHANGE_NOT_SET: {
@@ -2340,253 +2433,6 @@ void CreateElement::InternalSwap(CreateElement* other) {
 
 // ===================================================================
 
-void AppendChild::InitAsDefaultInstance() {
-}
-class AppendChild::_Internal {
- public:
-};
-
-AppendChild::AppendChild(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:protocol.AppendChild)
-}
-AppendChild::AppendChild(const AppendChild& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (!from._internal_parent_name().empty()) {
-    parent_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_parent_name(),
-      GetArena());
-  }
-  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (!from._internal_child_name().empty()) {
-    child_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_child_name(),
-      GetArena());
-  }
-  // @@protoc_insertion_point(copy_constructor:protocol.AppendChild)
-}
-
-void AppendChild::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AppendChild_protocol_2eproto.base);
-  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-AppendChild::~AppendChild() {
-  // @@protoc_insertion_point(destructor:protocol.AppendChild)
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-void AppendChild::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-  parent_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  child_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void AppendChild::ArenaDtor(void* object) {
-  AppendChild* _this = reinterpret_cast< AppendChild* >(object);
-  (void)_this;
-}
-void AppendChild::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void AppendChild::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const AppendChild& AppendChild::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_AppendChild_protocol_2eproto.base);
-  return *internal_default_instance();
-}
-
-
-void AppendChild::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.AppendChild)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  parent_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  child_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* AppendChild::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
-  while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
-    switch (tag >> 3) {
-      // string parent_name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          auto str = _internal_mutable_parent_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.AppendChild.parent_name"));
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // string child_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_child_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.AppendChild.child_name"));
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
-    }  // switch
-  }  // while
-success:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto success;
-#undef CHK_
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* AppendChild::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.AppendChild)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string parent_name = 1;
-  if (this->parent_name().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_parent_name().data(), static_cast<int>(this->_internal_parent_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "protocol.AppendChild.parent_name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_parent_name(), target);
-  }
-
-  // string child_name = 2;
-  if (this->child_name().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_child_name().data(), static_cast<int>(this->_internal_child_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "protocol.AppendChild.child_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_child_name(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.AppendChild)
-  return target;
-}
-
-size_t AppendChild::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.AppendChild)
-  size_t total_size = 0;
-
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string parent_name = 1;
-  if (this->parent_name().size() > 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_parent_name());
-  }
-
-  // string child_name = 2;
-  if (this->child_name().size() > 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_child_name());
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void AppendChild::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:protocol.AppendChild)
-  GOOGLE_DCHECK_NE(&from, this);
-  const AppendChild* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AppendChild>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.AppendChild)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.AppendChild)
-    MergeFrom(*source);
-  }
-}
-
-void AppendChild::MergeFrom(const AppendChild& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:protocol.AppendChild)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.parent_name().size() > 0) {
-    _internal_set_parent_name(from._internal_parent_name());
-  }
-  if (from.child_name().size() > 0) {
-    _internal_set_child_name(from._internal_child_name());
-  }
-}
-
-void AppendChild::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:protocol.AppendChild)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void AppendChild::CopyFrom(const AppendChild& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.AppendChild)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AppendChild::IsInitialized() const {
-  return true;
-}
-
-void AppendChild::InternalSwap(AppendChild* other) {
-  using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  parent_name_.Swap(&other->parent_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  child_name_.Swap(&other->child_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata AppendChild::GetMetadata() const {
-  return GetMetadataStatic();
-}
-
-
-// ===================================================================
-
 void UpdateElement::InitAsDefaultInstance() {
 }
 class UpdateElement::_Internal {
@@ -2850,6 +2696,500 @@ void UpdateElement::InternalSwap(UpdateElement* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata UpdateElement::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void AppendChild::InitAsDefaultInstance() {
+}
+class AppendChild::_Internal {
+ public:
+};
+
+AppendChild::AppendChild(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:protocol.AppendChild)
+}
+AppendChild::AppendChild(const AppendChild& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_parent_name().empty()) {
+    parent_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_parent_name(),
+      GetArena());
+  }
+  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_child_name().empty()) {
+    child_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_child_name(),
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.AppendChild)
+}
+
+void AppendChild::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AppendChild_protocol_2eproto.base);
+  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+AppendChild::~AppendChild() {
+  // @@protoc_insertion_point(destructor:protocol.AppendChild)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void AppendChild::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  parent_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  child_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void AppendChild::ArenaDtor(void* object) {
+  AppendChild* _this = reinterpret_cast< AppendChild* >(object);
+  (void)_this;
+}
+void AppendChild::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void AppendChild::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const AppendChild& AppendChild::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_AppendChild_protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void AppendChild::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.AppendChild)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  parent_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  child_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* AppendChild::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string parent_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_parent_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.AppendChild.parent_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string child_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_child_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.AppendChild.child_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* AppendChild::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.AppendChild)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string parent_name = 1;
+  if (this->parent_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_parent_name().data(), static_cast<int>(this->_internal_parent_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.AppendChild.parent_name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_parent_name(), target);
+  }
+
+  // string child_name = 2;
+  if (this->child_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_child_name().data(), static_cast<int>(this->_internal_child_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.AppendChild.child_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_child_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.AppendChild)
+  return target;
+}
+
+size_t AppendChild::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.AppendChild)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string parent_name = 1;
+  if (this->parent_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_parent_name());
+  }
+
+  // string child_name = 2;
+  if (this->child_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_child_name());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void AppendChild::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.AppendChild)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AppendChild* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AppendChild>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.AppendChild)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.AppendChild)
+    MergeFrom(*source);
+  }
+}
+
+void AppendChild::MergeFrom(const AppendChild& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.AppendChild)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.parent_name().size() > 0) {
+    _internal_set_parent_name(from._internal_parent_name());
+  }
+  if (from.child_name().size() > 0) {
+    _internal_set_child_name(from._internal_child_name());
+  }
+}
+
+void AppendChild::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.AppendChild)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AppendChild::CopyFrom(const AppendChild& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.AppendChild)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AppendChild::IsInitialized() const {
+  return true;
+}
+
+void AppendChild::InternalSwap(AppendChild* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  parent_name_.Swap(&other->parent_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  child_name_.Swap(&other->child_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata AppendChild::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void RemoveChild::InitAsDefaultInstance() {
+}
+class RemoveChild::_Internal {
+ public:
+};
+
+RemoveChild::RemoveChild(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:protocol.RemoveChild)
+}
+RemoveChild::RemoveChild(const RemoveChild& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_parent_name().empty()) {
+    parent_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_parent_name(),
+      GetArena());
+  }
+  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_child_name().empty()) {
+    child_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_child_name(),
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.RemoveChild)
+}
+
+void RemoveChild::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RemoveChild_protocol_2eproto.base);
+  parent_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  child_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+RemoveChild::~RemoveChild() {
+  // @@protoc_insertion_point(destructor:protocol.RemoveChild)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void RemoveChild::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  parent_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  child_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void RemoveChild::ArenaDtor(void* object) {
+  RemoveChild* _this = reinterpret_cast< RemoveChild* >(object);
+  (void)_this;
+}
+void RemoveChild::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void RemoveChild::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const RemoveChild& RemoveChild::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RemoveChild_protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void RemoveChild::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.RemoveChild)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  parent_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  child_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* RemoveChild::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string parent_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_parent_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.RemoveChild.parent_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string child_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_child_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.RemoveChild.child_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* RemoveChild::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.RemoveChild)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string parent_name = 1;
+  if (this->parent_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_parent_name().data(), static_cast<int>(this->_internal_parent_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.RemoveChild.parent_name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_parent_name(), target);
+  }
+
+  // string child_name = 2;
+  if (this->child_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_child_name().data(), static_cast<int>(this->_internal_child_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.RemoveChild.child_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_child_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.RemoveChild)
+  return target;
+}
+
+size_t RemoveChild::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.RemoveChild)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string parent_name = 1;
+  if (this->parent_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_parent_name());
+  }
+
+  // string child_name = 2;
+  if (this->child_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_child_name());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void RemoveChild::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.RemoveChild)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RemoveChild* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RemoveChild>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.RemoveChild)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.RemoveChild)
+    MergeFrom(*source);
+  }
+}
+
+void RemoveChild::MergeFrom(const RemoveChild& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.RemoveChild)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.parent_name().size() > 0) {
+    _internal_set_parent_name(from._internal_parent_name());
+  }
+  if (from.child_name().size() > 0) {
+    _internal_set_child_name(from._internal_child_name());
+  }
+}
+
+void RemoveChild::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.RemoveChild)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RemoveChild::CopyFrom(const RemoveChild& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.RemoveChild)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RemoveChild::IsInitialized() const {
+  return true;
+}
+
+void RemoveChild::InternalSwap(RemoveChild* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  parent_name_.Swap(&other->parent_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  child_name_.Swap(&other->child_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata RemoveChild::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -3548,11 +3888,14 @@ template<> PROTOBUF_NOINLINE ::protocol::ApplyUpdate* Arena::CreateMaybeMessage<
 template<> PROTOBUF_NOINLINE ::protocol::CreateElement* Arena::CreateMaybeMessage< ::protocol::CreateElement >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::CreateElement >(arena);
 }
+template<> PROTOBUF_NOINLINE ::protocol::UpdateElement* Arena::CreateMaybeMessage< ::protocol::UpdateElement >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::UpdateElement >(arena);
+}
 template<> PROTOBUF_NOINLINE ::protocol::AppendChild* Arena::CreateMaybeMessage< ::protocol::AppendChild >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::AppendChild >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::UpdateElement* Arena::CreateMaybeMessage< ::protocol::UpdateElement >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::UpdateElement >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::RemoveChild* Arena::CreateMaybeMessage< ::protocol::RemoveChild >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::RemoveChild >(arena);
 }
 template<> PROTOBUF_NOINLINE ::protocol::Prop* Arena::CreateMaybeMessage< ::protocol::Prop >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::Prop >(arena);

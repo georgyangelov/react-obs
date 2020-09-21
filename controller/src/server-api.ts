@@ -1,7 +1,7 @@
 import { create } from 'domain';
 import { Socket } from 'net';
 import { v4 as uuid } from 'uuid';
-import { AppendChild, ApplyUpdate, ClientMessage, CreateElement, ElementType, InitRequest, Prop, UpdateElement, Object as ObjectValue } from './generated/protocol_pb';
+import { AppendChild, ApplyUpdate, ClientMessage, CreateElement, ElementType, InitRequest, Prop, UpdateElement, Object as ObjectValue, RemoveChild } from './generated/protocol_pb';
 import { Instance, PropChange as PropChangeType, Props, Type } from './types';
 
 export class ServerAPI {
@@ -62,6 +62,23 @@ export class ServerAPI {
     return { name };
   }
 
+  updateProps(element: Instance, propChanges: PropChangeType[]) {
+    const updateElement = new UpdateElement();
+    updateElement.setName(element.name);
+
+    propChanges.forEach(change => {
+      updateElement.addChangedProps(this.asProp(change.key, change.value));
+    });
+
+    const applyUpdate = new ApplyUpdate();
+    applyUpdate.setUpdateElement(updateElement);
+
+    const message = new ClientMessage();
+    message.setApplyUpdate(applyUpdate);
+
+    this.send(message);
+  }
+
   appendChild(parent: Instance, child: Instance) {
     const appendChild = new AppendChild();
     appendChild.setParentName(parent.name);
@@ -76,16 +93,13 @@ export class ServerAPI {
     this.send(message);
   }
 
-  updateProps(element: Instance, propChanges: PropChangeType[]) {
-    const updateElement = new UpdateElement();
-    updateElement.setName(element.name);
-
-    propChanges.forEach(change => {
-      updateElement.addChangedProps(this.asProp(change.key, change.value));
-    });
+  removeChild(parent: Instance, child: Instance) {
+    const removeChild = new RemoveChild();
+    removeChild.setParentName(parent.name);
+    removeChild.setChildName(child.name);
 
     const applyUpdate = new ApplyUpdate();
-    applyUpdate.setUpdateElement(updateElement);
+    applyUpdate.setRemoveChild(removeChild);
 
     const message = new ClientMessage();
     message.setApplyUpdate(applyUpdate);

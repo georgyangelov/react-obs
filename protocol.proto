@@ -5,7 +5,7 @@ package protocol;
 message ClientMessage {
     oneof message {
         InitRequest init_request = 1;
-        ApplyUpdates apply_updates = 2;
+        ApplyUpdate apply_update = 2;
     }
 }
 
@@ -30,14 +30,11 @@ message Scene {
     string name = 1;
 }
 
-message ApplyUpdates {
-    repeated Update updates = 1;
-}
-
-message Update {
+message ApplyUpdate {
     oneof change {
         CreateElement create_element = 1;
         AppendChild append_child = 2;
+        UpdateElement update_element = 3;
     }
 }
 
@@ -53,7 +50,7 @@ enum ElementType {
 message CreateElement {
     ElementType type = 1;
     string name = 2;
-    map<string, PropValue> props = 3;
+    repeated Prop props = 3;
 }
 
 message AppendChild {
@@ -61,20 +58,29 @@ message AppendChild {
     string child_name = 2;
 }
 
+message UpdateElement {
+    ElementType type = 1;
+    string name = 2;
+    repeated Prop changed_props = 3;
+}
+
 //
 // Common
 //
 
-message PropValue {
+message Prop {
+    string key = 1;
+
     oneof value {
-        string string_value = 1;
-        int64 int_value = 2;
-        double float_value = 3;
-        bool bool_value = 4;
-        MapProp map_value = 5;
+        string string_value = 2;
+        int64 int_value = 3;
+        double float_value = 4;
+        bool bool_value = 5;
+        Object object_value = 6;
+        bool undefined = 7;
     }
 }
 
-message MapProp {
-    map<string, PropValue> map = 1;
+message Object {
+    repeated Prop props = 1;
 }

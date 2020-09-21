@@ -1,8 +1,8 @@
 import { create } from 'domain';
 import { Socket } from 'net';
 import { v4 as uuid } from 'uuid';
-import { AppendChild, ApplyUpdates, ClientMessage, CreateElement, ElementType, InitRequest, MapProp, PropValue, Update } from './generated/protocol_pb';
-import { Instance, Props, Type } from './types';
+import { AppendChild, ApplyUpdate, ClientMessage, CreateElement, ElementType, InitRequest, Prop, UpdateElement, Object as ObjectValue } from './generated/protocol_pb';
+import { Instance, PropChange as PropChangeType, Props, Type } from './types';
 
 export class ServerAPI {
   private clientId: string = uuid();
@@ -48,17 +48,14 @@ export class ServerAPI {
     }
 
     Object.entries(props).forEach(([key, value]) => {
-      createElement.getPropsMap().set(key, this.valueAsProp(value));
+      createElement.addProps(this.asProp(key, value));
     });
 
-    const update = new Update();
-    update.setCreateElement(createElement);
-
-    const applyUpdates = new ApplyUpdates();
-    applyUpdates.addUpdates(update)
+    const applyUpdate = new ApplyUpdate();
+    applyUpdate.setCreateElement(createElement);
 
     const message = new ClientMessage();
-    message.setApplyUpdates(applyUpdates);
+    message.setApplyUpdate(applyUpdate);
 
     this.send(message);
 
@@ -70,22 +67,39 @@ export class ServerAPI {
     appendChild.setParentName(parent.name);
     appendChild.setChildName(child.name);
 
-    const update = new Update();
-    update.setAppendChild(appendChild);
-
-    const applyUpdates = new ApplyUpdates();
-    applyUpdates.addUpdates(update);
+    const applyUpdate = new ApplyUpdate();
+    applyUpdate.setAppendChild(appendChild);
 
     const message = new ClientMessage();
-    message.setApplyUpdates(applyUpdates);
+    message.setApplyUpdate(applyUpdate);
 
     this.send(message);
   }
 
-  private valueAsProp(value: string | boolean | number | object): PropValue {
-    const propValue = new PropValue();
+  updateProps(element: Instance, propChanges: PropChangeType[]) {
+    const updateElement = new UpdateElement();
+    updateElement.setName(element.name);
 
-    if (typeof value === 'string') {
+    propChanges.forEach(change => {
+      updateElement.addChangedProps(this.asProp(change.key, change.value));
+    });
+
+    const applyUpdate = new ApplyUpdate();
+    applyUpdate.setUpdateElement(updateElement);
+
+    const message = new ClientMessage();
+    message.setApplyUpdate(applyUpdate);
+
+    this.send(message);
+  }
+
+  private asProp(key: string, value: string | boolean | number | object | undefined): Prop {
+    const propValue = new Prop();
+    propValue.setKey(key);
+
+    if (typeof value === 'undefined') {
+      propValue.setUndefined(true);
+    } else if (typeof value === 'string') {
       propValue.setStringValue(value);
     } else if (typeof value === 'boolean') {
       propValue.setBoolValue(value);
@@ -96,13 +110,13 @@ export class ServerAPI {
         propValue.setFloatValue(value);
       }
     } else if (typeof value === 'object') {
-      const mapProp = new MapProp();
+      const objectValue = new ObjectValue();
 
       Object.entries(value).forEach(([key, value]) => {
-        mapProp.getMapMap().set(key, this.valueAsProp(value));
+        objectValue.addProps(this.asProp(key, value));
       });
 
-      propValue.setMapValue(mapProp);
+      propValue.setObjectValue(objectValue);
     } else {
       throw new Error(`Unknown value type ${typeof value}`);
     }

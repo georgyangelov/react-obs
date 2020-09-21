@@ -9,10 +9,10 @@ export class ClientMessage extends jspb.Message {
   getInitRequest(): InitRequest | undefined;
   setInitRequest(value?: InitRequest): void;
 
-  hasApplyUpdates(): boolean;
-  clearApplyUpdates(): void;
-  getApplyUpdates(): ApplyUpdates | undefined;
-  setApplyUpdates(value?: ApplyUpdates): void;
+  hasApplyUpdate(): boolean;
+  clearApplyUpdate(): void;
+  getApplyUpdate(): ApplyUpdate | undefined;
+  setApplyUpdate(value?: ApplyUpdate): void;
 
   getMessageCase(): ClientMessage.MessageCase;
   serializeBinary(): Uint8Array;
@@ -28,13 +28,13 @@ export class ClientMessage extends jspb.Message {
 export namespace ClientMessage {
   export type AsObject = {
     initRequest?: InitRequest.AsObject,
-    applyUpdates?: ApplyUpdates.AsObject,
+    applyUpdate?: ApplyUpdate.AsObject,
   }
 
   export enum MessageCase {
     MESSAGE_NOT_SET = 0,
     INIT_REQUEST = 1,
-    APPLY_UPDATES = 2,
+    APPLY_UPDATE = 2,
   }
 }
 
@@ -136,29 +136,7 @@ export namespace Scene {
   }
 }
 
-export class ApplyUpdates extends jspb.Message {
-  clearUpdatesList(): void;
-  getUpdatesList(): Array<Update>;
-  setUpdatesList(value: Array<Update>): void;
-  addUpdates(value?: Update, index?: number): Update;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ApplyUpdates.AsObject;
-  static toObject(includeInstance: boolean, msg: ApplyUpdates): ApplyUpdates.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: ApplyUpdates, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ApplyUpdates;
-  static deserializeBinaryFromReader(message: ApplyUpdates, reader: jspb.BinaryReader): ApplyUpdates;
-}
-
-export namespace ApplyUpdates {
-  export type AsObject = {
-    updatesList: Array<Update.AsObject>,
-  }
-}
-
-export class Update extends jspb.Message {
+export class ApplyUpdate extends jspb.Message {
   hasCreateElement(): boolean;
   clearCreateElement(): void;
   getCreateElement(): CreateElement | undefined;
@@ -169,27 +147,34 @@ export class Update extends jspb.Message {
   getAppendChild(): AppendChild | undefined;
   setAppendChild(value?: AppendChild): void;
 
-  getChangeCase(): Update.ChangeCase;
+  hasUpdateElement(): boolean;
+  clearUpdateElement(): void;
+  getUpdateElement(): UpdateElement | undefined;
+  setUpdateElement(value?: UpdateElement): void;
+
+  getChangeCase(): ApplyUpdate.ChangeCase;
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Update.AsObject;
-  static toObject(includeInstance: boolean, msg: Update): Update.AsObject;
+  toObject(includeInstance?: boolean): ApplyUpdate.AsObject;
+  static toObject(includeInstance: boolean, msg: ApplyUpdate): ApplyUpdate.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: Update, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Update;
-  static deserializeBinaryFromReader(message: Update, reader: jspb.BinaryReader): Update;
+  static serializeBinaryToWriter(message: ApplyUpdate, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ApplyUpdate;
+  static deserializeBinaryFromReader(message: ApplyUpdate, reader: jspb.BinaryReader): ApplyUpdate;
 }
 
-export namespace Update {
+export namespace ApplyUpdate {
   export type AsObject = {
     createElement?: CreateElement.AsObject,
     appendChild?: AppendChild.AsObject,
+    updateElement?: UpdateElement.AsObject,
   }
 
   export enum ChangeCase {
     CHANGE_NOT_SET = 0,
     CREATE_ELEMENT = 1,
     APPEND_CHILD = 2,
+    UPDATE_ELEMENT = 3,
   }
 }
 
@@ -200,8 +185,11 @@ export class CreateElement extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
-  getPropsMap(): jspb.Map<string, PropValue>;
-  clearPropsMap(): void;
+  clearPropsList(): void;
+  getPropsList(): Array<Prop>;
+  setPropsList(value: Array<Prop>): void;
+  addProps(value?: Prop, index?: number): Prop;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateElement.AsObject;
   static toObject(includeInstance: boolean, msg: CreateElement): CreateElement.AsObject;
@@ -216,7 +204,7 @@ export namespace CreateElement {
   export type AsObject = {
     type: ElementTypeMap[keyof ElementTypeMap],
     name: string,
-    propsMap: Array<[string, PropValue.AsObject]>,
+    propsList: Array<Prop.AsObject>,
   }
 }
 
@@ -244,7 +232,40 @@ export namespace AppendChild {
   }
 }
 
-export class PropValue extends jspb.Message {
+export class UpdateElement extends jspb.Message {
+  getType(): ElementTypeMap[keyof ElementTypeMap];
+  setType(value: ElementTypeMap[keyof ElementTypeMap]): void;
+
+  getName(): string;
+  setName(value: string): void;
+
+  clearChangedPropsList(): void;
+  getChangedPropsList(): Array<Prop>;
+  setChangedPropsList(value: Array<Prop>): void;
+  addChangedProps(value?: Prop, index?: number): Prop;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateElement.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateElement): UpdateElement.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: UpdateElement, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateElement;
+  static deserializeBinaryFromReader(message: UpdateElement, reader: jspb.BinaryReader): UpdateElement;
+}
+
+export namespace UpdateElement {
+  export type AsObject = {
+    type: ElementTypeMap[keyof ElementTypeMap],
+    name: string,
+    changedPropsList: Array<Prop.AsObject>,
+  }
+}
+
+export class Prop extends jspb.Message {
+  getKey(): string;
+  setKey(value: string): void;
+
   hasStringValue(): boolean;
   clearStringValue(): void;
   getStringValue(): string;
@@ -265,57 +286,68 @@ export class PropValue extends jspb.Message {
   getBoolValue(): boolean;
   setBoolValue(value: boolean): void;
 
-  hasMapValue(): boolean;
-  clearMapValue(): void;
-  getMapValue(): MapProp | undefined;
-  setMapValue(value?: MapProp): void;
+  hasObjectValue(): boolean;
+  clearObjectValue(): void;
+  getObjectValue(): Object | undefined;
+  setObjectValue(value?: Object): void;
 
-  getValueCase(): PropValue.ValueCase;
+  hasUndefined(): boolean;
+  clearUndefined(): void;
+  getUndefined(): boolean;
+  setUndefined(value: boolean): void;
+
+  getValueCase(): Prop.ValueCase;
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PropValue.AsObject;
-  static toObject(includeInstance: boolean, msg: PropValue): PropValue.AsObject;
+  toObject(includeInstance?: boolean): Prop.AsObject;
+  static toObject(includeInstance: boolean, msg: Prop): Prop.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: PropValue, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PropValue;
-  static deserializeBinaryFromReader(message: PropValue, reader: jspb.BinaryReader): PropValue;
+  static serializeBinaryToWriter(message: Prop, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Prop;
+  static deserializeBinaryFromReader(message: Prop, reader: jspb.BinaryReader): Prop;
 }
 
-export namespace PropValue {
+export namespace Prop {
   export type AsObject = {
+    key: string,
     stringValue: string,
     intValue: number,
     floatValue: number,
     boolValue: boolean,
-    mapValue?: MapProp.AsObject,
+    objectValue?: Object.AsObject,
+    undefined: boolean,
   }
 
   export enum ValueCase {
     VALUE_NOT_SET = 0,
-    STRING_VALUE = 1,
-    INT_VALUE = 2,
-    FLOAT_VALUE = 3,
-    BOOL_VALUE = 4,
-    MAP_VALUE = 5,
+    STRING_VALUE = 2,
+    INT_VALUE = 3,
+    FLOAT_VALUE = 4,
+    BOOL_VALUE = 5,
+    OBJECT_VALUE = 6,
+    UNDEFINED = 7,
   }
 }
 
-export class MapProp extends jspb.Message {
-  getMapMap(): jspb.Map<string, PropValue>;
-  clearMapMap(): void;
+export class Object extends jspb.Message {
+  clearPropsList(): void;
+  getPropsList(): Array<Prop>;
+  setPropsList(value: Array<Prop>): void;
+  addProps(value?: Prop, index?: number): Prop;
+
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): MapProp.AsObject;
-  static toObject(includeInstance: boolean, msg: MapProp): MapProp.AsObject;
+  toObject(includeInstance?: boolean): Object.AsObject;
+  static toObject(includeInstance: boolean, msg: Object): Object.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: MapProp, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): MapProp;
-  static deserializeBinaryFromReader(message: MapProp, reader: jspb.BinaryReader): MapProp;
+  static serializeBinaryToWriter(message: Object, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Object;
+  static deserializeBinaryFromReader(message: Object, reader: jspb.BinaryReader): Object;
 }
 
-export namespace MapProp {
+export namespace Object {
   export type AsObject = {
-    mapMap: Array<[string, PropValue.AsObject]>,
+    propsList: Array<Prop.AsObject>,
   }
 }
 

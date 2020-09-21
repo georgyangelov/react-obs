@@ -15,7 +15,9 @@ export type TextInstance = Instance;
 export type HydratableInstance = any;
 export type PublicInstance = Instance;
 export type HostContext = {};
-export type UpdatePayload = any;
+export type UpdatePayload = { propChanges: PropChange[] };
 export type ChildSet = any;
 export type TimeoutHandle = NodeJS.Timeout;
 export type NoTimeout = undefined;
+
+export type PropChange = { key: string, value: Props[string] | undefined };

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Reconciler, { OpaqueHandle } from 'react-reconciler';
 import { createConnection } from 'net';
 import { ServerAPI } from './server-api';
@@ -15,16 +15,30 @@ import {
   UpdatePayload,
   ChildSet,
   TimeoutHandle,
-  NoTimeout
+  NoTimeout, PropChange
 } from './types';
 
 console.log('Hello world');
+
+function App() {
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter(count => count + 1);
+    }, 16.6);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <Text fontSize={42}>Counter: {counter}</Text>;
+}
 
 const socket = createConnection({ port: 6666 }, () => {
   api.initialize();
 
   const root = reconciler.createContainer({ name: 'react-obs' }, false, false);
-  reconciler.updateContainer(<Text>test</Text>, root, null, () => {
+  reconciler.updateContainer(<App />, root, null, () => {
     console.log('done mounting');
   });
 });
@@ -101,20 +115,29 @@ const reconciler = Reconciler<
       if (key === 'children') {
         if (type !== 'obs_text') {
           if (typeof value === 'string' || typeof value === 'number') {
-            throw new Error('Text strings must be rendered within a <Text> component.');
+            throw new Error('Strings must be rendered within a <Text> component.');
           }
 
           if (value instanceof Array) {
             value.forEach(item => {
-              if (typeof item === 'string') {
-                throw new Error('Text strings must be rendered within a <Text> component.');
+              if (typeof item === 'string' || typeof value === 'number') {
+                throw new Error('Strings must be rendered within a <Text> component.');
               }
             });
           }
         }
 
         if (type === 'obs_text') {
-          if (typeof value !== 'string' && typeof value !== 'number') {
+          // if (value instanceof Array) {
+          //   value.forEach(item => {
+          //     if (typeof item !== 'string' && typeof item !== 'number') {
+          //       throw new Error('Strings must be rendered within a <Text> component.');
+          //     }
+          //   });
+          // } else if (typeof value !== 'string' && typeof value !== 'number') {
+          //   throw new Error('A <Text> component may only render strings or numbers, not other elements');
+          // }
+          if (typeof value !== 'string') {
             throw new Error('A <Text> component may only render strings or numbers, not other elements');
           }
         }
@@ -146,7 +169,19 @@ const reconciler = Reconciler<
     rootContainerInstance: Container,
     hostContext: HostContext,
   ): null | UpdatePayload {
-    return { updatePayload: true };
+    const propChanges: PropChange[] = [];
+
+    Object.keys(newProps).forEach(key => {
+      propChanges.push({ key, value: newProps[key] });
+    });
+
+    Object.keys(oldProps).forEach(key => {
+      if (newProps[key] === undefined || newProps[key] === null) {
+        propChanges.push({ key, value: undefined });
+      }
+    });
+
+    return { propChanges };
   },
 
   shouldSetTextContent(type: Type, props: Props): boolean {
@@ -233,7 +268,7 @@ const reconciler = Reconciler<
     newProps: Props,
     internalInstanceHandle: OpaqueHandle,
   ): void {
-
+    api.updateProps(instance, updatePayload.propChanges);
   },
 
   insertBefore(
@@ -362,6 +397,11 @@ const reconciler = Reconciler<
 //   return null;
 // }
 
-function Text({ children }: { children: ReactNode }) {
-  return <obs_text>{children}</obs_text>;
+function Text({ children, fontSize }: {
+  children: string | number | (string | number)[],
+  fontSize?: number
+}) {
+  const text = children instanceof Array ? children.join('') : children;
+
+  return <obs_text fontSize={fontSize}>{text}</obs_text>;
 }

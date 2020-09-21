@@ -48,24 +48,108 @@ public:
     PropError(const std::string& what): std::runtime_error(what) {}
 };
 
-std::string string_prop(
-    const google::protobuf::Map<std::string, protocol::PropValue> props,
-    const std::string &name
-) {
-    std::string result;
-    
-    if (!props.contains(name)) {
-        throw new PropError(std::string("Props do not contain ") + name);
-    }
-    
-    auto prop = props.at(name);
-    
-    if (prop.value_case() != protocol::PropValue::ValueCase::kStringValue) {
-        throw new PropError(std::string("Prop ") + name + std::string(" must be a string"));
+//std::string string_prop(
+//    const google::protobuf::Map<std::string, protocol::PropValue> props,
+//    const std::string &name
+//) {
+//    std::string result;
+//
+//    if (!props.contains(name)) {
+//        throw PropError(std::string("Props do not contain ") + name);
+//    }
+//
+//    auto prop = props.at(name);
+//
+//    if (prop.value_case() != protocol::PropValue::ValueCase::kStringValue) {
+//        throw PropError(std::string("Prop ") + name + std::string(" must be a string"));
+//    }
+//
+//    return prop.string_value();
+//}
+
+std::string as_string(const protocol::Prop prop) {
+    if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
+        throw PropError(std::string("Prop ") + prop.key() + std::string(" must be a string"));
     }
     
     return prop.string_value();
 }
+
+int64_t as_int(const protocol::Prop prop) {
+    if (prop.value_case() != protocol::Prop::ValueCase::kIntValue) {
+        throw PropError(std::string("Prop ") + prop.key() + std::string(" must be an int"));
+    }
+    
+    return prop.int_value();
+}
+
+//
+// Element settings
+//
+
+template <class T>
+std::unordered_map<std::string, protocol::Prop> as_prop_map(
+    const T &props
+) {
+    std::unordered_map<std::string, protocol::Prop> result;
+    
+    for (size_t i = 0; i < props.size(); i++) {
+        auto prop = props[i];
+        
+        result[prop.key()] = prop;
+    }
+    
+    return result;
+}
+
+template <class T>
+void update_settings(
+    obs_data_t* settings,
+    protocol::ElementType elementType,
+    T propVector
+) {
+    auto props = as_prop_map(propVector);
+    
+    switch (elementType) {
+        case protocol::ElementType::TEXT: {
+            auto children = props["children"];
+            if (!children.undefined()) {
+                auto text = as_string(children);
+                obs_data_set_string(settings, "text", text.c_str());
+            } else {
+                obs_data_set_string(settings, "text", "");
+            }
+            
+            auto font_data = obs_data_get_obj(settings, "font");
+            if (!font_data) {
+                font_data = obs_data_create();
+                obs_data_set_obj(settings, "font", font_data);
+            }
+            
+            obs_data_set_string(font_data, "face", "Arial");
+            obs_data_set_string(font_data, "style", "Normal");
+            
+            auto font_size = props["fontSize"];
+            if (!font_size.undefined()) {
+                auto size = as_int(font_size);
+                obs_data_set_int(font_data, "size", size);
+            } else {
+                obs_data_unset_user_value(font_data, "size");
+            }
+            
+            obs_data_set_int(font_data, "flags", 0);
+            
+            break;
+        }
+        
+        default:
+            blog(LOG_ERROR, "[react-obs] Unsupported element type in update_settings");
+    }
+}
+
+//
+// Updates
+//
 
 void create_element(const protocol::CreateElement &element) {
     blog(LOG_DEBUG, "[react-obs] Creating element %s", element.name().c_str());
@@ -73,19 +157,8 @@ void create_element(const protocol::CreateElement &element) {
     if (element.type() == protocol::ElementType::TEXT) {
         auto props = element.props();
         
-        auto text = string_prop(props, "children");
-        
         auto settings = obs_data_create();
-        
-        // TODO: Should I be calling obs_data_release on this?
-        auto font_data = obs_data_create();
-        obs_data_set_string(font_data, "face", "Arial");
-        obs_data_set_string(font_data, "style", "Normal");
-        obs_data_set_int(font_data, "size", 42);
-        obs_data_set_int(font_data, "flags", 0);
-        
-        obs_data_set_obj(settings, "font", font_data);
-        obs_data_set_string(settings, "text", text.c_str());
+        update_settings(settings, element.type(), props);
         
         auto text_source = obs_source_create("text_ft2_source", element.name().c_str(), settings, NULL);
         
@@ -135,29 +208,46 @@ void append_child(const protocol::AppendChild &append_child) {
     auto item = obs_scene_add(scene, child_source);
 }
 
-void apply_updates(protocol::ApplyUpdates &command) {
-    auto updates = command.updates();
+void update_element(const protocol::UpdateElement &update) {
+    blog(LOG_DEBUG, "[react-obs] Updating element %s", update.name().c_str());
     
-    for (int i = 0; i < updates.size(); i++) {
-        auto update = updates.Get(i);
-        
-        try {
-            switch (update.change_case()) {
-                case protocol::Update::ChangeCase::kCreateElement:
-                    create_element(update.create_element());
-                    break;
-                
-                case protocol::Update::ChangeCase::kAppendChild:
-                    append_child(update.append_child());
-                    break;
+    auto source = obs_get_source_by_name(update.name().c_str());
+    if (!source) {
+        blog(LOG_ERROR, "[react-obs] Cannot find source named %s", update.name().c_str());
+        return;
+    }
+    
+    auto settings = obs_source_get_settings(source);
+    if (!settings) {
+        blog(LOG_ERROR, "[react-obs] Source %s does not have settings object, WTF", update.name().c_str());
+        return;
+    }
+    
+    update_settings(settings, update.type(), update.changed_props());
+    obs_source_update(source, settings);
+}
 
-                case protocol::Update::ChangeCase::CHANGE_NOT_SET:
-                    blog(LOG_ERROR, "[react-obs] Received update request with no change");
-                    break;
-            }
-        } catch (PropError error) {
-            blog(LOG_ERROR, "[react-obs] Prop error: %s", error.what());
+void apply_updates(protocol::ApplyUpdate &update) {
+    try {
+        switch (update.change_case()) {
+            case protocol::ApplyUpdate::ChangeCase::kCreateElement:
+                create_element(update.create_element());
+                break;
+            
+            case protocol::ApplyUpdate::ChangeCase::kAppendChild:
+                append_child(update.append_child());
+                break;
+                
+            case protocol::ApplyUpdate::ChangeCase::kUpdateElement:
+                update_element(update.update_element());
+                break;
+
+            case protocol::ApplyUpdate::ChangeCase::CHANGE_NOT_SET:
+                blog(LOG_ERROR, "[react-obs] Received update request with no change");
+                break;
         }
+    } catch (PropError error) {
+        blog(LOG_ERROR, "[react-obs] Prop error: %s", error.what());
     }
 }
 
@@ -224,8 +314,8 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 break;
             }
                 
-            case protocol::ClientMessage::MessageCase::kApplyUpdates: {
-                auto command = message.apply_updates();
+            case protocol::ClientMessage::MessageCase::kApplyUpdate: {
+                auto command = message.apply_update();
                 
                 blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
                 apply_updates(command);

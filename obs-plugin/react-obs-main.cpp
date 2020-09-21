@@ -6,6 +6,7 @@
 #include <thread>
 #include <vector>
 #include <optional>
+#include <variant>
 #include "generated/protocol.pb.h"
 
 OBS_DECLARE_MODULE()
@@ -13,6 +14,10 @@ OBS_MODULE_USE_DEFAULT_LOCALE("react-obs", "en-US")
 
 std::thread server_thread;
 sockpp::tcp_acceptor server_acceptor;
+
+//
+// Utility functions
+//
 
 void log_scene_names() {
     auto scene_names = obs_frontend_get_scene_names();
@@ -27,6 +32,133 @@ void log_scene_names() {
     }
 
     bfree(scene_names);
+}
+
+//
+// Elements API
+//
+obs_scene_t* get_scene() {
+    return obs_scene_from_source(obs_frontend_get_current_scene());
+}
+
+
+
+class PropError: public std::runtime_error {
+public:
+    PropError(const std::string& what): std::runtime_error(what) {}
+};
+
+std::string string_prop(
+    const google::protobuf::Map<std::string, protocol::PropValue> props,
+    const std::string &name
+) {
+    std::string result;
+    
+    if (!props.contains(name)) {
+        throw new PropError(std::string("Props do not contain ") + name);
+    }
+    
+    auto prop = props.at(name);
+    
+    if (prop.value_case() != protocol::PropValue::ValueCase::kStringValue) {
+        throw new PropError(std::string("Prop ") + name + std::string(" must be a string"));
+    }
+    
+    return prop.string_value();
+}
+
+void create_element(const protocol::CreateElement &element) {
+    blog(LOG_DEBUG, "[react-obs] Creating element %s", element.name().c_str());
+    
+    if (element.type() == protocol::ElementType::TEXT) {
+        auto props = element.props();
+        
+        auto text = string_prop(props, "children");
+        
+        auto settings = obs_data_create();
+        
+        // TODO: Should I be calling obs_data_release on this?
+        auto font_data = obs_data_create();
+        obs_data_set_string(font_data, "face", "Arial");
+        obs_data_set_string(font_data, "style", "Normal");
+        obs_data_set_int(font_data, "size", 42);
+        obs_data_set_int(font_data, "flags", 0);
+        
+        obs_data_set_obj(settings, "font", font_data);
+        obs_data_set_string(settings, "text", text.c_str());
+        
+        auto text_source = obs_source_create("text_ft2_source", element.name().c_str(), settings, NULL);
+        
+        // TODO: Should I release this?
+        // obs_sceneitem_release(item);
+        
+        // obs_source_release(text_source);
+        
+        // TODO: Should I be calling obs_data_release on this?
+        // obs_data_release(settings);
+        
+        return;
+    }
+    
+    blog(LOG_ERROR, "[react-obs] Unsupported element type");
+}
+
+void append_child(const protocol::AppendChild &append_child) {
+    blog(LOG_DEBUG, "[react-obs] Appending %s to %s",
+         append_child.child_name().c_str(),
+         append_child.parent_name().c_str());
+    
+//    auto current_scene = get_scene();
+//    if (!current_scene) {
+//        blog(LOG_ERROR, "[react-obs] Cannot find current scene");
+//        return;
+//    }
+    
+    auto parent = obs_get_source_by_name(append_child.parent_name().c_str());
+    if (!parent) {
+        blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", append_child.parent_name().c_str());
+        return;
+    }
+    
+    auto scene = obs_scene_from_source(parent);
+    if (!scene) {
+        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", append_child.parent_name().c_str());
+        return;
+    }
+    
+    auto child_source = obs_get_source_by_name(append_child.child_name().c_str());
+    if (!child_source) {
+        blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", append_child.child_name().c_str());
+        return;
+    }
+    
+    auto item = obs_scene_add(scene, child_source);
+}
+
+void apply_updates(protocol::ApplyUpdates &command) {
+    auto updates = command.updates();
+    
+    for (int i = 0; i < updates.size(); i++) {
+        auto update = updates.Get(i);
+        
+        try {
+            switch (update.change_case()) {
+                case protocol::Update::ChangeCase::kCreateElement:
+                    create_element(update.create_element());
+                    break;
+                
+                case protocol::Update::ChangeCase::kAppendChild:
+                    append_child(update.append_child());
+                    break;
+
+                case protocol::Update::ChangeCase::CHANGE_NOT_SET:
+                    blog(LOG_ERROR, "[react-obs] Received update request with no change");
+                    break;
+            }
+        } catch (PropError error) {
+            blog(LOG_ERROR, "[react-obs] Prop error: %s", error.what());
+        }
+    }
 }
 
 //
@@ -89,6 +221,15 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 auto init_request = message.init_request();
 
                 blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
+                break;
+            }
+                
+            case protocol::ClientMessage::MessageCase::kApplyUpdates: {
+                auto command = message.apply_updates();
+                
+                blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
+                apply_updates(command);
+                
                 break;
             }
 

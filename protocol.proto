@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package protocol;
+
+message ClientMessage {
+    oneof message {
+        InitRequest init_request = 1;
+    }
+}
+
+message ServerMessage {
+    oneof message {
+        InitResponse init_response = 1;
+    }
+}
+
+message InitRequest {
+    string client_id = 1;
+}
+
+message InitResponse {
+    uint32 canvas_width = 1;
+    uint32 canvas_height = 2;
+
+    repeated Scene scenes = 3;
+}
+
+message Scene {
+    string name = 1;
+}

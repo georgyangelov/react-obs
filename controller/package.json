@@ -1,0 +1,16 @@
+{
+  "name": "react-obs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "google-protobuf": "^3.13.0",
+    "react": "^16.13.1",
+    "uuid": "^8.3.0"
+  }
+}

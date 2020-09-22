@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import Reconciler, { OpaqueHandle } from 'react-reconciler';
 import { createConnection } from 'net';
 import { ServerAPI } from './server-api';
@@ -15,7 +15,7 @@ import {
   UpdatePayload,
   ChildSet,
   TimeoutHandle,
-  NoTimeout, PropChange
+  NoTimeout, PropChanges
 } from './types';
 
 console.log('Hello world');
@@ -65,7 +65,7 @@ function traceWrap<T extends { [k: string]: any }>(hostConfig: T): T {
 
 const ROOT_CONTEXT = {};
 
-
+const STRING_SOURCES = new Set('text_ft2_source');
 
 const reconciler = Reconciler<
   Type,
@@ -114,10 +114,12 @@ const reconciler = Reconciler<
     hostContext: HostContext,
     internalInstanceHandle: OpaqueHandle,
   ): Instance {
+    const isStringSource = typeof props.id === 'string' && STRING_SOURCES.has(props.id);
+
     Object.keys(props).forEach(key => {
       const value = props[key];
       if (key === 'children') {
-        if (type !== 'obs_text') {
+        if (!isStringSource) {
           if (typeof value === 'string' || typeof value === 'number') {
             throw new Error('Strings must be rendered within a <Text> component.');
           }
@@ -131,16 +133,7 @@ const reconciler = Reconciler<
           }
         }
 
-        if (type === 'obs_text') {
-          // if (value instanceof Array) {
-          //   value.forEach(item => {
-          //     if (typeof item !== 'string' && typeof item !== 'number') {
-          //       throw new Error('Strings must be rendered within a <Text> component.');
-          //     }
-          //   });
-          // } else if (typeof value !== 'string' && typeof value !== 'number') {
-          //   throw new Error('A <Text> component may only render strings or numbers, not other elements');
-          // }
+        if (isStringSource) {
           if (typeof value !== 'string') {
             throw new Error('A <Text> component may only render strings or numbers, not other elements');
           }
@@ -148,7 +141,15 @@ const reconciler = Reconciler<
       }
     });
 
-    return api.createElement(type, props);
+    if (type === 'obs_source') {
+      if (!props.id || typeof props.id !== 'string') {
+        throw new Error('obs_source must have an id and it must be a string');
+      }
+
+      return api.createSource(props.id, props.id, props);
+    } else {
+      throw new Error(`Unsupported obs element ${type}`);
+    }
   },
 
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
@@ -173,15 +174,17 @@ const reconciler = Reconciler<
     rootContainerInstance: Container,
     hostContext: HostContext,
   ): null | UpdatePayload {
-    const propChanges: PropChange[] = [];
+    const propChanges: PropChanges = {};
 
     Object.keys(newProps).forEach(key => {
-      propChanges.push({ key, value: newProps[key] });
+    //   propChanges.push({ key, value: newProps[key] });
+      propChanges[key] = newProps[key];
     });
 
     Object.keys(oldProps).forEach(key => {
       if (newProps[key] === undefined || newProps[key] === null) {
-        propChanges.push({ key, value: undefined });
+    //     propChanges.push({ key, value: undefined });
+        propChanges[key] = undefined;
       }
     });
 
@@ -189,7 +192,7 @@ const reconciler = Reconciler<
   },
 
   shouldSetTextContent(type: Type, props: Props): boolean {
-    return type === 'obs_text';
+    return type === 'obs_source' && typeof props.id === 'string' && STRING_SOURCES.has(props.id);
   },
 
   shouldDeprioritizeSubtree(type: Type, props: Props): boolean {
@@ -202,7 +205,8 @@ const reconciler = Reconciler<
     hostContext: HostContext,
     internalInstanceHandle: OpaqueHandle,
   ): TextInstance {
-    return api.createElement('obs_text', { text });
+    // return api.createElement('obs_text', { text });
+    throw new Error('This should not happen - createTextInstance called');
   },
 
   // TODO: Is this requestAnimationFrame?
@@ -272,7 +276,11 @@ const reconciler = Reconciler<
     newProps: Props,
     internalInstanceHandle: OpaqueHandle,
   ): void {
-    api.updateProps(instance, updatePayload.propChanges);
+    if (type === 'obs_source') {
+      api.updateSource(instance, updatePayload.propChanges);
+    } else {
+      throw new Error('Unsupported element type');
+    }
   },
 
   insertBefore(
@@ -409,11 +417,16 @@ function Text({ children, fontSize, fontFace, fontStyle }: {
 }) {
   const text = children instanceof Array ? children.join('') : children;
 
+  const font = useMemo(() => ({
+    size: fontSize,
+    face: fontFace,
+    style: fontStyle
+  }), [fontSize, fontFace, fontStyle]);
+
   return (
-    <obs_text
-      fontSize={fontSize}
-      fontFace={fontFace}
-      fontStyle={fontStyle}
-    >{text}</obs_text>
+    <obs_source
+      id="text_ft2_source"
+      font={font}
+      text={text} />
   );
 }

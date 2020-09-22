@@ -16,13 +16,13 @@
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AppendChild_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_ApplyUpdate_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateElement_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateSource_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_InitRequest_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_InitResponse_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Object_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ObjectValue_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RemoveChild_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Scene_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UpdateElement_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UpdateSource_protocol_2eproto;
 namespace protocol {
 class ClientMessageDefaultTypeInternal {
  public:
@@ -50,19 +50,19 @@ class SceneDefaultTypeInternal {
 class ApplyUpdateDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ApplyUpdate> _instance;
-  const ::protocol::CreateElement* create_element_;
-  const ::protocol::UpdateElement* update_element_;
+  const ::protocol::CreateSource* create_source_;
+  const ::protocol::UpdateSource* update_source_;
   const ::protocol::AppendChild* append_child_;
   const ::protocol::RemoveChild* remove_child_;
 } _ApplyUpdate_default_instance_;
-class CreateElementDefaultTypeInternal {
+class CreateSourceDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CreateElement> _instance;
-} _CreateElement_default_instance_;
-class UpdateElementDefaultTypeInternal {
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CreateSource> _instance;
+} _CreateSource_default_instance_;
+class UpdateSourceDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdateElement> _instance;
-} _UpdateElement_default_instance_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdateSource> _instance;
+} _UpdateSource_default_instance_;
 class AppendChildDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AppendChild> _instance;
@@ -78,13 +78,13 @@ class PropDefaultTypeInternal {
   ::PROTOBUF_NAMESPACE_ID::int64 int_value_;
   double float_value_;
   bool bool_value_;
-  const ::protocol::Object* object_value_;
+  const ::protocol::ObjectValue* object_value_;
   bool undefined_;
 } _Prop_default_instance_;
-class ObjectDefaultTypeInternal {
+class ObjectValueDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Object> _instance;
-} _Object_default_instance_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ObjectValue> _instance;
+} _ObjectValue_default_instance_;
 }  // namespace protocol
 static void InitDefaultsscc_info_AppendChild_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -113,8 +113,8 @@ static void InitDefaultsscc_info_ApplyUpdate_protocol_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_ApplyUpdate_protocol_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_ApplyUpdate_protocol_2eproto}, {
-      &scc_info_CreateElement_protocol_2eproto.base,
-      &scc_info_UpdateElement_protocol_2eproto.base,
+      &scc_info_CreateSource_protocol_2eproto.base,
+      &scc_info_UpdateSource_protocol_2eproto.base,
       &scc_info_AppendChild_protocol_2eproto.base,
       &scc_info_RemoveChild_protocol_2eproto.base,}};
 
@@ -134,20 +134,20 @@ static void InitDefaultsscc_info_ClientMessage_protocol_2eproto() {
       &scc_info_InitRequest_protocol_2eproto.base,
       &scc_info_ApplyUpdate_protocol_2eproto.base,}};
 
-static void InitDefaultsscc_info_CreateElement_protocol_2eproto() {
+static void InitDefaultsscc_info_CreateSource_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::protocol::_CreateElement_default_instance_;
-    new (ptr) ::protocol::CreateElement();
+    void* ptr = &::protocol::_CreateSource_default_instance_;
+    new (ptr) ::protocol::CreateSource();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::protocol::CreateElement::InitAsDefaultInstance();
+  ::protocol::CreateSource::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateElement_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_CreateElement_protocol_2eproto}, {
-      &scc_info_Object_protocol_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateSource_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_CreateSource_protocol_2eproto}, {
+      &scc_info_ObjectValue_protocol_2eproto.base,}};
 
 static void InitDefaultsscc_info_InitRequest_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -178,7 +178,7 @@ static void InitDefaultsscc_info_InitResponse_protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_InitResponse_protocol_2eproto}, {
       &scc_info_Scene_protocol_2eproto.base,}};
 
-static void InitDefaultsscc_info_Object_protocol_2eproto() {
+static void InitDefaultsscc_info_ObjectValue_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
@@ -187,16 +187,16 @@ static void InitDefaultsscc_info_Object_protocol_2eproto() {
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
   {
-    void* ptr = &::protocol::_Object_default_instance_;
-    new (ptr) ::protocol::Object();
+    void* ptr = &::protocol::_ObjectValue_default_instance_;
+    new (ptr) ::protocol::ObjectValue();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
   ::protocol::Prop::InitAsDefaultInstance();
-  ::protocol::Object::InitAsDefaultInstance();
+  ::protocol::ObjectValue::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Object_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_Object_protocol_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ObjectValue_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ObjectValue_protocol_2eproto}, {}};
 
 static void InitDefaultsscc_info_RemoveChild_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -241,23 +241,23 @@ static void InitDefaultsscc_info_ServerMessage_protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_ServerMessage_protocol_2eproto}, {
       &scc_info_InitResponse_protocol_2eproto.base,}};
 
-static void InitDefaultsscc_info_UpdateElement_protocol_2eproto() {
+static void InitDefaultsscc_info_UpdateSource_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::protocol::_UpdateElement_default_instance_;
-    new (ptr) ::protocol::UpdateElement();
+    void* ptr = &::protocol::_UpdateSource_default_instance_;
+    new (ptr) ::protocol::UpdateSource();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::protocol::UpdateElement::InitAsDefaultInstance();
+  ::protocol::UpdateSource::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UpdateElement_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_UpdateElement_protocol_2eproto}, {
-      &scc_info_Object_protocol_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UpdateSource_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_UpdateSource_protocol_2eproto}, {
+      &scc_info_ObjectValue_protocol_2eproto.base,}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protocol_2eproto[12];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_protocol_2eproto[1];
+static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_protocol_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_protocol_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -301,27 +301,26 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::protocol::ApplyUpdate, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
-  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, create_element_),
-  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, update_element_),
+  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, create_source_),
+  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, update_source_),
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, append_child_),
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, remove_child_),
   PROTOBUF_FIELD_OFFSET(::protocol::ApplyUpdate, change_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::protocol::CreateSource, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, type_),
-  PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, name_),
-  PROTOBUF_FIELD_OFFSET(::protocol::CreateElement, props_),
+  PROTOBUF_FIELD_OFFSET(::protocol::CreateSource, id_),
+  PROTOBUF_FIELD_OFFSET(::protocol::CreateSource, name_),
+  PROTOBUF_FIELD_OFFSET(::protocol::CreateSource, settings_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::protocol::UpdateSource, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, type_),
-  PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, name_),
-  PROTOBUF_FIELD_OFFSET(::protocol::UpdateElement, changed_props_),
+  PROTOBUF_FIELD_OFFSET(::protocol::UpdateSource, name_),
+  PROTOBUF_FIELD_OFFSET(::protocol::UpdateSource, changed_props_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -350,11 +349,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   offsetof(::protocol::PropDefaultTypeInternal, undefined_),
   PROTOBUF_FIELD_OFFSET(::protocol::Prop, value_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::protocol::Object, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::protocol::ObjectValue, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::protocol::Object, props_),
+  PROTOBUF_FIELD_OFFSET(::protocol::ObjectValue, props_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::protocol::ClientMessage)},
@@ -363,12 +362,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 21, -1, sizeof(::protocol::InitResponse)},
   { 29, -1, sizeof(::protocol::Scene)},
   { 35, -1, sizeof(::protocol::ApplyUpdate)},
-  { 45, -1, sizeof(::protocol::CreateElement)},
-  { 53, -1, sizeof(::protocol::UpdateElement)},
-  { 61, -1, sizeof(::protocol::AppendChild)},
-  { 68, -1, sizeof(::protocol::RemoveChild)},
-  { 75, -1, sizeof(::protocol::Prop)},
-  { 88, -1, sizeof(::protocol::Object)},
+  { 45, -1, sizeof(::protocol::CreateSource)},
+  { 53, -1, sizeof(::protocol::UpdateSource)},
+  { 60, -1, sizeof(::protocol::AppendChild)},
+  { 67, -1, sizeof(::protocol::RemoveChild)},
+  { 74, -1, sizeof(::protocol::Prop)},
+  { 87, -1, sizeof(::protocol::ObjectValue)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -378,12 +377,12 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_InitResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Scene_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_ApplyUpdate_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_CreateElement_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_UpdateElement_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_CreateSource_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_UpdateSource_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_AppendChild_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_RemoveChild_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Prop_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Object_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_ObjectValue_default_instance_),
 };
 
 const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -396,27 +395,25 @@ const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\022\021\n\tclient_id\030\001 \001(\t\"\\\n\014InitResponse\022\024\n\014c"
   "anvas_width\030\001 \001(\r\022\025\n\rcanvas_height\030\002 \001(\r"
   "\022\037\n\006scenes\030\003 \003(\0132\017.protocol.Scene\"\025\n\005Sce"
-  "ne\022\014\n\004name\030\001 \001(\t\"\333\001\n\013ApplyUpdate\0221\n\016crea"
-  "te_element\030\001 \001(\0132\027.protocol.CreateElemen"
-  "tH\000\0221\n\016update_element\030\003 \001(\0132\027.protocol.U"
-  "pdateElementH\000\022-\n\014append_child\030\002 \001(\0132\025.p"
-  "rotocol.AppendChildH\000\022-\n\014remove_child\030\004 "
-  "\001(\0132\025.protocol.RemoveChildH\000B\010\n\006change\"a"
-  "\n\rCreateElement\022#\n\004type\030\001 \001(\0162\025.protocol"
-  ".ElementType\022\014\n\004name\030\002 \001(\t\022\035\n\005props\030\003 \003("
-  "\0132\016.protocol.Prop\"i\n\rUpdateElement\022#\n\004ty"
-  "pe\030\001 \001(\0162\025.protocol.ElementType\022\014\n\004name\030"
-  "\002 \001(\t\022%\n\rchanged_props\030\003 \003(\0132\016.protocol."
-  "Prop\"6\n\013AppendChild\022\023\n\013parent_name\030\001 \001(\t"
-  "\022\022\n\nchild_name\030\002 \001(\t\"6\n\013RemoveChild\022\023\n\013p"
-  "arent_name\030\001 \001(\t\022\022\n\nchild_name\030\002 \001(\t\"\265\001\n"
-  "\004Prop\022\013\n\003key\030\001 \001(\t\022\026\n\014string_value\030\002 \001(\t"
-  "H\000\022\023\n\tint_value\030\003 \001(\003H\000\022\025\n\013float_value\030\004"
-  " \001(\001H\000\022\024\n\nbool_value\030\005 \001(\010H\000\022(\n\014object_v"
-  "alue\030\006 \001(\0132\020.protocol.ObjectH\000\022\023\n\tundefi"
-  "ned\030\007 \001(\010H\000B\007\n\005value\"\'\n\006Object\022\035\n\005props\030"
-  "\001 \003(\0132\016.protocol.Prop* \n\013ElementType\022\010\n\004"
-  "TEXT\020\000\022\007\n\003BOX\020\001b\006proto3"
+  "ne\022\014\n\004name\030\001 \001(\t\"\327\001\n\013ApplyUpdate\022/\n\rcrea"
+  "te_source\030\001 \001(\0132\026.protocol.CreateSourceH"
+  "\000\022/\n\rupdate_source\030\003 \001(\0132\026.protocol.Upda"
+  "teSourceH\000\022-\n\014append_child\030\002 \001(\0132\025.proto"
+  "col.AppendChildH\000\022-\n\014remove_child\030\004 \001(\0132"
+  "\025.protocol.RemoveChildH\000B\010\n\006change\"Q\n\014Cr"
+  "eateSource\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\'\n\010"
+  "settings\030\003 \001(\0132\025.protocol.ObjectValue\"J\n"
+  "\014UpdateSource\022\014\n\004name\030\002 \001(\t\022,\n\rchanged_p"
+  "rops\030\003 \001(\0132\025.protocol.ObjectValue\"6\n\013App"
+  "endChild\022\023\n\013parent_name\030\001 \001(\t\022\022\n\nchild_n"
+  "ame\030\002 \001(\t\"6\n\013RemoveChild\022\023\n\013parent_name\030"
+  "\001 \001(\t\022\022\n\nchild_name\030\002 \001(\t\"\272\001\n\004Prop\022\013\n\003ke"
+  "y\030\001 \001(\t\022\026\n\014string_value\030\002 \001(\tH\000\022\023\n\tint_v"
+  "alue\030\003 \001(\003H\000\022\025\n\013float_value\030\004 \001(\001H\000\022\024\n\nb"
+  "ool_value\030\005 \001(\010H\000\022-\n\014object_value\030\006 \001(\0132"
+  "\025.protocol.ObjectValueH\000\022\023\n\tundefined\030\007 "
+  "\001(\010H\000B\007\n\005value\",\n\013ObjectValue\022\035\n\005props\030\001"
+  " \003(\0132\016.protocol.Propb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protocol_2eproto_deps[1] = {
 };
@@ -424,18 +421,18 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
   &scc_info_AppendChild_protocol_2eproto.base,
   &scc_info_ApplyUpdate_protocol_2eproto.base,
   &scc_info_ClientMessage_protocol_2eproto.base,
-  &scc_info_CreateElement_protocol_2eproto.base,
+  &scc_info_CreateSource_protocol_2eproto.base,
   &scc_info_InitRequest_protocol_2eproto.base,
   &scc_info_InitResponse_protocol_2eproto.base,
-  &scc_info_Object_protocol_2eproto.base,
+  &scc_info_ObjectValue_protocol_2eproto.base,
   &scc_info_RemoveChild_protocol_2eproto.base,
   &scc_info_Scene_protocol_2eproto.base,
   &scc_info_ServerMessage_protocol_2eproto.base,
-  &scc_info_UpdateElement_protocol_2eproto.base,
+  &scc_info_UpdateSource_protocol_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto = {
-  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1183,
+  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1108,
   &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 11, 0,
   schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
   file_level_metadata_protocol_2eproto, 12, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
@@ -444,20 +441,6 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protoc
 // Force running AddDescriptors() at dynamic initialization time.
 static bool dynamic_init_dummy_protocol_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_protocol_2eproto)), true);
 namespace protocol {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ElementType_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_protocol_2eproto);
-  return file_level_enum_descriptors_protocol_2eproto[0];
-}
-bool ElementType_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-      return true;
-    default:
-      return false;
-  }
-}
-
 
 // ===================================================================
 
@@ -1728,10 +1711,10 @@ void Scene::InternalSwap(Scene* other) {
 // ===================================================================
 
 void ApplyUpdate::InitAsDefaultInstance() {
-  ::protocol::_ApplyUpdate_default_instance_.create_element_ = const_cast< ::protocol::CreateElement*>(
-      ::protocol::CreateElement::internal_default_instance());
-  ::protocol::_ApplyUpdate_default_instance_.update_element_ = const_cast< ::protocol::UpdateElement*>(
-      ::protocol::UpdateElement::internal_default_instance());
+  ::protocol::_ApplyUpdate_default_instance_.create_source_ = const_cast< ::protocol::CreateSource*>(
+      ::protocol::CreateSource::internal_default_instance());
+  ::protocol::_ApplyUpdate_default_instance_.update_source_ = const_cast< ::protocol::UpdateSource*>(
+      ::protocol::UpdateSource::internal_default_instance());
   ::protocol::_ApplyUpdate_default_instance_.append_child_ = const_cast< ::protocol::AppendChild*>(
       ::protocol::AppendChild::internal_default_instance());
   ::protocol::_ApplyUpdate_default_instance_.remove_child_ = const_cast< ::protocol::RemoveChild*>(
@@ -1739,19 +1722,19 @@ void ApplyUpdate::InitAsDefaultInstance() {
 }
 class ApplyUpdate::_Internal {
  public:
-  static const ::protocol::CreateElement& create_element(const ApplyUpdate* msg);
-  static const ::protocol::UpdateElement& update_element(const ApplyUpdate* msg);
+  static const ::protocol::CreateSource& create_source(const ApplyUpdate* msg);
+  static const ::protocol::UpdateSource& update_source(const ApplyUpdate* msg);
   static const ::protocol::AppendChild& append_child(const ApplyUpdate* msg);
   static const ::protocol::RemoveChild& remove_child(const ApplyUpdate* msg);
 };
 
-const ::protocol::CreateElement&
-ApplyUpdate::_Internal::create_element(const ApplyUpdate* msg) {
-  return *msg->change_.create_element_;
+const ::protocol::CreateSource&
+ApplyUpdate::_Internal::create_source(const ApplyUpdate* msg) {
+  return *msg->change_.create_source_;
 }
-const ::protocol::UpdateElement&
-ApplyUpdate::_Internal::update_element(const ApplyUpdate* msg) {
-  return *msg->change_.update_element_;
+const ::protocol::UpdateSource&
+ApplyUpdate::_Internal::update_source(const ApplyUpdate* msg) {
+  return *msg->change_.update_source_;
 }
 const ::protocol::AppendChild&
 ApplyUpdate::_Internal::append_child(const ApplyUpdate* msg) {
@@ -1761,35 +1744,35 @@ const ::protocol::RemoveChild&
 ApplyUpdate::_Internal::remove_child(const ApplyUpdate* msg) {
   return *msg->change_.remove_child_;
 }
-void ApplyUpdate::set_allocated_create_element(::protocol::CreateElement* create_element) {
+void ApplyUpdate::set_allocated_create_source(::protocol::CreateSource* create_source) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   clear_change();
-  if (create_element) {
+  if (create_source) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(create_element);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(create_source);
     if (message_arena != submessage_arena) {
-      create_element = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, create_element, submessage_arena);
+      create_source = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, create_source, submessage_arena);
     }
-    set_has_create_element();
-    change_.create_element_ = create_element;
+    set_has_create_source();
+    change_.create_source_ = create_source;
   }
-  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.create_element)
+  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.create_source)
 }
-void ApplyUpdate::set_allocated_update_element(::protocol::UpdateElement* update_element) {
+void ApplyUpdate::set_allocated_update_source(::protocol::UpdateSource* update_source) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   clear_change();
-  if (update_element) {
+  if (update_source) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(update_element);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(update_source);
     if (message_arena != submessage_arena) {
-      update_element = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, update_element, submessage_arena);
+      update_source = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, update_source, submessage_arena);
     }
-    set_has_update_element();
-    change_.update_element_ = update_element;
+    set_has_update_source();
+    change_.update_source_ = update_source;
   }
-  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.update_element)
+  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.update_source)
 }
 void ApplyUpdate::set_allocated_append_child(::protocol::AppendChild* append_child) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
@@ -1832,12 +1815,12 @@ ApplyUpdate::ApplyUpdate(const ApplyUpdate& from)
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   clear_has_change();
   switch (from.change_case()) {
-    case kCreateElement: {
-      _internal_mutable_create_element()->::protocol::CreateElement::MergeFrom(from._internal_create_element());
+    case kCreateSource: {
+      _internal_mutable_create_source()->::protocol::CreateSource::MergeFrom(from._internal_create_source());
       break;
     }
-    case kUpdateElement: {
-      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+    case kUpdateSource: {
+      _internal_mutable_update_source()->::protocol::UpdateSource::MergeFrom(from._internal_update_source());
       break;
     }
     case kAppendChild: {
@@ -1891,15 +1874,15 @@ const ApplyUpdate& ApplyUpdate::default_instance() {
 void ApplyUpdate::clear_change() {
 // @@protoc_insertion_point(one_of_clear_start:protocol.ApplyUpdate)
   switch (change_case()) {
-    case kCreateElement: {
+    case kCreateSource: {
       if (GetArena() == nullptr) {
-        delete change_.create_element_;
+        delete change_.create_source_;
       }
       break;
     }
-    case kUpdateElement: {
+    case kUpdateSource: {
       if (GetArena() == nullptr) {
-        delete change_.update_element_;
+        delete change_.update_source_;
       }
       break;
     }
@@ -1941,10 +1924,10 @@ const char* ApplyUpdate::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .protocol.CreateElement create_element = 1;
+      // .protocol.CreateSource create_source = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_create_element(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_create_source(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1955,10 +1938,10 @@ const char* ApplyUpdate::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .protocol.UpdateElement update_element = 3;
+      // .protocol.UpdateSource update_source = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_update_element(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_update_source(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1997,12 +1980,12 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .protocol.CreateElement create_element = 1;
-  if (_internal_has_create_element()) {
+  // .protocol.CreateSource create_source = 1;
+  if (_internal_has_create_source()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        1, _Internal::create_element(this), target, stream);
+        1, _Internal::create_source(this), target, stream);
   }
 
   // .protocol.AppendChild append_child = 2;
@@ -2013,12 +1996,12 @@ failure:
         2, _Internal::append_child(this), target, stream);
   }
 
-  // .protocol.UpdateElement update_element = 3;
-  if (_internal_has_update_element()) {
+  // .protocol.UpdateSource update_source = 3;
+  if (_internal_has_update_source()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        3, _Internal::update_element(this), target, stream);
+        3, _Internal::update_source(this), target, stream);
   }
 
   // .protocol.RemoveChild remove_child = 4;
@@ -2046,18 +2029,18 @@ size_t ApplyUpdate::ByteSizeLong() const {
   (void) cached_has_bits;
 
   switch (change_case()) {
-    // .protocol.CreateElement create_element = 1;
-    case kCreateElement: {
+    // .protocol.CreateSource create_source = 1;
+    case kCreateSource: {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *change_.create_element_);
+          *change_.create_source_);
       break;
     }
-    // .protocol.UpdateElement update_element = 3;
-    case kUpdateElement: {
+    // .protocol.UpdateSource update_source = 3;
+    case kUpdateSource: {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *change_.update_element_);
+          *change_.update_source_);
       break;
     }
     // .protocol.AppendChild append_child = 2;
@@ -2110,12 +2093,12 @@ void ApplyUpdate::MergeFrom(const ApplyUpdate& from) {
   (void) cached_has_bits;
 
   switch (from.change_case()) {
-    case kCreateElement: {
-      _internal_mutable_create_element()->::protocol::CreateElement::MergeFrom(from._internal_create_element());
+    case kCreateSource: {
+      _internal_mutable_create_source()->::protocol::CreateSource::MergeFrom(from._internal_create_source());
       break;
     }
-    case kUpdateElement: {
-      _internal_mutable_update_element()->::protocol::UpdateElement::MergeFrom(from._internal_update_element());
+    case kUpdateSource: {
+      _internal_mutable_update_source()->::protocol::UpdateSource::MergeFrom(from._internal_update_source());
       break;
     }
     case kAppendChild: {
@@ -2164,77 +2147,97 @@ void ApplyUpdate::InternalSwap(ApplyUpdate* other) {
 
 // ===================================================================
 
-void CreateElement::InitAsDefaultInstance() {
+void CreateSource::InitAsDefaultInstance() {
+  ::protocol::_CreateSource_default_instance_._instance.get_mutable()->settings_ = const_cast< ::protocol::ObjectValue*>(
+      ::protocol::ObjectValue::internal_default_instance());
 }
-class CreateElement::_Internal {
+class CreateSource::_Internal {
  public:
+  static const ::protocol::ObjectValue& settings(const CreateSource* msg);
 };
 
-CreateElement::CreateElement(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  props_(arena) {
+const ::protocol::ObjectValue&
+CreateSource::_Internal::settings(const CreateSource* msg) {
+  return *msg->settings_;
+}
+CreateSource::CreateSource(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:protocol.CreateElement)
+  // @@protoc_insertion_point(arena_constructor:protocol.CreateSource)
 }
-CreateElement::CreateElement(const CreateElement& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      props_(from.props_) {
+CreateSource::CreateSource(const CreateSource& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_id().empty()) {
+    id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_id(),
+      GetArena());
+  }
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_name().empty()) {
     name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_name(),
       GetArena());
   }
-  type_ = from.type_;
-  // @@protoc_insertion_point(copy_constructor:protocol.CreateElement)
+  if (from._internal_has_settings()) {
+    settings_ = new ::protocol::ObjectValue(*from.settings_);
+  } else {
+    settings_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.CreateSource)
 }
 
-void CreateElement::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CreateElement_protocol_2eproto.base);
+void CreateSource::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CreateSource_protocol_2eproto.base);
+  id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  type_ = 0;
+  settings_ = nullptr;
 }
 
-CreateElement::~CreateElement() {
-  // @@protoc_insertion_point(destructor:protocol.CreateElement)
+CreateSource::~CreateSource() {
+  // @@protoc_insertion_point(destructor:protocol.CreateSource)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void CreateElement::SharedDtor() {
+void CreateSource::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete settings_;
 }
 
-void CreateElement::ArenaDtor(void* object) {
-  CreateElement* _this = reinterpret_cast< CreateElement* >(object);
+void CreateSource::ArenaDtor(void* object) {
+  CreateSource* _this = reinterpret_cast< CreateSource* >(object);
   (void)_this;
 }
-void CreateElement::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void CreateSource::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void CreateElement::SetCachedSize(int size) const {
+void CreateSource::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const CreateElement& CreateElement::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_CreateElement_protocol_2eproto.base);
+const CreateSource& CreateSource::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_CreateSource_protocol_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void CreateElement::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.CreateElement)
+void CreateSource::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.CreateSource)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  props_.Clear();
+  id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  type_ = 0;
+  if (GetArena() == nullptr && settings_ != nullptr) {
+    delete settings_;
+  }
+  settings_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* CreateElement::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* CreateSource::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
@@ -2242,12 +2245,13 @@ const char* CreateElement::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .protocol.ElementType type = 1;
+      // string id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.CreateSource.id"));
           CHK_(ptr);
-          _internal_set_type(static_cast<::protocol::ElementType>(val));
         } else goto handle_unusual;
         continue;
       // string name = 2;
@@ -2255,20 +2259,15 @@ const char* CreateElement::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.CreateElement.name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.CreateSource.name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .protocol.Prop props = 3;
+      // .protocol.ObjectValue settings = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_props(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+          ptr = ctx->ParseMessage(_internal_mutable_settings(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -2293,17 +2292,20 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* CreateElement::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* CreateSource::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.CreateElement)
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.CreateSource)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .protocol.ElementType type = 1;
-  if (this->type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
+  // string id = 1;
+  if (this->id().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_id().data(), static_cast<int>(this->_internal_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.CreateSource.id");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_id(), target);
   }
 
   // string name = 2;
@@ -2311,40 +2313,40 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "protocol.CreateElement.name");
+      "protocol.CreateSource.name");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_name(), target);
   }
 
-  // repeated .protocol.Prop props = 3;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_props_size()); i < n; i++) {
+  // .protocol.ObjectValue settings = 3;
+  if (this->has_settings()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, this->_internal_props(i), target, stream);
+      InternalWriteMessage(
+        3, _Internal::settings(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.CreateElement)
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.CreateSource)
   return target;
 }
 
-size_t CreateElement::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.CreateElement)
+size_t CreateSource::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.CreateSource)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .protocol.Prop props = 3;
-  total_size += 1UL * this->_internal_props_size();
-  for (const auto& msg : this->props_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  // string id = 1;
+  if (this->id().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_id());
   }
 
   // string name = 2;
@@ -2354,10 +2356,11 @@ size_t CreateElement::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // .protocol.ElementType type = 1;
-  if (this->type() != 0) {
+  // .protocol.ObjectValue settings = 3;
+  if (this->has_settings()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *settings_);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2369,141 +2372,155 @@ size_t CreateElement::ByteSizeLong() const {
   return total_size;
 }
 
-void CreateElement::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:protocol.CreateElement)
+void CreateSource::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.CreateSource)
   GOOGLE_DCHECK_NE(&from, this);
-  const CreateElement* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<CreateElement>(
+  const CreateSource* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<CreateSource>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.CreateElement)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.CreateSource)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.CreateElement)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.CreateSource)
     MergeFrom(*source);
   }
 }
 
-void CreateElement::MergeFrom(const CreateElement& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:protocol.CreateElement)
+void CreateSource::MergeFrom(const CreateSource& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.CreateSource)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  props_.MergeFrom(from.props_);
+  if (from.id().size() > 0) {
+    _internal_set_id(from._internal_id());
+  }
   if (from.name().size() > 0) {
     _internal_set_name(from._internal_name());
   }
-  if (from.type() != 0) {
-    _internal_set_type(from._internal_type());
+  if (from.has_settings()) {
+    _internal_mutable_settings()->::protocol::ObjectValue::MergeFrom(from._internal_settings());
   }
 }
 
-void CreateElement::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:protocol.CreateElement)
+void CreateSource::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.CreateSource)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CreateElement::CopyFrom(const CreateElement& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.CreateElement)
+void CreateSource::CopyFrom(const CreateSource& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.CreateSource)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool CreateElement::IsInitialized() const {
+bool CreateSource::IsInitialized() const {
   return true;
 }
 
-void CreateElement::InternalSwap(CreateElement* other) {
+void CreateSource::InternalSwap(CreateSource* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  props_.InternalSwap(&other->props_);
+  id_.Swap(&other->id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(type_, other->type_);
+  swap(settings_, other->settings_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata CreateElement::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata CreateSource::GetMetadata() const {
   return GetMetadataStatic();
 }
 
 
 // ===================================================================
 
-void UpdateElement::InitAsDefaultInstance() {
+void UpdateSource::InitAsDefaultInstance() {
+  ::protocol::_UpdateSource_default_instance_._instance.get_mutable()->changed_props_ = const_cast< ::protocol::ObjectValue*>(
+      ::protocol::ObjectValue::internal_default_instance());
 }
-class UpdateElement::_Internal {
+class UpdateSource::_Internal {
  public:
+  static const ::protocol::ObjectValue& changed_props(const UpdateSource* msg);
 };
 
-UpdateElement::UpdateElement(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  changed_props_(arena) {
+const ::protocol::ObjectValue&
+UpdateSource::_Internal::changed_props(const UpdateSource* msg) {
+  return *msg->changed_props_;
+}
+UpdateSource::UpdateSource(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:protocol.UpdateElement)
+  // @@protoc_insertion_point(arena_constructor:protocol.UpdateSource)
 }
-UpdateElement::UpdateElement(const UpdateElement& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      changed_props_(from.changed_props_) {
+UpdateSource::UpdateSource(const UpdateSource& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_name().empty()) {
     name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_name(),
       GetArena());
   }
-  type_ = from.type_;
-  // @@protoc_insertion_point(copy_constructor:protocol.UpdateElement)
+  if (from._internal_has_changed_props()) {
+    changed_props_ = new ::protocol::ObjectValue(*from.changed_props_);
+  } else {
+    changed_props_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.UpdateSource)
 }
 
-void UpdateElement::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UpdateElement_protocol_2eproto.base);
+void UpdateSource::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UpdateSource_protocol_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  type_ = 0;
+  changed_props_ = nullptr;
 }
 
-UpdateElement::~UpdateElement() {
-  // @@protoc_insertion_point(destructor:protocol.UpdateElement)
+UpdateSource::~UpdateSource() {
+  // @@protoc_insertion_point(destructor:protocol.UpdateSource)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void UpdateElement::SharedDtor() {
+void UpdateSource::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete changed_props_;
 }
 
-void UpdateElement::ArenaDtor(void* object) {
-  UpdateElement* _this = reinterpret_cast< UpdateElement* >(object);
+void UpdateSource::ArenaDtor(void* object) {
+  UpdateSource* _this = reinterpret_cast< UpdateSource* >(object);
   (void)_this;
 }
-void UpdateElement::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void UpdateSource::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void UpdateElement::SetCachedSize(int size) const {
+void UpdateSource::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const UpdateElement& UpdateElement::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_UpdateElement_protocol_2eproto.base);
+const UpdateSource& UpdateSource::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_UpdateSource_protocol_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void UpdateElement::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.UpdateElement)
+void UpdateSource::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.UpdateSource)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  changed_props_.Clear();
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  type_ = 0;
+  if (GetArena() == nullptr && changed_props_ != nullptr) {
+    delete changed_props_;
+  }
+  changed_props_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* UpdateElement::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* UpdateSource::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
@@ -2511,33 +2528,20 @@ const char* UpdateElement::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .protocol.ElementType type = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          _internal_set_type(static_cast<::protocol::ElementType>(val));
-        } else goto handle_unusual;
-        continue;
       // string name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.UpdateElement.name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.UpdateSource.name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .protocol.Prop changed_props = 3;
+      // .protocol.ObjectValue changed_props = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_changed_props(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+          ptr = ctx->ParseMessage(_internal_mutable_changed_props(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -2562,59 +2566,45 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* UpdateElement::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* UpdateSource::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.UpdateElement)
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.UpdateSource)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
-
-  // .protocol.ElementType type = 1;
-  if (this->type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
-  }
 
   // string name = 2;
   if (this->name().size() > 0) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "protocol.UpdateElement.name");
+      "protocol.UpdateSource.name");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_name(), target);
   }
 
-  // repeated .protocol.Prop changed_props = 3;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_changed_props_size()); i < n; i++) {
+  // .protocol.ObjectValue changed_props = 3;
+  if (this->has_changed_props()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, this->_internal_changed_props(i), target, stream);
+      InternalWriteMessage(
+        3, _Internal::changed_props(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.UpdateElement)
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.UpdateSource)
   return target;
 }
 
-size_t UpdateElement::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.UpdateElement)
+size_t UpdateSource::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.UpdateSource)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
-
-  // repeated .protocol.Prop changed_props = 3;
-  total_size += 1UL * this->_internal_changed_props_size();
-  for (const auto& msg : this->changed_props_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
-  }
 
   // string name = 2;
   if (this->name().size() > 0) {
@@ -2623,10 +2613,11 @@ size_t UpdateElement::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // .protocol.ElementType type = 1;
-  if (this->type() != 0) {
+  // .protocol.ObjectValue changed_props = 3;
+  if (this->has_changed_props()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *changed_props_);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2638,64 +2629,62 @@ size_t UpdateElement::ByteSizeLong() const {
   return total_size;
 }
 
-void UpdateElement::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:protocol.UpdateElement)
+void UpdateSource::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.UpdateSource)
   GOOGLE_DCHECK_NE(&from, this);
-  const UpdateElement* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<UpdateElement>(
+  const UpdateSource* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<UpdateSource>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.UpdateElement)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.UpdateSource)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.UpdateElement)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.UpdateSource)
     MergeFrom(*source);
   }
 }
 
-void UpdateElement::MergeFrom(const UpdateElement& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:protocol.UpdateElement)
+void UpdateSource::MergeFrom(const UpdateSource& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.UpdateSource)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  changed_props_.MergeFrom(from.changed_props_);
   if (from.name().size() > 0) {
     _internal_set_name(from._internal_name());
   }
-  if (from.type() != 0) {
-    _internal_set_type(from._internal_type());
+  if (from.has_changed_props()) {
+    _internal_mutable_changed_props()->::protocol::ObjectValue::MergeFrom(from._internal_changed_props());
   }
 }
 
-void UpdateElement::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:protocol.UpdateElement)
+void UpdateSource::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.UpdateSource)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void UpdateElement::CopyFrom(const UpdateElement& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.UpdateElement)
+void UpdateSource::CopyFrom(const UpdateSource& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.UpdateSource)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool UpdateElement::IsInitialized() const {
+bool UpdateSource::IsInitialized() const {
   return true;
 }
 
-void UpdateElement::InternalSwap(UpdateElement* other) {
+void UpdateSource::InternalSwap(UpdateSource* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  changed_props_.InternalSwap(&other->changed_props_);
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(type_, other->type_);
+  swap(changed_props_, other->changed_props_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata UpdateElement::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata UpdateSource::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -3202,20 +3191,20 @@ void Prop::InitAsDefaultInstance() {
   ::protocol::_Prop_default_instance_.int_value_ = PROTOBUF_LONGLONG(0);
   ::protocol::_Prop_default_instance_.float_value_ = 0;
   ::protocol::_Prop_default_instance_.bool_value_ = false;
-  ::protocol::_Prop_default_instance_.object_value_ = const_cast< ::protocol::Object*>(
-      ::protocol::Object::internal_default_instance());
+  ::protocol::_Prop_default_instance_.object_value_ = const_cast< ::protocol::ObjectValue*>(
+      ::protocol::ObjectValue::internal_default_instance());
   ::protocol::_Prop_default_instance_.undefined_ = false;
 }
 class Prop::_Internal {
  public:
-  static const ::protocol::Object& object_value(const Prop* msg);
+  static const ::protocol::ObjectValue& object_value(const Prop* msg);
 };
 
-const ::protocol::Object&
+const ::protocol::ObjectValue&
 Prop::_Internal::object_value(const Prop* msg) {
   return *msg->value_.object_value_;
 }
-void Prop::set_allocated_object_value(::protocol::Object* object_value) {
+void Prop::set_allocated_object_value(::protocol::ObjectValue* object_value) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   clear_value();
   if (object_value) {
@@ -3263,7 +3252,7 @@ Prop::Prop(const Prop& from)
       break;
     }
     case kObjectValue: {
-      _internal_mutable_object_value()->::protocol::Object::MergeFrom(from._internal_object_value());
+      _internal_mutable_object_value()->::protocol::ObjectValue::MergeFrom(from._internal_object_value());
       break;
     }
     case kUndefined: {
@@ -3278,7 +3267,7 @@ Prop::Prop(const Prop& from)
 }
 
 void Prop::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Object_protocol_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ObjectValue_protocol_2eproto.base);
   key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   clear_has_value();
 }
@@ -3307,7 +3296,7 @@ void Prop::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 const Prop& Prop::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_Object_protocol_2eproto.base);
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ObjectValue_protocol_2eproto.base);
   return *internal_default_instance();
 }
 
@@ -3407,7 +3396,7 @@ const char* Prop::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .protocol.Object object_value = 6;
+      // .protocol.ObjectValue object_value = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_object_value(), ptr);
@@ -3487,7 +3476,7 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(5, this->_internal_bool_value(), target);
   }
 
-  // .protocol.Object object_value = 6;
+  // .protocol.ObjectValue object_value = 6;
   if (_internal_has_object_value()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
@@ -3549,7 +3538,7 @@ size_t Prop::ByteSizeLong() const {
       total_size += 1 + 1;
       break;
     }
-    // .protocol.Object object_value = 6;
+    // .protocol.ObjectValue object_value = 6;
     case kObjectValue: {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -3617,7 +3606,7 @@ void Prop::MergeFrom(const Prop& from) {
       break;
     }
     case kObjectValue: {
-      _internal_mutable_object_value()->::protocol::Object::MergeFrom(from._internal_object_value());
+      _internal_mutable_object_value()->::protocol::ObjectValue::MergeFrom(from._internal_object_value());
       break;
     }
     case kUndefined: {
@@ -3663,57 +3652,57 @@ void Prop::InternalSwap(Prop* other) {
 
 // ===================================================================
 
-void Object::InitAsDefaultInstance() {
+void ObjectValue::InitAsDefaultInstance() {
 }
-class Object::_Internal {
+class ObjectValue::_Internal {
  public:
 };
 
-Object::Object(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+ObjectValue::ObjectValue(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   props_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:protocol.Object)
+  // @@protoc_insertion_point(arena_constructor:protocol.ObjectValue)
 }
-Object::Object(const Object& from)
+ObjectValue::ObjectValue(const ObjectValue& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       props_(from.props_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:protocol.Object)
+  // @@protoc_insertion_point(copy_constructor:protocol.ObjectValue)
 }
 
-void Object::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Object_protocol_2eproto.base);
+void ObjectValue::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ObjectValue_protocol_2eproto.base);
 }
 
-Object::~Object() {
-  // @@protoc_insertion_point(destructor:protocol.Object)
+ObjectValue::~ObjectValue() {
+  // @@protoc_insertion_point(destructor:protocol.ObjectValue)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void Object::SharedDtor() {
+void ObjectValue::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
 }
 
-void Object::ArenaDtor(void* object) {
-  Object* _this = reinterpret_cast< Object* >(object);
+void ObjectValue::ArenaDtor(void* object) {
+  ObjectValue* _this = reinterpret_cast< ObjectValue* >(object);
   (void)_this;
 }
-void Object::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void ObjectValue::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void Object::SetCachedSize(int size) const {
+void ObjectValue::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const Object& Object::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_Object_protocol_2eproto.base);
+const ObjectValue& ObjectValue::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ObjectValue_protocol_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void Object::Clear() {
-// @@protoc_insertion_point(message_clear_start:protocol.Object)
+void ObjectValue::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.ObjectValue)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3722,7 +3711,7 @@ void Object::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Object::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* ObjectValue::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
@@ -3764,9 +3753,9 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Object::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* ObjectValue::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:protocol.Object)
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.ObjectValue)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3782,12 +3771,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:protocol.Object)
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.ObjectValue)
   return target;
 }
 
-size_t Object::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:protocol.Object)
+size_t ObjectValue::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.ObjectValue)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3810,23 +3799,23 @@ size_t Object::ByteSizeLong() const {
   return total_size;
 }
 
-void Object::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:protocol.Object)
+void ObjectValue::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.ObjectValue)
   GOOGLE_DCHECK_NE(&from, this);
-  const Object* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Object>(
+  const ObjectValue* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ObjectValue>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.Object)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.ObjectValue)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.Object)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.ObjectValue)
     MergeFrom(*source);
   }
 }
 
-void Object::MergeFrom(const Object& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:protocol.Object)
+void ObjectValue::MergeFrom(const ObjectValue& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.ObjectValue)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3835,31 +3824,31 @@ void Object::MergeFrom(const Object& from) {
   props_.MergeFrom(from.props_);
 }
 
-void Object::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:protocol.Object)
+void ObjectValue::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.ObjectValue)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Object::CopyFrom(const Object& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:protocol.Object)
+void ObjectValue::CopyFrom(const ObjectValue& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.ObjectValue)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Object::IsInitialized() const {
+bool ObjectValue::IsInitialized() const {
   return true;
 }
 
-void Object::InternalSwap(Object* other) {
+void ObjectValue::InternalSwap(ObjectValue* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   props_.InternalSwap(&other->props_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata Object::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ObjectValue::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -3885,11 +3874,11 @@ template<> PROTOBUF_NOINLINE ::protocol::Scene* Arena::CreateMaybeMessage< ::pro
 template<> PROTOBUF_NOINLINE ::protocol::ApplyUpdate* Arena::CreateMaybeMessage< ::protocol::ApplyUpdate >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::ApplyUpdate >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::CreateElement* Arena::CreateMaybeMessage< ::protocol::CreateElement >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::CreateElement >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::CreateSource* Arena::CreateMaybeMessage< ::protocol::CreateSource >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::CreateSource >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::UpdateElement* Arena::CreateMaybeMessage< ::protocol::UpdateElement >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::UpdateElement >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::UpdateSource* Arena::CreateMaybeMessage< ::protocol::UpdateSource >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::UpdateSource >(arena);
 }
 template<> PROTOBUF_NOINLINE ::protocol::AppendChild* Arena::CreateMaybeMessage< ::protocol::AppendChild >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::AppendChild >(arena);
@@ -3900,8 +3889,8 @@ template<> PROTOBUF_NOINLINE ::protocol::RemoveChild* Arena::CreateMaybeMessage<
 template<> PROTOBUF_NOINLINE ::protocol::Prop* Arena::CreateMaybeMessage< ::protocol::Prop >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::Prop >(arena);
 }
-template<> PROTOBUF_NOINLINE ::protocol::Object* Arena::CreateMaybeMessage< ::protocol::Object >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::protocol::Object >(arena);
+template<> PROTOBUF_NOINLINE ::protocol::ObjectValue* Arena::CreateMaybeMessage< ::protocol::ObjectValue >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::ObjectValue >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

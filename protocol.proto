@@ -32,8 +32,8 @@ message Scene {
 
 message ApplyUpdate {
     oneof change {
-        CreateElement create_element = 1;
-        UpdateElement update_element = 3;
+        CreateSource create_source = 1;
+        UpdateSource update_source = 3;
 
         AppendChild append_child = 2;
         RemoveChild remove_child = 4;
@@ -44,21 +44,15 @@ message ApplyUpdate {
 // Update Types
 //
 
-enum ElementType {
-    TEXT = 0;
-    BOX = 1;
+message CreateSource {
+    string id = 1;
+    string name = 2;
+    ObjectValue settings = 3;
 }
 
-message CreateElement {
-    ElementType type = 1;
+message UpdateSource {
     string name = 2;
-    repeated Prop props = 3;
-}
-
-message UpdateElement {
-    ElementType type = 1;
-    string name = 2;
-    repeated Prop changed_props = 3;
+    ObjectValue changed_props = 3;
 }
 
 message AppendChild {
@@ -83,11 +77,11 @@ message Prop {
         int64 int_value = 3;
         double float_value = 4;
         bool bool_value = 5;
-        Object object_value = 6;
+        ObjectValue object_value = 6;
         bool undefined = 7;
     }
 }
 
-message Object {
+message ObjectValue {
     repeated Prop props = 1;
 }

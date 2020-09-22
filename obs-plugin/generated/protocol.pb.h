@@ -31,7 +31,6 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
-#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -65,18 +64,18 @@ extern ApplyUpdateDefaultTypeInternal _ApplyUpdate_default_instance_;
 class ClientMessage;
 class ClientMessageDefaultTypeInternal;
 extern ClientMessageDefaultTypeInternal _ClientMessage_default_instance_;
-class CreateElement;
-class CreateElementDefaultTypeInternal;
-extern CreateElementDefaultTypeInternal _CreateElement_default_instance_;
+class CreateSource;
+class CreateSourceDefaultTypeInternal;
+extern CreateSourceDefaultTypeInternal _CreateSource_default_instance_;
 class InitRequest;
 class InitRequestDefaultTypeInternal;
 extern InitRequestDefaultTypeInternal _InitRequest_default_instance_;
 class InitResponse;
 class InitResponseDefaultTypeInternal;
 extern InitResponseDefaultTypeInternal _InitResponse_default_instance_;
-class Object;
-class ObjectDefaultTypeInternal;
-extern ObjectDefaultTypeInternal _Object_default_instance_;
+class ObjectValue;
+class ObjectValueDefaultTypeInternal;
+extern ObjectValueDefaultTypeInternal _ObjectValue_default_instance_;
 class Prop;
 class PropDefaultTypeInternal;
 extern PropDefaultTypeInternal _Prop_default_instance_;
@@ -89,51 +88,26 @@ extern SceneDefaultTypeInternal _Scene_default_instance_;
 class ServerMessage;
 class ServerMessageDefaultTypeInternal;
 extern ServerMessageDefaultTypeInternal _ServerMessage_default_instance_;
-class UpdateElement;
-class UpdateElementDefaultTypeInternal;
-extern UpdateElementDefaultTypeInternal _UpdateElement_default_instance_;
+class UpdateSource;
+class UpdateSourceDefaultTypeInternal;
+extern UpdateSourceDefaultTypeInternal _UpdateSource_default_instance_;
 }  // namespace protocol
 PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::AppendChild* Arena::CreateMaybeMessage<::protocol::AppendChild>(Arena*);
 template<> ::protocol::ApplyUpdate* Arena::CreateMaybeMessage<::protocol::ApplyUpdate>(Arena*);
 template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::ClientMessage>(Arena*);
-template<> ::protocol::CreateElement* Arena::CreateMaybeMessage<::protocol::CreateElement>(Arena*);
+template<> ::protocol::CreateSource* Arena::CreateMaybeMessage<::protocol::CreateSource>(Arena*);
 template<> ::protocol::InitRequest* Arena::CreateMaybeMessage<::protocol::InitRequest>(Arena*);
 template<> ::protocol::InitResponse* Arena::CreateMaybeMessage<::protocol::InitResponse>(Arena*);
-template<> ::protocol::Object* Arena::CreateMaybeMessage<::protocol::Object>(Arena*);
+template<> ::protocol::ObjectValue* Arena::CreateMaybeMessage<::protocol::ObjectValue>(Arena*);
 template<> ::protocol::Prop* Arena::CreateMaybeMessage<::protocol::Prop>(Arena*);
 template<> ::protocol::RemoveChild* Arena::CreateMaybeMessage<::protocol::RemoveChild>(Arena*);
 template<> ::protocol::Scene* Arena::CreateMaybeMessage<::protocol::Scene>(Arena*);
 template<> ::protocol::ServerMessage* Arena::CreateMaybeMessage<::protocol::ServerMessage>(Arena*);
-template<> ::protocol::UpdateElement* Arena::CreateMaybeMessage<::protocol::UpdateElement>(Arena*);
+template<> ::protocol::UpdateSource* Arena::CreateMaybeMessage<::protocol::UpdateSource>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace protocol {
 
-enum ElementType : int {
-  TEXT = 0,
-  BOX = 1,
-  ElementType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  ElementType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool ElementType_IsValid(int value);
-constexpr ElementType ElementType_MIN = TEXT;
-constexpr ElementType ElementType_MAX = BOX;
-constexpr int ElementType_ARRAYSIZE = ElementType_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ElementType_descriptor();
-template<typename T>
-inline const std::string& ElementType_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, ElementType>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function ElementType_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    ElementType_descriptor(), enum_t_value);
-}
-inline bool ElementType_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ElementType* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ElementType>(
-    ElementType_descriptor(), name, value);
-}
 // ===================================================================
 
 class ClientMessage PROTOBUF_FINAL :
@@ -975,8 +949,8 @@ class ApplyUpdate PROTOBUF_FINAL :
   static const ApplyUpdate& default_instance();
 
   enum ChangeCase {
-    kCreateElement = 1,
-    kUpdateElement = 3,
+    kCreateSource = 1,
+    kUpdateSource = 3,
     kAppendChild = 2,
     kRemoveChild = 4,
     CHANGE_NOT_SET = 0,
@@ -1059,46 +1033,46 @@ class ApplyUpdate PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCreateElementFieldNumber = 1,
-    kUpdateElementFieldNumber = 3,
+    kCreateSourceFieldNumber = 1,
+    kUpdateSourceFieldNumber = 3,
     kAppendChildFieldNumber = 2,
     kRemoveChildFieldNumber = 4,
   };
-  // .protocol.CreateElement create_element = 1;
-  bool has_create_element() const;
+  // .protocol.CreateSource create_source = 1;
+  bool has_create_source() const;
   private:
-  bool _internal_has_create_element() const;
+  bool _internal_has_create_source() const;
   public:
-  void clear_create_element();
-  const ::protocol::CreateElement& create_element() const;
-  ::protocol::CreateElement* release_create_element();
-  ::protocol::CreateElement* mutable_create_element();
-  void set_allocated_create_element(::protocol::CreateElement* create_element);
+  void clear_create_source();
+  const ::protocol::CreateSource& create_source() const;
+  ::protocol::CreateSource* release_create_source();
+  ::protocol::CreateSource* mutable_create_source();
+  void set_allocated_create_source(::protocol::CreateSource* create_source);
   private:
-  const ::protocol::CreateElement& _internal_create_element() const;
-  ::protocol::CreateElement* _internal_mutable_create_element();
+  const ::protocol::CreateSource& _internal_create_source() const;
+  ::protocol::CreateSource* _internal_mutable_create_source();
   public:
-  void unsafe_arena_set_allocated_create_element(
-      ::protocol::CreateElement* create_element);
-  ::protocol::CreateElement* unsafe_arena_release_create_element();
+  void unsafe_arena_set_allocated_create_source(
+      ::protocol::CreateSource* create_source);
+  ::protocol::CreateSource* unsafe_arena_release_create_source();
 
-  // .protocol.UpdateElement update_element = 3;
-  bool has_update_element() const;
+  // .protocol.UpdateSource update_source = 3;
+  bool has_update_source() const;
   private:
-  bool _internal_has_update_element() const;
+  bool _internal_has_update_source() const;
   public:
-  void clear_update_element();
-  const ::protocol::UpdateElement& update_element() const;
-  ::protocol::UpdateElement* release_update_element();
-  ::protocol::UpdateElement* mutable_update_element();
-  void set_allocated_update_element(::protocol::UpdateElement* update_element);
+  void clear_update_source();
+  const ::protocol::UpdateSource& update_source() const;
+  ::protocol::UpdateSource* release_update_source();
+  ::protocol::UpdateSource* mutable_update_source();
+  void set_allocated_update_source(::protocol::UpdateSource* update_source);
   private:
-  const ::protocol::UpdateElement& _internal_update_element() const;
-  ::protocol::UpdateElement* _internal_mutable_update_element();
+  const ::protocol::UpdateSource& _internal_update_source() const;
+  ::protocol::UpdateSource* _internal_mutable_update_source();
   public:
-  void unsafe_arena_set_allocated_update_element(
-      ::protocol::UpdateElement* update_element);
-  ::protocol::UpdateElement* unsafe_arena_release_update_element();
+  void unsafe_arena_set_allocated_update_source(
+      ::protocol::UpdateSource* update_source);
+  ::protocol::UpdateSource* unsafe_arena_release_update_source();
 
   // .protocol.AppendChild append_child = 2;
   bool has_append_child() const;
@@ -1141,8 +1115,8 @@ class ApplyUpdate PROTOBUF_FINAL :
   // @@protoc_insertion_point(class_scope:protocol.ApplyUpdate)
  private:
   class _Internal;
-  void set_has_create_element();
-  void set_has_update_element();
+  void set_has_create_source();
+  void set_has_update_source();
   void set_has_append_child();
   void set_has_remove_child();
 
@@ -1154,8 +1128,8 @@ class ApplyUpdate PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   union ChangeUnion {
     ChangeUnion() {}
-    ::protocol::CreateElement* create_element_;
-    ::protocol::UpdateElement* update_element_;
+    ::protocol::CreateSource* create_source_;
+    ::protocol::UpdateSource* update_source_;
     ::protocol::AppendChild* append_child_;
     ::protocol::RemoveChild* remove_child_;
   } change_;
@@ -1166,23 +1140,23 @@ class ApplyUpdate PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class CreateElement PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.CreateElement) */ {
+class CreateSource PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.CreateSource) */ {
  public:
-  inline CreateElement() : CreateElement(nullptr) {}
-  virtual ~CreateElement();
+  inline CreateSource() : CreateSource(nullptr) {}
+  virtual ~CreateSource();
 
-  CreateElement(const CreateElement& from);
-  CreateElement(CreateElement&& from) noexcept
-    : CreateElement() {
+  CreateSource(const CreateSource& from);
+  CreateSource(CreateSource&& from) noexcept
+    : CreateSource() {
     *this = ::std::move(from);
   }
 
-  inline CreateElement& operator=(const CreateElement& from) {
+  inline CreateSource& operator=(const CreateSource& from) {
     CopyFrom(from);
     return *this;
   }
-  inline CreateElement& operator=(CreateElement&& from) noexcept {
+  inline CreateSource& operator=(CreateSource&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1200,20 +1174,20 @@ class CreateElement PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const CreateElement& default_instance();
+  static const CreateSource& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const CreateElement* internal_default_instance() {
-    return reinterpret_cast<const CreateElement*>(
-               &_CreateElement_default_instance_);
+  static inline const CreateSource* internal_default_instance() {
+    return reinterpret_cast<const CreateSource*>(
+               &_CreateSource_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  friend void swap(CreateElement& a, CreateElement& b) {
+  friend void swap(CreateSource& a, CreateSource& b) {
     a.Swap(&b);
   }
-  inline void Swap(CreateElement* other) {
+  inline void Swap(CreateSource* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -1221,7 +1195,7 @@ class CreateElement PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(CreateElement* other) {
+  void UnsafeArenaSwap(CreateSource* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1229,17 +1203,17 @@ class CreateElement PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline CreateElement* New() const final {
-    return CreateMaybeMessage<CreateElement>(nullptr);
+  inline CreateSource* New() const final {
+    return CreateMaybeMessage<CreateSource>(nullptr);
   }
 
-  CreateElement* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<CreateElement>(arena);
+  CreateSource* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CreateSource>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const CreateElement& from);
-  void MergeFrom(const CreateElement& from);
+  void CopyFrom(const CreateSource& from);
+  void MergeFrom(const CreateSource& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -1253,13 +1227,13 @@ class CreateElement PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(CreateElement* other);
+  void InternalSwap(CreateSource* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.CreateElement";
+    return "protocol.CreateSource";
   }
   protected:
-  explicit CreateElement(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit CreateSource(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1279,27 +1253,25 @@ class CreateElement PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPropsFieldNumber = 3,
+    kIdFieldNumber = 1,
     kNameFieldNumber = 2,
-    kTypeFieldNumber = 1,
+    kSettingsFieldNumber = 3,
   };
-  // repeated .protocol.Prop props = 3;
-  int props_size() const;
+  // string id = 1;
+  void clear_id();
+  const std::string& id() const;
+  void set_id(const std::string& value);
+  void set_id(std::string&& value);
+  void set_id(const char* value);
+  void set_id(const char* value, size_t size);
+  std::string* mutable_id();
+  std::string* release_id();
+  void set_allocated_id(std::string* id);
   private:
-  int _internal_props_size() const;
+  const std::string& _internal_id() const;
+  void _internal_set_id(const std::string& value);
+  std::string* _internal_mutable_id();
   public:
-  void clear_props();
-  ::protocol::Prop* mutable_props(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >*
-      mutable_props();
-  private:
-  const ::protocol::Prop& _internal_props(int index) const;
-  ::protocol::Prop* _internal_add_props();
-  public:
-  const ::protocol::Prop& props(int index) const;
-  ::protocol::Prop* add_props();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
-      props() const;
 
   // string name = 2;
   void clear_name();
@@ -1317,47 +1289,56 @@ class CreateElement PROTOBUF_FINAL :
   std::string* _internal_mutable_name();
   public:
 
-  // .protocol.ElementType type = 1;
-  void clear_type();
-  ::protocol::ElementType type() const;
-  void set_type(::protocol::ElementType value);
+  // .protocol.ObjectValue settings = 3;
+  bool has_settings() const;
   private:
-  ::protocol::ElementType _internal_type() const;
-  void _internal_set_type(::protocol::ElementType value);
+  bool _internal_has_settings() const;
   public:
+  void clear_settings();
+  const ::protocol::ObjectValue& settings() const;
+  ::protocol::ObjectValue* release_settings();
+  ::protocol::ObjectValue* mutable_settings();
+  void set_allocated_settings(::protocol::ObjectValue* settings);
+  private:
+  const ::protocol::ObjectValue& _internal_settings() const;
+  ::protocol::ObjectValue* _internal_mutable_settings();
+  public:
+  void unsafe_arena_set_allocated_settings(
+      ::protocol::ObjectValue* settings);
+  ::protocol::ObjectValue* unsafe_arena_release_settings();
 
-  // @@protoc_insertion_point(class_scope:protocol.CreateElement)
+  // @@protoc_insertion_point(class_scope:protocol.CreateSource)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop > props_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  int type_;
+  ::protocol::ObjectValue* settings_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
 };
 // -------------------------------------------------------------------
 
-class UpdateElement PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.UpdateElement) */ {
+class UpdateSource PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.UpdateSource) */ {
  public:
-  inline UpdateElement() : UpdateElement(nullptr) {}
-  virtual ~UpdateElement();
+  inline UpdateSource() : UpdateSource(nullptr) {}
+  virtual ~UpdateSource();
 
-  UpdateElement(const UpdateElement& from);
-  UpdateElement(UpdateElement&& from) noexcept
-    : UpdateElement() {
+  UpdateSource(const UpdateSource& from);
+  UpdateSource(UpdateSource&& from) noexcept
+    : UpdateSource() {
     *this = ::std::move(from);
   }
 
-  inline UpdateElement& operator=(const UpdateElement& from) {
+  inline UpdateSource& operator=(const UpdateSource& from) {
     CopyFrom(from);
     return *this;
   }
-  inline UpdateElement& operator=(UpdateElement&& from) noexcept {
+  inline UpdateSource& operator=(UpdateSource&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1375,20 +1356,20 @@ class UpdateElement PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const UpdateElement& default_instance();
+  static const UpdateSource& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const UpdateElement* internal_default_instance() {
-    return reinterpret_cast<const UpdateElement*>(
-               &_UpdateElement_default_instance_);
+  static inline const UpdateSource* internal_default_instance() {
+    return reinterpret_cast<const UpdateSource*>(
+               &_UpdateSource_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     7;
 
-  friend void swap(UpdateElement& a, UpdateElement& b) {
+  friend void swap(UpdateSource& a, UpdateSource& b) {
     a.Swap(&b);
   }
-  inline void Swap(UpdateElement* other) {
+  inline void Swap(UpdateSource* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -1396,7 +1377,7 @@ class UpdateElement PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(UpdateElement* other) {
+  void UnsafeArenaSwap(UpdateSource* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1404,17 +1385,17 @@ class UpdateElement PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline UpdateElement* New() const final {
-    return CreateMaybeMessage<UpdateElement>(nullptr);
+  inline UpdateSource* New() const final {
+    return CreateMaybeMessage<UpdateSource>(nullptr);
   }
 
-  UpdateElement* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<UpdateElement>(arena);
+  UpdateSource* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<UpdateSource>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const UpdateElement& from);
-  void MergeFrom(const UpdateElement& from);
+  void CopyFrom(const UpdateSource& from);
+  void MergeFrom(const UpdateSource& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -1428,13 +1409,13 @@ class UpdateElement PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(UpdateElement* other);
+  void InternalSwap(UpdateSource* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.UpdateElement";
+    return "protocol.UpdateSource";
   }
   protected:
-  explicit UpdateElement(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit UpdateSource(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1454,28 +1435,9 @@ class UpdateElement PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kChangedPropsFieldNumber = 3,
     kNameFieldNumber = 2,
-    kTypeFieldNumber = 1,
+    kChangedPropsFieldNumber = 3,
   };
-  // repeated .protocol.Prop changed_props = 3;
-  int changed_props_size() const;
-  private:
-  int _internal_changed_props_size() const;
-  public:
-  void clear_changed_props();
-  ::protocol::Prop* mutable_changed_props(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >*
-      mutable_changed_props();
-  private:
-  const ::protocol::Prop& _internal_changed_props(int index) const;
-  ::protocol::Prop* _internal_add_changed_props();
-  public:
-  const ::protocol::Prop& changed_props(int index) const;
-  ::protocol::Prop* add_changed_props();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
-      changed_props() const;
-
   // string name = 2;
   void clear_name();
   const std::string& name() const;
@@ -1492,25 +1454,33 @@ class UpdateElement PROTOBUF_FINAL :
   std::string* _internal_mutable_name();
   public:
 
-  // .protocol.ElementType type = 1;
-  void clear_type();
-  ::protocol::ElementType type() const;
-  void set_type(::protocol::ElementType value);
+  // .protocol.ObjectValue changed_props = 3;
+  bool has_changed_props() const;
   private:
-  ::protocol::ElementType _internal_type() const;
-  void _internal_set_type(::protocol::ElementType value);
+  bool _internal_has_changed_props() const;
   public:
+  void clear_changed_props();
+  const ::protocol::ObjectValue& changed_props() const;
+  ::protocol::ObjectValue* release_changed_props();
+  ::protocol::ObjectValue* mutable_changed_props();
+  void set_allocated_changed_props(::protocol::ObjectValue* changed_props);
+  private:
+  const ::protocol::ObjectValue& _internal_changed_props() const;
+  ::protocol::ObjectValue* _internal_mutable_changed_props();
+  public:
+  void unsafe_arena_set_allocated_changed_props(
+      ::protocol::ObjectValue* changed_props);
+  ::protocol::ObjectValue* unsafe_arena_release_changed_props();
 
-  // @@protoc_insertion_point(class_scope:protocol.UpdateElement)
+  // @@protoc_insertion_point(class_scope:protocol.UpdateSource)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop > changed_props_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  int type_;
+  ::protocol::ObjectValue* changed_props_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -2042,23 +2012,23 @@ class Prop PROTOBUF_FINAL :
   void _internal_set_bool_value(bool value);
   public:
 
-  // .protocol.Object object_value = 6;
+  // .protocol.ObjectValue object_value = 6;
   bool has_object_value() const;
   private:
   bool _internal_has_object_value() const;
   public:
   void clear_object_value();
-  const ::protocol::Object& object_value() const;
-  ::protocol::Object* release_object_value();
-  ::protocol::Object* mutable_object_value();
-  void set_allocated_object_value(::protocol::Object* object_value);
+  const ::protocol::ObjectValue& object_value() const;
+  ::protocol::ObjectValue* release_object_value();
+  ::protocol::ObjectValue* mutable_object_value();
+  void set_allocated_object_value(::protocol::ObjectValue* object_value);
   private:
-  const ::protocol::Object& _internal_object_value() const;
-  ::protocol::Object* _internal_mutable_object_value();
+  const ::protocol::ObjectValue& _internal_object_value() const;
+  ::protocol::ObjectValue* _internal_mutable_object_value();
   public:
   void unsafe_arena_set_allocated_object_value(
-      ::protocol::Object* object_value);
-  ::protocol::Object* unsafe_arena_release_object_value();
+      ::protocol::ObjectValue* object_value);
+  ::protocol::ObjectValue* unsafe_arena_release_object_value();
 
   // bool undefined = 7;
   private:
@@ -2097,7 +2067,7 @@ class Prop PROTOBUF_FINAL :
     ::PROTOBUF_NAMESPACE_ID::int64 int_value_;
     double float_value_;
     bool bool_value_;
-    ::protocol::Object* object_value_;
+    ::protocol::ObjectValue* object_value_;
     bool undefined_;
   } value_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2107,23 +2077,23 @@ class Prop PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class Object PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.Object) */ {
+class ObjectValue PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.ObjectValue) */ {
  public:
-  inline Object() : Object(nullptr) {}
-  virtual ~Object();
+  inline ObjectValue() : ObjectValue(nullptr) {}
+  virtual ~ObjectValue();
 
-  Object(const Object& from);
-  Object(Object&& from) noexcept
-    : Object() {
+  ObjectValue(const ObjectValue& from);
+  ObjectValue(ObjectValue&& from) noexcept
+    : ObjectValue() {
     *this = ::std::move(from);
   }
 
-  inline Object& operator=(const Object& from) {
+  inline ObjectValue& operator=(const ObjectValue& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Object& operator=(Object&& from) noexcept {
+  inline ObjectValue& operator=(ObjectValue&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -2141,20 +2111,20 @@ class Object PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Object& default_instance();
+  static const ObjectValue& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Object* internal_default_instance() {
-    return reinterpret_cast<const Object*>(
-               &_Object_default_instance_);
+  static inline const ObjectValue* internal_default_instance() {
+    return reinterpret_cast<const ObjectValue*>(
+               &_ObjectValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     11;
 
-  friend void swap(Object& a, Object& b) {
+  friend void swap(ObjectValue& a, ObjectValue& b) {
     a.Swap(&b);
   }
-  inline void Swap(Object* other) {
+  inline void Swap(ObjectValue* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -2162,7 +2132,7 @@ class Object PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Object* other) {
+  void UnsafeArenaSwap(ObjectValue* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2170,17 +2140,17 @@ class Object PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Object* New() const final {
-    return CreateMaybeMessage<Object>(nullptr);
+  inline ObjectValue* New() const final {
+    return CreateMaybeMessage<ObjectValue>(nullptr);
   }
 
-  Object* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Object>(arena);
+  ObjectValue* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ObjectValue>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Object& from);
-  void MergeFrom(const Object& from);
+  void CopyFrom(const ObjectValue& from);
+  void MergeFrom(const ObjectValue& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -2194,13 +2164,13 @@ class Object PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Object* other);
+  void InternalSwap(ObjectValue* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "protocol.Object";
+    return "protocol.ObjectValue";
   }
   protected:
-  explicit Object(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit ObjectValue(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -2240,7 +2210,7 @@ class Object PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
       props() const;
 
-  // @@protoc_insertion_point(class_scope:protocol.Object)
+  // @@protoc_insertion_point(class_scope:protocol.ObjectValue)
  private:
   class _Internal;
 
@@ -2722,150 +2692,150 @@ inline void Scene::set_allocated_name(std::string* name) {
 
 // ApplyUpdate
 
-// .protocol.CreateElement create_element = 1;
-inline bool ApplyUpdate::_internal_has_create_element() const {
-  return change_case() == kCreateElement;
+// .protocol.CreateSource create_source = 1;
+inline bool ApplyUpdate::_internal_has_create_source() const {
+  return change_case() == kCreateSource;
 }
-inline bool ApplyUpdate::has_create_element() const {
-  return _internal_has_create_element();
+inline bool ApplyUpdate::has_create_source() const {
+  return _internal_has_create_source();
 }
-inline void ApplyUpdate::set_has_create_element() {
-  _oneof_case_[0] = kCreateElement;
+inline void ApplyUpdate::set_has_create_source() {
+  _oneof_case_[0] = kCreateSource;
 }
-inline void ApplyUpdate::clear_create_element() {
-  if (_internal_has_create_element()) {
+inline void ApplyUpdate::clear_create_source() {
+  if (_internal_has_create_source()) {
     if (GetArena() == nullptr) {
-      delete change_.create_element_;
+      delete change_.create_source_;
     }
     clear_has_change();
   }
 }
-inline ::protocol::CreateElement* ApplyUpdate::release_create_element() {
-  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.create_element)
-  if (_internal_has_create_element()) {
+inline ::protocol::CreateSource* ApplyUpdate::release_create_source() {
+  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.create_source)
+  if (_internal_has_create_source()) {
     clear_has_change();
-      ::protocol::CreateElement* temp = change_.create_element_;
+      ::protocol::CreateSource* temp = change_.create_source_;
     if (GetArena() != nullptr) {
       temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
     }
-    change_.create_element_ = nullptr;
+    change_.create_source_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline const ::protocol::CreateElement& ApplyUpdate::_internal_create_element() const {
-  return _internal_has_create_element()
-      ? *change_.create_element_
-      : *reinterpret_cast< ::protocol::CreateElement*>(&::protocol::_CreateElement_default_instance_);
+inline const ::protocol::CreateSource& ApplyUpdate::_internal_create_source() const {
+  return _internal_has_create_source()
+      ? *change_.create_source_
+      : *reinterpret_cast< ::protocol::CreateSource*>(&::protocol::_CreateSource_default_instance_);
 }
-inline const ::protocol::CreateElement& ApplyUpdate::create_element() const {
-  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.create_element)
-  return _internal_create_element();
+inline const ::protocol::CreateSource& ApplyUpdate::create_source() const {
+  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.create_source)
+  return _internal_create_source();
 }
-inline ::protocol::CreateElement* ApplyUpdate::unsafe_arena_release_create_element() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.create_element)
-  if (_internal_has_create_element()) {
+inline ::protocol::CreateSource* ApplyUpdate::unsafe_arena_release_create_source() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.create_source)
+  if (_internal_has_create_source()) {
     clear_has_change();
-    ::protocol::CreateElement* temp = change_.create_element_;
-    change_.create_element_ = nullptr;
+    ::protocol::CreateSource* temp = change_.create_source_;
+    change_.create_source_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline void ApplyUpdate::unsafe_arena_set_allocated_create_element(::protocol::CreateElement* create_element) {
+inline void ApplyUpdate::unsafe_arena_set_allocated_create_source(::protocol::CreateSource* create_source) {
   clear_change();
-  if (create_element) {
-    set_has_create_element();
-    change_.create_element_ = create_element;
+  if (create_source) {
+    set_has_create_source();
+    change_.create_source_ = create_source;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.create_element)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.create_source)
 }
-inline ::protocol::CreateElement* ApplyUpdate::_internal_mutable_create_element() {
-  if (!_internal_has_create_element()) {
+inline ::protocol::CreateSource* ApplyUpdate::_internal_mutable_create_source() {
+  if (!_internal_has_create_source()) {
     clear_change();
-    set_has_create_element();
-    change_.create_element_ = CreateMaybeMessage< ::protocol::CreateElement >(GetArena());
+    set_has_create_source();
+    change_.create_source_ = CreateMaybeMessage< ::protocol::CreateSource >(GetArena());
   }
-  return change_.create_element_;
+  return change_.create_source_;
 }
-inline ::protocol::CreateElement* ApplyUpdate::mutable_create_element() {
-  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.create_element)
-  return _internal_mutable_create_element();
+inline ::protocol::CreateSource* ApplyUpdate::mutable_create_source() {
+  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.create_source)
+  return _internal_mutable_create_source();
 }
 
-// .protocol.UpdateElement update_element = 3;
-inline bool ApplyUpdate::_internal_has_update_element() const {
-  return change_case() == kUpdateElement;
+// .protocol.UpdateSource update_source = 3;
+inline bool ApplyUpdate::_internal_has_update_source() const {
+  return change_case() == kUpdateSource;
 }
-inline bool ApplyUpdate::has_update_element() const {
-  return _internal_has_update_element();
+inline bool ApplyUpdate::has_update_source() const {
+  return _internal_has_update_source();
 }
-inline void ApplyUpdate::set_has_update_element() {
-  _oneof_case_[0] = kUpdateElement;
+inline void ApplyUpdate::set_has_update_source() {
+  _oneof_case_[0] = kUpdateSource;
 }
-inline void ApplyUpdate::clear_update_element() {
-  if (_internal_has_update_element()) {
+inline void ApplyUpdate::clear_update_source() {
+  if (_internal_has_update_source()) {
     if (GetArena() == nullptr) {
-      delete change_.update_element_;
+      delete change_.update_source_;
     }
     clear_has_change();
   }
 }
-inline ::protocol::UpdateElement* ApplyUpdate::release_update_element() {
-  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.update_element)
-  if (_internal_has_update_element()) {
+inline ::protocol::UpdateSource* ApplyUpdate::release_update_source() {
+  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.update_source)
+  if (_internal_has_update_source()) {
     clear_has_change();
-      ::protocol::UpdateElement* temp = change_.update_element_;
+      ::protocol::UpdateSource* temp = change_.update_source_;
     if (GetArena() != nullptr) {
       temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
     }
-    change_.update_element_ = nullptr;
+    change_.update_source_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline const ::protocol::UpdateElement& ApplyUpdate::_internal_update_element() const {
-  return _internal_has_update_element()
-      ? *change_.update_element_
-      : *reinterpret_cast< ::protocol::UpdateElement*>(&::protocol::_UpdateElement_default_instance_);
+inline const ::protocol::UpdateSource& ApplyUpdate::_internal_update_source() const {
+  return _internal_has_update_source()
+      ? *change_.update_source_
+      : *reinterpret_cast< ::protocol::UpdateSource*>(&::protocol::_UpdateSource_default_instance_);
 }
-inline const ::protocol::UpdateElement& ApplyUpdate::update_element() const {
-  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.update_element)
-  return _internal_update_element();
+inline const ::protocol::UpdateSource& ApplyUpdate::update_source() const {
+  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.update_source)
+  return _internal_update_source();
 }
-inline ::protocol::UpdateElement* ApplyUpdate::unsafe_arena_release_update_element() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.update_element)
-  if (_internal_has_update_element()) {
+inline ::protocol::UpdateSource* ApplyUpdate::unsafe_arena_release_update_source() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.update_source)
+  if (_internal_has_update_source()) {
     clear_has_change();
-    ::protocol::UpdateElement* temp = change_.update_element_;
-    change_.update_element_ = nullptr;
+    ::protocol::UpdateSource* temp = change_.update_source_;
+    change_.update_source_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline void ApplyUpdate::unsafe_arena_set_allocated_update_element(::protocol::UpdateElement* update_element) {
+inline void ApplyUpdate::unsafe_arena_set_allocated_update_source(::protocol::UpdateSource* update_source) {
   clear_change();
-  if (update_element) {
-    set_has_update_element();
-    change_.update_element_ = update_element;
+  if (update_source) {
+    set_has_update_source();
+    change_.update_source_ = update_source;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.update_element)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.update_source)
 }
-inline ::protocol::UpdateElement* ApplyUpdate::_internal_mutable_update_element() {
-  if (!_internal_has_update_element()) {
+inline ::protocol::UpdateSource* ApplyUpdate::_internal_mutable_update_source() {
+  if (!_internal_has_update_source()) {
     clear_change();
-    set_has_update_element();
-    change_.update_element_ = CreateMaybeMessage< ::protocol::UpdateElement >(GetArena());
+    set_has_update_source();
+    change_.update_source_ = CreateMaybeMessage< ::protocol::UpdateSource >(GetArena());
   }
-  return change_.update_element_;
+  return change_.update_source_;
 }
-inline ::protocol::UpdateElement* ApplyUpdate::mutable_update_element() {
-  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.update_element)
-  return _internal_mutable_update_element();
+inline ::protocol::UpdateSource* ApplyUpdate::mutable_update_source() {
+  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.update_source)
+  return _internal_mutable_update_source();
 }
 
 // .protocol.AppendChild append_child = 2;
@@ -3025,80 +2995,122 @@ inline ApplyUpdate::ChangeCase ApplyUpdate::change_case() const {
 }
 // -------------------------------------------------------------------
 
-// CreateElement
+// CreateSource
 
-// .protocol.ElementType type = 1;
-inline void CreateElement::clear_type() {
-  type_ = 0;
+// string id = 1;
+inline void CreateSource::clear_id() {
+  id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline ::protocol::ElementType CreateElement::_internal_type() const {
-  return static_cast< ::protocol::ElementType >(type_);
+inline const std::string& CreateSource::id() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateSource.id)
+  return _internal_id();
 }
-inline ::protocol::ElementType CreateElement::type() const {
-  // @@protoc_insertion_point(field_get:protocol.CreateElement.type)
-  return _internal_type();
+inline void CreateSource::set_id(const std::string& value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:protocol.CreateSource.id)
 }
-inline void CreateElement::_internal_set_type(::protocol::ElementType value) {
+inline std::string* CreateSource::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateSource.id)
+  return _internal_mutable_id();
+}
+inline const std::string& CreateSource::_internal_id() const {
+  return id_.Get();
+}
+inline void CreateSource::_internal_set_id(const std::string& value) {
   
-  type_ = value;
+  id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void CreateElement::set_type(::protocol::ElementType value) {
-  _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:protocol.CreateElement.type)
+inline void CreateSource::set_id(std::string&& value) {
+  
+  id_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:protocol.CreateSource.id)
+}
+inline void CreateSource::set_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:protocol.CreateSource.id)
+}
+inline void CreateSource::set_id(const char* value,
+    size_t size) {
+  
+  id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:protocol.CreateSource.id)
+}
+inline std::string* CreateSource::_internal_mutable_id() {
+  
+  return id_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* CreateSource::release_id() {
+  // @@protoc_insertion_point(field_release:protocol.CreateSource.id)
+  return id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void CreateSource::set_allocated_id(std::string* id) {
+  if (id != nullptr) {
+    
+  } else {
+    
+  }
+  id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateSource.id)
 }
 
 // string name = 2;
-inline void CreateElement::clear_name() {
+inline void CreateSource::clear_name() {
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline const std::string& CreateElement::name() const {
-  // @@protoc_insertion_point(field_get:protocol.CreateElement.name)
+inline const std::string& CreateSource::name() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateSource.name)
   return _internal_name();
 }
-inline void CreateElement::set_name(const std::string& value) {
+inline void CreateSource::set_name(const std::string& value) {
   _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:protocol.CreateElement.name)
+  // @@protoc_insertion_point(field_set:protocol.CreateSource.name)
 }
-inline std::string* CreateElement::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:protocol.CreateElement.name)
+inline std::string* CreateSource::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateSource.name)
   return _internal_mutable_name();
 }
-inline const std::string& CreateElement::_internal_name() const {
+inline const std::string& CreateSource::_internal_name() const {
   return name_.Get();
 }
-inline void CreateElement::_internal_set_name(const std::string& value) {
+inline void CreateSource::_internal_set_name(const std::string& value) {
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void CreateElement::set_name(std::string&& value) {
+inline void CreateSource::set_name(std::string&& value) {
   
   name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:protocol.CreateElement.name)
+  // @@protoc_insertion_point(field_set_rvalue:protocol.CreateSource.name)
 }
-inline void CreateElement::set_name(const char* value) {
+inline void CreateSource::set_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:protocol.CreateElement.name)
+  // @@protoc_insertion_point(field_set_char:protocol.CreateSource.name)
 }
-inline void CreateElement::set_name(const char* value,
+inline void CreateSource::set_name(const char* value,
     size_t size) {
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:protocol.CreateElement.name)
+  // @@protoc_insertion_point(field_set_pointer:protocol.CreateSource.name)
 }
-inline std::string* CreateElement::_internal_mutable_name() {
+inline std::string* CreateSource::_internal_mutable_name() {
   
   return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* CreateElement::release_name() {
-  // @@protoc_insertion_point(field_release:protocol.CreateElement.name)
+inline std::string* CreateSource::release_name() {
+  // @@protoc_insertion_point(field_release:protocol.CreateSource.name)
   return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void CreateElement::set_allocated_name(std::string* name) {
+inline void CreateSource::set_allocated_name(std::string* name) {
   if (name != nullptr) {
     
   } else {
@@ -3106,124 +3118,148 @@ inline void CreateElement::set_allocated_name(std::string* name) {
   }
   name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:protocol.CreateElement.name)
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateSource.name)
 }
 
-// repeated .protocol.Prop props = 3;
-inline int CreateElement::_internal_props_size() const {
-  return props_.size();
+// .protocol.ObjectValue settings = 3;
+inline bool CreateSource::_internal_has_settings() const {
+  return this != internal_default_instance() && settings_ != nullptr;
 }
-inline int CreateElement::props_size() const {
-  return _internal_props_size();
+inline bool CreateSource::has_settings() const {
+  return _internal_has_settings();
 }
-inline void CreateElement::clear_props() {
-  props_.Clear();
+inline void CreateSource::clear_settings() {
+  if (GetArena() == nullptr && settings_ != nullptr) {
+    delete settings_;
+  }
+  settings_ = nullptr;
 }
-inline ::protocol::Prop* CreateElement::mutable_props(int index) {
-  // @@protoc_insertion_point(field_mutable:protocol.CreateElement.props)
-  return props_.Mutable(index);
+inline const ::protocol::ObjectValue& CreateSource::_internal_settings() const {
+  const ::protocol::ObjectValue* p = settings_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::protocol::ObjectValue*>(
+      &::protocol::_ObjectValue_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >*
-CreateElement::mutable_props() {
-  // @@protoc_insertion_point(field_mutable_list:protocol.CreateElement.props)
-  return &props_;
+inline const ::protocol::ObjectValue& CreateSource::settings() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateSource.settings)
+  return _internal_settings();
 }
-inline const ::protocol::Prop& CreateElement::_internal_props(int index) const {
-  return props_.Get(index);
+inline void CreateSource::unsafe_arena_set_allocated_settings(
+    ::protocol::ObjectValue* settings) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(settings_);
+  }
+  settings_ = settings;
+  if (settings) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.CreateSource.settings)
 }
-inline const ::protocol::Prop& CreateElement::props(int index) const {
-  // @@protoc_insertion_point(field_get:protocol.CreateElement.props)
-  return _internal_props(index);
+inline ::protocol::ObjectValue* CreateSource::release_settings() {
+  
+  ::protocol::ObjectValue* temp = settings_;
+  settings_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline ::protocol::Prop* CreateElement::_internal_add_props() {
-  return props_.Add();
+inline ::protocol::ObjectValue* CreateSource::unsafe_arena_release_settings() {
+  // @@protoc_insertion_point(field_release:protocol.CreateSource.settings)
+  
+  ::protocol::ObjectValue* temp = settings_;
+  settings_ = nullptr;
+  return temp;
 }
-inline ::protocol::Prop* CreateElement::add_props() {
-  // @@protoc_insertion_point(field_add:protocol.CreateElement.props)
-  return _internal_add_props();
+inline ::protocol::ObjectValue* CreateSource::_internal_mutable_settings() {
+  
+  if (settings_ == nullptr) {
+    auto* p = CreateMaybeMessage<::protocol::ObjectValue>(GetArena());
+    settings_ = p;
+  }
+  return settings_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
-CreateElement::props() const {
-  // @@protoc_insertion_point(field_list:protocol.CreateElement.props)
-  return props_;
+inline ::protocol::ObjectValue* CreateSource::mutable_settings() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateSource.settings)
+  return _internal_mutable_settings();
+}
+inline void CreateSource::set_allocated_settings(::protocol::ObjectValue* settings) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete settings_;
+  }
+  if (settings) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(settings);
+    if (message_arena != submessage_arena) {
+      settings = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, settings, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  settings_ = settings;
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateSource.settings)
 }
 
 // -------------------------------------------------------------------
 
-// UpdateElement
-
-// .protocol.ElementType type = 1;
-inline void UpdateElement::clear_type() {
-  type_ = 0;
-}
-inline ::protocol::ElementType UpdateElement::_internal_type() const {
-  return static_cast< ::protocol::ElementType >(type_);
-}
-inline ::protocol::ElementType UpdateElement::type() const {
-  // @@protoc_insertion_point(field_get:protocol.UpdateElement.type)
-  return _internal_type();
-}
-inline void UpdateElement::_internal_set_type(::protocol::ElementType value) {
-  
-  type_ = value;
-}
-inline void UpdateElement::set_type(::protocol::ElementType value) {
-  _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:protocol.UpdateElement.type)
-}
+// UpdateSource
 
 // string name = 2;
-inline void UpdateElement::clear_name() {
+inline void UpdateSource::clear_name() {
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline const std::string& UpdateElement::name() const {
-  // @@protoc_insertion_point(field_get:protocol.UpdateElement.name)
+inline const std::string& UpdateSource::name() const {
+  // @@protoc_insertion_point(field_get:protocol.UpdateSource.name)
   return _internal_name();
 }
-inline void UpdateElement::set_name(const std::string& value) {
+inline void UpdateSource::set_name(const std::string& value) {
   _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:protocol.UpdateElement.name)
+  // @@protoc_insertion_point(field_set:protocol.UpdateSource.name)
 }
-inline std::string* UpdateElement::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:protocol.UpdateElement.name)
+inline std::string* UpdateSource::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:protocol.UpdateSource.name)
   return _internal_mutable_name();
 }
-inline const std::string& UpdateElement::_internal_name() const {
+inline const std::string& UpdateSource::_internal_name() const {
   return name_.Get();
 }
-inline void UpdateElement::_internal_set_name(const std::string& value) {
+inline void UpdateSource::_internal_set_name(const std::string& value) {
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void UpdateElement::set_name(std::string&& value) {
+inline void UpdateSource::set_name(std::string&& value) {
   
   name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:protocol.UpdateElement.name)
+  // @@protoc_insertion_point(field_set_rvalue:protocol.UpdateSource.name)
 }
-inline void UpdateElement::set_name(const char* value) {
+inline void UpdateSource::set_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:protocol.UpdateElement.name)
+  // @@protoc_insertion_point(field_set_char:protocol.UpdateSource.name)
 }
-inline void UpdateElement::set_name(const char* value,
+inline void UpdateSource::set_name(const char* value,
     size_t size) {
   
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:protocol.UpdateElement.name)
+  // @@protoc_insertion_point(field_set_pointer:protocol.UpdateSource.name)
 }
-inline std::string* UpdateElement::_internal_mutable_name() {
+inline std::string* UpdateSource::_internal_mutable_name() {
   
   return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* UpdateElement::release_name() {
-  // @@protoc_insertion_point(field_release:protocol.UpdateElement.name)
+inline std::string* UpdateSource::release_name() {
+  // @@protoc_insertion_point(field_release:protocol.UpdateSource.name)
   return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void UpdateElement::set_allocated_name(std::string* name) {
+inline void UpdateSource::set_allocated_name(std::string* name) {
   if (name != nullptr) {
     
   } else {
@@ -3231,46 +3267,90 @@ inline void UpdateElement::set_allocated_name(std::string* name) {
   }
   name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:protocol.UpdateElement.name)
+  // @@protoc_insertion_point(field_set_allocated:protocol.UpdateSource.name)
 }
 
-// repeated .protocol.Prop changed_props = 3;
-inline int UpdateElement::_internal_changed_props_size() const {
-  return changed_props_.size();
+// .protocol.ObjectValue changed_props = 3;
+inline bool UpdateSource::_internal_has_changed_props() const {
+  return this != internal_default_instance() && changed_props_ != nullptr;
 }
-inline int UpdateElement::changed_props_size() const {
-  return _internal_changed_props_size();
+inline bool UpdateSource::has_changed_props() const {
+  return _internal_has_changed_props();
 }
-inline void UpdateElement::clear_changed_props() {
-  changed_props_.Clear();
+inline void UpdateSource::clear_changed_props() {
+  if (GetArena() == nullptr && changed_props_ != nullptr) {
+    delete changed_props_;
+  }
+  changed_props_ = nullptr;
 }
-inline ::protocol::Prop* UpdateElement::mutable_changed_props(int index) {
-  // @@protoc_insertion_point(field_mutable:protocol.UpdateElement.changed_props)
-  return changed_props_.Mutable(index);
+inline const ::protocol::ObjectValue& UpdateSource::_internal_changed_props() const {
+  const ::protocol::ObjectValue* p = changed_props_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::protocol::ObjectValue*>(
+      &::protocol::_ObjectValue_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >*
-UpdateElement::mutable_changed_props() {
-  // @@protoc_insertion_point(field_mutable_list:protocol.UpdateElement.changed_props)
-  return &changed_props_;
+inline const ::protocol::ObjectValue& UpdateSource::changed_props() const {
+  // @@protoc_insertion_point(field_get:protocol.UpdateSource.changed_props)
+  return _internal_changed_props();
 }
-inline const ::protocol::Prop& UpdateElement::_internal_changed_props(int index) const {
-  return changed_props_.Get(index);
+inline void UpdateSource::unsafe_arena_set_allocated_changed_props(
+    ::protocol::ObjectValue* changed_props) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(changed_props_);
+  }
+  changed_props_ = changed_props;
+  if (changed_props) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.UpdateSource.changed_props)
 }
-inline const ::protocol::Prop& UpdateElement::changed_props(int index) const {
-  // @@protoc_insertion_point(field_get:protocol.UpdateElement.changed_props)
-  return _internal_changed_props(index);
+inline ::protocol::ObjectValue* UpdateSource::release_changed_props() {
+  
+  ::protocol::ObjectValue* temp = changed_props_;
+  changed_props_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline ::protocol::Prop* UpdateElement::_internal_add_changed_props() {
-  return changed_props_.Add();
+inline ::protocol::ObjectValue* UpdateSource::unsafe_arena_release_changed_props() {
+  // @@protoc_insertion_point(field_release:protocol.UpdateSource.changed_props)
+  
+  ::protocol::ObjectValue* temp = changed_props_;
+  changed_props_ = nullptr;
+  return temp;
 }
-inline ::protocol::Prop* UpdateElement::add_changed_props() {
-  // @@protoc_insertion_point(field_add:protocol.UpdateElement.changed_props)
-  return _internal_add_changed_props();
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
-UpdateElement::changed_props() const {
-  // @@protoc_insertion_point(field_list:protocol.UpdateElement.changed_props)
+inline ::protocol::ObjectValue* UpdateSource::_internal_mutable_changed_props() {
+  
+  if (changed_props_ == nullptr) {
+    auto* p = CreateMaybeMessage<::protocol::ObjectValue>(GetArena());
+    changed_props_ = p;
+  }
   return changed_props_;
+}
+inline ::protocol::ObjectValue* UpdateSource::mutable_changed_props() {
+  // @@protoc_insertion_point(field_mutable:protocol.UpdateSource.changed_props)
+  return _internal_mutable_changed_props();
+}
+inline void UpdateSource::set_allocated_changed_props(::protocol::ObjectValue* changed_props) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete changed_props_;
+  }
+  if (changed_props) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(changed_props);
+    if (message_arena != submessage_arena) {
+      changed_props = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, changed_props, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  changed_props_ = changed_props;
+  // @@protoc_insertion_point(field_set_allocated:protocol.UpdateSource.changed_props)
 }
 
 // -------------------------------------------------------------------
@@ -3806,7 +3886,7 @@ inline void Prop::set_bool_value(bool value) {
   // @@protoc_insertion_point(field_set:protocol.Prop.bool_value)
 }
 
-// .protocol.Object object_value = 6;
+// .protocol.ObjectValue object_value = 6;
 inline bool Prop::_internal_has_object_value() const {
   return value_case() == kObjectValue;
 }
@@ -3824,11 +3904,11 @@ inline void Prop::clear_object_value() {
     clear_has_value();
   }
 }
-inline ::protocol::Object* Prop::release_object_value() {
+inline ::protocol::ObjectValue* Prop::release_object_value() {
   // @@protoc_insertion_point(field_release:protocol.Prop.object_value)
   if (_internal_has_object_value()) {
     clear_has_value();
-      ::protocol::Object* temp = value_.object_value_;
+      ::protocol::ObjectValue* temp = value_.object_value_;
     if (GetArena() != nullptr) {
       temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
     }
@@ -3838,27 +3918,27 @@ inline ::protocol::Object* Prop::release_object_value() {
     return nullptr;
   }
 }
-inline const ::protocol::Object& Prop::_internal_object_value() const {
+inline const ::protocol::ObjectValue& Prop::_internal_object_value() const {
   return _internal_has_object_value()
       ? *value_.object_value_
-      : *reinterpret_cast< ::protocol::Object*>(&::protocol::_Object_default_instance_);
+      : *reinterpret_cast< ::protocol::ObjectValue*>(&::protocol::_ObjectValue_default_instance_);
 }
-inline const ::protocol::Object& Prop::object_value() const {
+inline const ::protocol::ObjectValue& Prop::object_value() const {
   // @@protoc_insertion_point(field_get:protocol.Prop.object_value)
   return _internal_object_value();
 }
-inline ::protocol::Object* Prop::unsafe_arena_release_object_value() {
+inline ::protocol::ObjectValue* Prop::unsafe_arena_release_object_value() {
   // @@protoc_insertion_point(field_unsafe_arena_release:protocol.Prop.object_value)
   if (_internal_has_object_value()) {
     clear_has_value();
-    ::protocol::Object* temp = value_.object_value_;
+    ::protocol::ObjectValue* temp = value_.object_value_;
     value_.object_value_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline void Prop::unsafe_arena_set_allocated_object_value(::protocol::Object* object_value) {
+inline void Prop::unsafe_arena_set_allocated_object_value(::protocol::ObjectValue* object_value) {
   clear_value();
   if (object_value) {
     set_has_object_value();
@@ -3866,15 +3946,15 @@ inline void Prop::unsafe_arena_set_allocated_object_value(::protocol::Object* ob
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.Prop.object_value)
 }
-inline ::protocol::Object* Prop::_internal_mutable_object_value() {
+inline ::protocol::ObjectValue* Prop::_internal_mutable_object_value() {
   if (!_internal_has_object_value()) {
     clear_value();
     set_has_object_value();
-    value_.object_value_ = CreateMaybeMessage< ::protocol::Object >(GetArena());
+    value_.object_value_ = CreateMaybeMessage< ::protocol::ObjectValue >(GetArena());
   }
   return value_.object_value_;
 }
-inline ::protocol::Object* Prop::mutable_object_value() {
+inline ::protocol::ObjectValue* Prop::mutable_object_value() {
   // @@protoc_insertion_point(field_mutable:protocol.Prop.object_value)
   return _internal_mutable_object_value();
 }
@@ -3925,44 +4005,44 @@ inline Prop::ValueCase Prop::value_case() const {
 }
 // -------------------------------------------------------------------
 
-// Object
+// ObjectValue
 
 // repeated .protocol.Prop props = 1;
-inline int Object::_internal_props_size() const {
+inline int ObjectValue::_internal_props_size() const {
   return props_.size();
 }
-inline int Object::props_size() const {
+inline int ObjectValue::props_size() const {
   return _internal_props_size();
 }
-inline void Object::clear_props() {
+inline void ObjectValue::clear_props() {
   props_.Clear();
 }
-inline ::protocol::Prop* Object::mutable_props(int index) {
-  // @@protoc_insertion_point(field_mutable:protocol.Object.props)
+inline ::protocol::Prop* ObjectValue::mutable_props(int index) {
+  // @@protoc_insertion_point(field_mutable:protocol.ObjectValue.props)
   return props_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >*
-Object::mutable_props() {
-  // @@protoc_insertion_point(field_mutable_list:protocol.Object.props)
+ObjectValue::mutable_props() {
+  // @@protoc_insertion_point(field_mutable_list:protocol.ObjectValue.props)
   return &props_;
 }
-inline const ::protocol::Prop& Object::_internal_props(int index) const {
+inline const ::protocol::Prop& ObjectValue::_internal_props(int index) const {
   return props_.Get(index);
 }
-inline const ::protocol::Prop& Object::props(int index) const {
-  // @@protoc_insertion_point(field_get:protocol.Object.props)
+inline const ::protocol::Prop& ObjectValue::props(int index) const {
+  // @@protoc_insertion_point(field_get:protocol.ObjectValue.props)
   return _internal_props(index);
 }
-inline ::protocol::Prop* Object::_internal_add_props() {
+inline ::protocol::Prop* ObjectValue::_internal_add_props() {
   return props_.Add();
 }
-inline ::protocol::Prop* Object::add_props() {
-  // @@protoc_insertion_point(field_add:protocol.Object.props)
+inline ::protocol::Prop* ObjectValue::add_props() {
+  // @@protoc_insertion_point(field_add:protocol.ObjectValue.props)
   return _internal_add_props();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::protocol::Prop >&
-Object::props() const {
-  // @@protoc_insertion_point(field_list:protocol.Object.props)
+ObjectValue::props() const {
+  // @@protoc_insertion_point(field_list:protocol.ObjectValue.props)
   return props_;
 }
 
@@ -3995,16 +4075,6 @@ Object::props() const {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace protocol
-
-PROTOBUF_NAMESPACE_OPEN
-
-template <> struct is_proto_enum< ::protocol::ElementType> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::protocol::ElementType>() {
-  return ::protocol::ElementType_descriptor();
-}
-
-PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

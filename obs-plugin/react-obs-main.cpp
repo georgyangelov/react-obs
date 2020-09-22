@@ -48,25 +48,6 @@ public:
     PropError(const std::string& what): std::runtime_error(what) {}
 };
 
-//std::string string_prop(
-//    const google::protobuf::Map<std::string, protocol::PropValue> props,
-//    const std::string &name
-//) {
-//    std::string result;
-//
-//    if (!props.contains(name)) {
-//        throw PropError(std::string("Props do not contain ") + name);
-//    }
-//
-//    auto prop = props.at(name);
-//
-//    if (prop.value_case() != protocol::PropValue::ValueCase::kStringValue) {
-//        throw PropError(std::string("Prop ") + name + std::string(" must be a string"));
-//    }
-//
-//    return prop.string_value();
-//}
-
 std::string as_string(const protocol::Prop prop) {
     if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
         throw PropError(std::string("Prop ") + prop.key() + std::string(" must be a string"));
@@ -102,61 +83,52 @@ std::unordered_map<std::string, protocol::Prop> as_prop_map(
     return result;
 }
 
-template <class T>
 void update_settings(
     obs_data_t* settings,
-    protocol::ElementType elementType,
-    T propVector
+    protocol::ObjectValue object
 ) {
-    auto props = as_prop_map(propVector);
+    auto props = object.props();
     
-    switch (elementType) {
-        case protocol::ElementType::TEXT: {
-            auto children = props["children"];
-            if (!children.undefined()) {
-                auto text = as_string(children);
-                obs_data_set_string(settings, "text", text.c_str());
-            } else {
-                obs_data_set_string(settings, "text", "");
-            }
-            
-            auto font_data = obs_data_get_obj(settings, "font");
-            if (!font_data) {
-                font_data = obs_data_create();
-                obs_data_set_obj(settings, "font", font_data);
-            }
-            
-            auto font_face = props["fontFace"];
-            if (!font_face.undefined()) {
-                auto value = as_string(font_face);
-                obs_data_set_string(font_data, "face", value.c_str());
-            } else {
-                obs_data_set_string(font_data, "face", "Arial");
-            }
-            
-            auto font_style = props["fontStyle"];
-            if (!font_style.undefined()) {
-                auto value = as_string(font_style);
-                obs_data_set_string(font_data, "style", value.c_str());
-            } else {
-                obs_data_set_string(font_data, "style", "Normal");
-            }
-            
-            auto font_size = props["fontSize"];
-            if (!font_size.undefined()) {
-                auto size = as_int(font_size);
-                obs_data_set_int(font_data, "size", size);
-            } else {
-                obs_data_unset_user_value(font_data, "size");
-            }
-            
-            obs_data_set_int(font_data, "flags", 0);
-            
-            break;
-        }
+    for (int i = 0; i < props.size(); i++) {
+        protocol::Prop prop = props[i];
+        const char* key = prop.key().c_str();
         
-        default:
-            blog(LOG_ERROR, "[react-obs] Unsupported element type in update_settings");
+        switch (prop.value_case()) {
+            case protocol::Prop::ValueCase::kUndefined:
+                obs_data_unset_user_value(settings, key);
+                break;
+                
+            case protocol::Prop::ValueCase::kBoolValue:
+                obs_data_set_bool(settings, key, prop.bool_value());
+                break;
+                
+            case protocol::Prop::ValueCase::kIntValue:
+                obs_data_set_int(settings, key, prop.int_value());
+                break;
+                
+            case protocol::Prop::ValueCase::kFloatValue:
+                obs_data_set_double(settings, key, prop.float_value());
+                break;
+                
+            case protocol::Prop::ValueCase::kStringValue:
+                obs_data_set_string(settings, key, prop.string_value().c_str());
+                break;
+                
+            case protocol::Prop::ValueCase::kObjectValue: {
+                auto object = obs_data_get_obj(settings, key);
+                if (!object) {
+                    object = obs_data_create();
+                    obs_data_set_obj(settings, key, object);
+                    obs_data_release(object);
+                }
+                
+                update_settings(object, prop.object_value());
+                break;
+            }
+            
+            default:
+                blog(LOG_ERROR, "[react-obs] Unsupported prop type");
+        }
     }
 }
 
@@ -164,29 +136,17 @@ void update_settings(
 // Updates
 //
 
-void create_element(const protocol::CreateElement &element) {
-    blog(LOG_DEBUG, "[react-obs] Creating element %s", element.name().c_str());
+void create_source(const protocol::CreateSource &create_source) {
+    blog(LOG_DEBUG, "[react-obs] Creating source %s", create_source.name().c_str());
     
-    if (element.type() == protocol::ElementType::TEXT) {
-        auto props = element.props();
-        
-        auto settings = obs_data_create();
-        update_settings(settings, element.type(), props);
-        
-        auto text_source = obs_source_create("text_ft2_source", element.name().c_str(), settings, NULL);
-        
-        // TODO: Should I release this?
-        // obs_sceneitem_release(item);
-        
-        // obs_source_release(text_source);
-        
-        // TODO: Should I be calling obs_data_release on this?
-        // obs_data_release(settings);
-        
-        return;
-    }
+    auto settings = obs_data_create();
+    update_settings(settings, create_source.settings());
     
-    blog(LOG_ERROR, "[react-obs] Unsupported element type");
+    auto source = obs_source_create(create_source.id().c_str(), create_source.name().c_str(), settings, NULL);
+    
+    // TODO: Add source to internal map for tracking and GC
+    
+    obs_data_release(settings);
 }
 
 void append_child(const protocol::AppendChild &append_child) {
@@ -221,8 +181,8 @@ void append_child(const protocol::AppendChild &append_child) {
     auto item = obs_scene_add(scene, child_source);
 }
 
-void update_element(const protocol::UpdateElement &update) {
-    blog(LOG_DEBUG, "[react-obs] Updating element %s", update.name().c_str());
+void update_source(const protocol::UpdateSource &update) {
+    blog(LOG_DEBUG, "[react-obs] Updating source %s", update.name().c_str());
     
     auto source = obs_get_source_by_name(update.name().c_str());
     if (!source) {
@@ -236,7 +196,7 @@ void update_element(const protocol::UpdateElement &update) {
         return;
     }
     
-    update_settings(settings, update.type(), update.changed_props());
+    update_settings(settings, update.changed_props());
     obs_source_update(source, settings);
 }
 
@@ -283,12 +243,12 @@ void remove_child(const protocol::RemoveChild &remove) {
 void apply_updates(protocol::ApplyUpdate &update) {
     try {
         switch (update.change_case()) {
-            case protocol::ApplyUpdate::ChangeCase::kCreateElement:
-                create_element(update.create_element());
+            case protocol::ApplyUpdate::ChangeCase::kCreateSource:
+                create_source(update.create_source());
                 break;
                 
-            case protocol::ApplyUpdate::ChangeCase::kUpdateElement:
-                update_element(update.update_element());
+            case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
+                update_source(update.update_source());
                 break;
                 
             case protocol::ApplyUpdate::ChangeCase::kAppendChild:

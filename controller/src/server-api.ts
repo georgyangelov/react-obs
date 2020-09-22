@@ -1,8 +1,8 @@
 import { create } from 'domain';
 import { Socket } from 'net';
 import { v4 as uuid } from 'uuid';
-import { AppendChild, ApplyUpdate, ClientMessage, CreateElement, ElementType, InitRequest, Prop, UpdateElement, Object as ObjectValue, RemoveChild } from './generated/protocol_pb';
-import { Instance, PropChange as PropChangeType, Props, Type } from './types';
+import { AppendChild, ApplyUpdate, ClientMessage, InitRequest, Prop, UpdateSource, RemoveChild, CreateSource, ObjectValue } from './generated/protocol_pb';
+import { Instance, PropChanges, Props } from './types';
 
 export class ServerAPI {
   private clientId: string = uuid();
@@ -32,27 +32,16 @@ export class ServerAPI {
     });
   }
 
-  createElement(type: Type, props: Props): Instance {
-    const name = this.newName(type);
+  createSource(id: string, namePrefix: string, props: Props): Instance {
+    const name = this.newName(namePrefix);
 
-    const createElement = new CreateElement();
-    createElement.setName(name);
-
-    switch (type) {
-      case 'obs_text':
-        createElement.setType(ElementType.TEXT);
-        break;
-
-      default:
-        throw new Error(`Unsupported element type ${type}`);
-    }
-
-    Object.entries(props).forEach(([key, value]) => {
-      createElement.addProps(this.asProp(key, value));
-    });
+    const createSource = new CreateSource();
+    createSource.setId(id);
+    createSource.setName(name);
+    createSource.setSettings(this.asObject(props));
 
     const applyUpdate = new ApplyUpdate();
-    applyUpdate.setCreateElement(createElement);
+    applyUpdate.setCreateSource(createSource);
 
     const message = new ClientMessage();
     message.setApplyUpdate(applyUpdate);
@@ -62,16 +51,13 @@ export class ServerAPI {
     return { name };
   }
 
-  updateProps(element: Instance, propChanges: PropChangeType[]) {
-    const updateElement = new UpdateElement();
-    updateElement.setName(element.name);
-
-    propChanges.forEach(change => {
-      updateElement.addChangedProps(this.asProp(change.key, change.value));
-    });
+  updateSource(source: Instance, propChanges: PropChanges) {
+    const updateSource = new UpdateSource();
+    updateSource.setName(source.name);
+    updateSource.setChangedProps(this.asObject(propChanges));
 
     const applyUpdate = new ApplyUpdate();
-    applyUpdate.setUpdateElement(updateElement);
+    applyUpdate.setUpdateSource(updateSource);
 
     const message = new ClientMessage();
     message.setApplyUpdate(applyUpdate);
@@ -124,13 +110,7 @@ export class ServerAPI {
         propValue.setFloatValue(value);
       }
     } else if (typeof value === 'object') {
-      const objectValue = new ObjectValue();
-
-      Object.entries(value).forEach(([key, value]) => {
-        objectValue.addProps(this.asProp(key, value));
-      });
-
-      propValue.setObjectValue(objectValue);
+      propValue.setObjectValue(this.asObject(value));
     } else {
       throw new Error(`Unknown value type ${typeof value}`);
     }
@@ -138,7 +118,17 @@ export class ServerAPI {
     return propValue;
   }
 
-  private newName(type: Type) {
+  private asObject(value: object): ObjectValue {
+    const objectValue = new ObjectValue();
+
+    Object.entries(value).forEach(([key, value]) => {
+      objectValue.addProps(this.asProp(key, value));
+    });
+
+    return objectValue;
+  }
+
+  private newName(type: string) {
     return `${type}-${uuid()}`;
   }
 

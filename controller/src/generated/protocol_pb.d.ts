@@ -137,15 +137,15 @@ export namespace Scene {
 }
 
 export class ApplyUpdate extends jspb.Message {
-  hasCreateElement(): boolean;
-  clearCreateElement(): void;
-  getCreateElement(): CreateElement | undefined;
-  setCreateElement(value?: CreateElement): void;
+  hasCreateSource(): boolean;
+  clearCreateSource(): void;
+  getCreateSource(): CreateSource | undefined;
+  setCreateSource(value?: CreateSource): void;
 
-  hasUpdateElement(): boolean;
-  clearUpdateElement(): void;
-  getUpdateElement(): UpdateElement | undefined;
-  setUpdateElement(value?: UpdateElement): void;
+  hasUpdateSource(): boolean;
+  clearUpdateSource(): void;
+  getUpdateSource(): UpdateSource | undefined;
+  setUpdateSource(value?: UpdateSource): void;
 
   hasAppendChild(): boolean;
   clearAppendChild(): void;
@@ -170,78 +170,74 @@ export class ApplyUpdate extends jspb.Message {
 
 export namespace ApplyUpdate {
   export type AsObject = {
-    createElement?: CreateElement.AsObject,
-    updateElement?: UpdateElement.AsObject,
+    createSource?: CreateSource.AsObject,
+    updateSource?: UpdateSource.AsObject,
     appendChild?: AppendChild.AsObject,
     removeChild?: RemoveChild.AsObject,
   }
 
   export enum ChangeCase {
     CHANGE_NOT_SET = 0,
-    CREATE_ELEMENT = 1,
-    UPDATE_ELEMENT = 3,
+    CREATE_SOURCE = 1,
+    UPDATE_SOURCE = 3,
     APPEND_CHILD = 2,
     REMOVE_CHILD = 4,
   }
 }
 
-export class CreateElement extends jspb.Message {
-  getType(): ElementTypeMap[keyof ElementTypeMap];
-  setType(value: ElementTypeMap[keyof ElementTypeMap]): void;
+export class CreateSource extends jspb.Message {
+  getId(): string;
+  setId(value: string): void;
 
   getName(): string;
   setName(value: string): void;
 
-  clearPropsList(): void;
-  getPropsList(): Array<Prop>;
-  setPropsList(value: Array<Prop>): void;
-  addProps(value?: Prop, index?: number): Prop;
+  hasSettings(): boolean;
+  clearSettings(): void;
+  getSettings(): ObjectValue | undefined;
+  setSettings(value?: ObjectValue): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): CreateElement.AsObject;
-  static toObject(includeInstance: boolean, msg: CreateElement): CreateElement.AsObject;
+  toObject(includeInstance?: boolean): CreateSource.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateSource): CreateSource.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: CreateElement, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): CreateElement;
-  static deserializeBinaryFromReader(message: CreateElement, reader: jspb.BinaryReader): CreateElement;
+  static serializeBinaryToWriter(message: CreateSource, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateSource;
+  static deserializeBinaryFromReader(message: CreateSource, reader: jspb.BinaryReader): CreateSource;
 }
 
-export namespace CreateElement {
+export namespace CreateSource {
   export type AsObject = {
-    type: ElementTypeMap[keyof ElementTypeMap],
+    id: string,
     name: string,
-    propsList: Array<Prop.AsObject>,
+    settings?: ObjectValue.AsObject,
   }
 }
 
-export class UpdateElement extends jspb.Message {
-  getType(): ElementTypeMap[keyof ElementTypeMap];
-  setType(value: ElementTypeMap[keyof ElementTypeMap]): void;
-
+export class UpdateSource extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
-  clearChangedPropsList(): void;
-  getChangedPropsList(): Array<Prop>;
-  setChangedPropsList(value: Array<Prop>): void;
-  addChangedProps(value?: Prop, index?: number): Prop;
+  hasChangedProps(): boolean;
+  clearChangedProps(): void;
+  getChangedProps(): ObjectValue | undefined;
+  setChangedProps(value?: ObjectValue): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): UpdateElement.AsObject;
-  static toObject(includeInstance: boolean, msg: UpdateElement): UpdateElement.AsObject;
+  toObject(includeInstance?: boolean): UpdateSource.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateSource): UpdateSource.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: UpdateElement, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): UpdateElement;
-  static deserializeBinaryFromReader(message: UpdateElement, reader: jspb.BinaryReader): UpdateElement;
+  static serializeBinaryToWriter(message: UpdateSource, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateSource;
+  static deserializeBinaryFromReader(message: UpdateSource, reader: jspb.BinaryReader): UpdateSource;
 }
 
-export namespace UpdateElement {
+export namespace UpdateSource {
   export type AsObject = {
-    type: ElementTypeMap[keyof ElementTypeMap],
     name: string,
-    changedPropsList: Array<Prop.AsObject>,
+    changedProps?: ObjectValue.AsObject,
   }
 }
 
@@ -319,8 +315,8 @@ export class Prop extends jspb.Message {
 
   hasObjectValue(): boolean;
   clearObjectValue(): void;
-  getObjectValue(): Object | undefined;
-  setObjectValue(value?: Object): void;
+  getObjectValue(): ObjectValue | undefined;
+  setObjectValue(value?: ObjectValue): void;
 
   hasUndefined(): boolean;
   clearUndefined(): void;
@@ -345,7 +341,7 @@ export namespace Prop {
     intValue: number,
     floatValue: number,
     boolValue: boolean,
-    objectValue?: Object.AsObject,
+    objectValue?: ObjectValue.AsObject,
     undefined: boolean,
   }
 
@@ -360,32 +356,25 @@ export namespace Prop {
   }
 }
 
-export class Object extends jspb.Message {
+export class ObjectValue extends jspb.Message {
   clearPropsList(): void;
   getPropsList(): Array<Prop>;
   setPropsList(value: Array<Prop>): void;
   addProps(value?: Prop, index?: number): Prop;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Object.AsObject;
-  static toObject(includeInstance: boolean, msg: Object): Object.AsObject;
+  toObject(includeInstance?: boolean): ObjectValue.AsObject;
+  static toObject(includeInstance: boolean, msg: ObjectValue): ObjectValue.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: Object, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Object;
-  static deserializeBinaryFromReader(message: Object, reader: jspb.BinaryReader): Object;
+  static serializeBinaryToWriter(message: ObjectValue, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ObjectValue;
+  static deserializeBinaryFromReader(message: ObjectValue, reader: jspb.BinaryReader): ObjectValue;
 }
 
-export namespace Object {
+export namespace ObjectValue {
   export type AsObject = {
     propsList: Array<Prop.AsObject>,
   }
 }
-
-export interface ElementTypeMap {
-  TEXT: 0;
-  BOX: 1;
-}
-
-export const ElementType: ElementTypeMap;
 

@@ -2,7 +2,7 @@
 
 ## What is this?
 
-A React renderer capable of controlling OBS. Idea is to layout OBS scenes using React, making it easy to build interactive plugins.
+A React renderer capable of controlling [OBS Studio](https://obsproject.com/). Idea is to layout OBS scenes using React, making it easy to build interactive plugins.
 
 It's currently a work in progress.
 

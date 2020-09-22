@@ -1,7 +1,7 @@
 import { BinaryReader } from 'google-protobuf';
 import { Socket } from 'net';
 import { v4 as uuid } from 'uuid';
-import { AppendChild, ApplyUpdate, ClientMessage, InitRequest, Prop, UpdateSource, RemoveChild, CreateSource, ObjectValue, FindSourceRequest, Response, ServerMessage, CreateScene } from './generated/protocol_pb';
+import { AppendChild, ApplyUpdate, ClientMessage, InitRequest, Prop, UpdateSource, RemoveChild, CreateSource, ObjectValue, FindSourceRequest, Response, ServerMessage, CreateScene, CommitUpdates } from './generated/protocol_pb';
 import { Container, Instance, PropChanges, Props } from './types';
 
 class PacketReader {
@@ -161,6 +161,19 @@ export class ServerAPI {
     await this.sendExpectingResponse(uid, packet);
 
     return { uid, unmanaged: true };
+  }
+
+  commitUpdates(containerUid: string) {
+    const commitUpdates = new CommitUpdates();
+    commitUpdates.setContainerUid(containerUid);
+
+    const applyUpdate = new ApplyUpdate();
+    applyUpdate.setCommitUpdates(commitUpdates);
+
+    const message = new ClientMessage();
+    message.setApplyUpdate(applyUpdate);
+
+    this.send(message);
   }
 
   createSource(id: string, name: string, props: Props): Instance {

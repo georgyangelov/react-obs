@@ -47,7 +47,7 @@ struct TableStruct_protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -64,6 +64,9 @@ extern ApplyUpdateDefaultTypeInternal _ApplyUpdate_default_instance_;
 class ClientMessage;
 class ClientMessageDefaultTypeInternal;
 extern ClientMessageDefaultTypeInternal _ClientMessage_default_instance_;
+class CommitUpdates;
+class CommitUpdatesDefaultTypeInternal;
+extern CommitUpdatesDefaultTypeInternal _CommitUpdates_default_instance_;
 class CreateScene;
 class CreateSceneDefaultTypeInternal;
 extern CreateSceneDefaultTypeInternal _CreateScene_default_instance_;
@@ -102,6 +105,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::AppendChild* Arena::CreateMaybeMessage<::protocol::AppendChild>(Arena*);
 template<> ::protocol::ApplyUpdate* Arena::CreateMaybeMessage<::protocol::ApplyUpdate>(Arena*);
 template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::ClientMessage>(Arena*);
+template<> ::protocol::CommitUpdates* Arena::CreateMaybeMessage<::protocol::CommitUpdates>(Arena*);
 template<> ::protocol::CreateScene* Arena::CreateMaybeMessage<::protocol::CreateScene>(Arena*);
 template<> ::protocol::CreateSource* Arena::CreateMaybeMessage<::protocol::CreateSource>(Arena*);
 template<> ::protocol::FindSourceRequest* Arena::CreateMaybeMessage<::protocol::FindSourceRequest>(Arena*);
@@ -834,6 +838,7 @@ class ApplyUpdate PROTOBUF_FINAL :
     kCreateScene = 5,
     kAppendChild = 2,
     kRemoveChild = 4,
+    kCommitUpdates = 6,
     CHANGE_NOT_SET = 0,
   };
 
@@ -919,6 +924,7 @@ class ApplyUpdate PROTOBUF_FINAL :
     kCreateSceneFieldNumber = 5,
     kAppendChildFieldNumber = 2,
     kRemoveChildFieldNumber = 4,
+    kCommitUpdatesFieldNumber = 6,
   };
   // .protocol.CreateSource create_source = 1;
   bool has_create_source() const;
@@ -1010,6 +1016,24 @@ class ApplyUpdate PROTOBUF_FINAL :
       ::protocol::RemoveChild* remove_child);
   ::protocol::RemoveChild* unsafe_arena_release_remove_child();
 
+  // .protocol.CommitUpdates commit_updates = 6;
+  bool has_commit_updates() const;
+  private:
+  bool _internal_has_commit_updates() const;
+  public:
+  void clear_commit_updates();
+  const ::protocol::CommitUpdates& commit_updates() const;
+  ::protocol::CommitUpdates* release_commit_updates();
+  ::protocol::CommitUpdates* mutable_commit_updates();
+  void set_allocated_commit_updates(::protocol::CommitUpdates* commit_updates);
+  private:
+  const ::protocol::CommitUpdates& _internal_commit_updates() const;
+  ::protocol::CommitUpdates* _internal_mutable_commit_updates();
+  public:
+  void unsafe_arena_set_allocated_commit_updates(
+      ::protocol::CommitUpdates* commit_updates);
+  ::protocol::CommitUpdates* unsafe_arena_release_commit_updates();
+
   void clear_change();
   ChangeCase change_case() const;
   // @@protoc_insertion_point(class_scope:protocol.ApplyUpdate)
@@ -1020,6 +1044,7 @@ class ApplyUpdate PROTOBUF_FINAL :
   void set_has_create_scene();
   void set_has_append_child();
   void set_has_remove_child();
+  void set_has_commit_updates();
 
   inline bool has_change() const;
   inline void clear_has_change();
@@ -1034,6 +1059,7 @@ class ApplyUpdate PROTOBUF_FINAL :
     ::protocol::CreateScene* create_scene_;
     ::protocol::AppendChild* append_child_;
     ::protocol::RemoveChild* remove_child_;
+    ::protocol::CommitUpdates* commit_updates_;
   } change_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::uint32 _oneof_case_[1];
@@ -2227,6 +2253,150 @@ class RemoveChild PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class CommitUpdates PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.CommitUpdates) */ {
+ public:
+  inline CommitUpdates() : CommitUpdates(nullptr) {}
+  virtual ~CommitUpdates();
+
+  CommitUpdates(const CommitUpdates& from);
+  CommitUpdates(CommitUpdates&& from) noexcept
+    : CommitUpdates() {
+    *this = ::std::move(from);
+  }
+
+  inline CommitUpdates& operator=(const CommitUpdates& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CommitUpdates& operator=(CommitUpdates&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CommitUpdates& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CommitUpdates* internal_default_instance() {
+    return reinterpret_cast<const CommitUpdates*>(
+               &_CommitUpdates_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(CommitUpdates& a, CommitUpdates& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CommitUpdates* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CommitUpdates* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CommitUpdates* New() const final {
+    return CreateMaybeMessage<CommitUpdates>(nullptr);
+  }
+
+  CommitUpdates* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CommitUpdates>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CommitUpdates& from);
+  void MergeFrom(const CommitUpdates& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CommitUpdates* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.CommitUpdates";
+  }
+  protected:
+  explicit CommitUpdates(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_protocol_2eproto);
+    return ::descriptor_table_protocol_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContainerUidFieldNumber = 1,
+  };
+  // string container_uid = 1;
+  void clear_container_uid();
+  const std::string& container_uid() const;
+  void set_container_uid(const std::string& value);
+  void set_container_uid(std::string&& value);
+  void set_container_uid(const char* value);
+  void set_container_uid(const char* value, size_t size);
+  std::string* mutable_container_uid();
+  std::string* release_container_uid();
+  void set_allocated_container_uid(std::string* container_uid);
+  private:
+  const std::string& _internal_container_uid() const;
+  void _internal_set_container_uid(const std::string& value);
+  std::string* _internal_mutable_container_uid();
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.CommitUpdates)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr container_uid_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Prop PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.Prop) */ {
  public:
@@ -2279,7 +2449,7 @@ class Prop PROTOBUF_FINAL :
                &_Prop_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(Prop& a, Prop& b) {
     a.Swap(&b);
@@ -2536,7 +2706,7 @@ class ObjectValue PROTOBUF_FINAL :
                &_ObjectValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(ObjectValue& a, ObjectValue& b) {
     a.Swap(&b);
@@ -3524,6 +3694,79 @@ inline ::protocol::RemoveChild* ApplyUpdate::_internal_mutable_remove_child() {
 inline ::protocol::RemoveChild* ApplyUpdate::mutable_remove_child() {
   // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.remove_child)
   return _internal_mutable_remove_child();
+}
+
+// .protocol.CommitUpdates commit_updates = 6;
+inline bool ApplyUpdate::_internal_has_commit_updates() const {
+  return change_case() == kCommitUpdates;
+}
+inline bool ApplyUpdate::has_commit_updates() const {
+  return _internal_has_commit_updates();
+}
+inline void ApplyUpdate::set_has_commit_updates() {
+  _oneof_case_[0] = kCommitUpdates;
+}
+inline void ApplyUpdate::clear_commit_updates() {
+  if (_internal_has_commit_updates()) {
+    if (GetArena() == nullptr) {
+      delete change_.commit_updates_;
+    }
+    clear_has_change();
+  }
+}
+inline ::protocol::CommitUpdates* ApplyUpdate::release_commit_updates() {
+  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.commit_updates)
+  if (_internal_has_commit_updates()) {
+    clear_has_change();
+      ::protocol::CommitUpdates* temp = change_.commit_updates_;
+    if (GetArena() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    change_.commit_updates_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::protocol::CommitUpdates& ApplyUpdate::_internal_commit_updates() const {
+  return _internal_has_commit_updates()
+      ? *change_.commit_updates_
+      : *reinterpret_cast< ::protocol::CommitUpdates*>(&::protocol::_CommitUpdates_default_instance_);
+}
+inline const ::protocol::CommitUpdates& ApplyUpdate::commit_updates() const {
+  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.commit_updates)
+  return _internal_commit_updates();
+}
+inline ::protocol::CommitUpdates* ApplyUpdate::unsafe_arena_release_commit_updates() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.commit_updates)
+  if (_internal_has_commit_updates()) {
+    clear_has_change();
+    ::protocol::CommitUpdates* temp = change_.commit_updates_;
+    change_.commit_updates_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ApplyUpdate::unsafe_arena_set_allocated_commit_updates(::protocol::CommitUpdates* commit_updates) {
+  clear_change();
+  if (commit_updates) {
+    set_has_commit_updates();
+    change_.commit_updates_ = commit_updates;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.commit_updates)
+}
+inline ::protocol::CommitUpdates* ApplyUpdate::_internal_mutable_commit_updates() {
+  if (!_internal_has_commit_updates()) {
+    clear_change();
+    set_has_commit_updates();
+    change_.commit_updates_ = CreateMaybeMessage< ::protocol::CommitUpdates >(GetArena());
+  }
+  return change_.commit_updates_;
+}
+inline ::protocol::CommitUpdates* ApplyUpdate::mutable_commit_updates() {
+  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.commit_updates)
+  return _internal_mutable_commit_updates();
 }
 
 inline bool ApplyUpdate::has_change() const {
@@ -4619,6 +4862,72 @@ inline void RemoveChild::set_allocated_child_uid(std::string* child_uid) {
 
 // -------------------------------------------------------------------
 
+// CommitUpdates
+
+// string container_uid = 1;
+inline void CommitUpdates::clear_container_uid() {
+  container_uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& CommitUpdates::container_uid() const {
+  // @@protoc_insertion_point(field_get:protocol.CommitUpdates.container_uid)
+  return _internal_container_uid();
+}
+inline void CommitUpdates::set_container_uid(const std::string& value) {
+  _internal_set_container_uid(value);
+  // @@protoc_insertion_point(field_set:protocol.CommitUpdates.container_uid)
+}
+inline std::string* CommitUpdates::mutable_container_uid() {
+  // @@protoc_insertion_point(field_mutable:protocol.CommitUpdates.container_uid)
+  return _internal_mutable_container_uid();
+}
+inline const std::string& CommitUpdates::_internal_container_uid() const {
+  return container_uid_.Get();
+}
+inline void CommitUpdates::_internal_set_container_uid(const std::string& value) {
+  
+  container_uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void CommitUpdates::set_container_uid(std::string&& value) {
+  
+  container_uid_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:protocol.CommitUpdates.container_uid)
+}
+inline void CommitUpdates::set_container_uid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  container_uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:protocol.CommitUpdates.container_uid)
+}
+inline void CommitUpdates::set_container_uid(const char* value,
+    size_t size) {
+  
+  container_uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:protocol.CommitUpdates.container_uid)
+}
+inline std::string* CommitUpdates::_internal_mutable_container_uid() {
+  
+  return container_uid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* CommitUpdates::release_container_uid() {
+  // @@protoc_insertion_point(field_release:protocol.CommitUpdates.container_uid)
+  return container_uid_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void CommitUpdates::set_allocated_container_uid(std::string* container_uid) {
+  if (container_uid != nullptr) {
+    
+  } else {
+    
+  }
+  container_uid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), container_uid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:protocol.CommitUpdates.container_uid)
+}
+
+// -------------------------------------------------------------------
+
 // Prop
 
 // string key = 1;
@@ -5057,6 +5366,8 @@ ObjectValue::props() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

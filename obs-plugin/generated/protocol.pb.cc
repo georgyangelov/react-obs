@@ -15,7 +15,8 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AppendChild_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<5> scc_info_ApplyUpdate_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<6> scc_info_ApplyUpdate_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CommitUpdates_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CreateScene_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateSource_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FindSourceRequest_protocol_2eproto;
@@ -53,6 +54,7 @@ class ApplyUpdateDefaultTypeInternal {
   const ::protocol::CreateScene* create_scene_;
   const ::protocol::AppendChild* append_child_;
   const ::protocol::RemoveChild* remove_child_;
+  const ::protocol::CommitUpdates* commit_updates_;
 } _ApplyUpdate_default_instance_;
 class FindSourceRequestDefaultTypeInternal {
  public:
@@ -82,6 +84,10 @@ class RemoveChildDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RemoveChild> _instance;
 } _RemoveChild_default_instance_;
+class CommitUpdatesDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CommitUpdates> _instance;
+} _CommitUpdates_default_instance_;
 class PropDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Prop> _instance;
@@ -122,13 +128,14 @@ static void InitDefaultsscc_info_ApplyUpdate_protocol_2eproto() {
   ::protocol::ApplyUpdate::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<5> scc_info_ApplyUpdate_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 5, 0, InitDefaultsscc_info_ApplyUpdate_protocol_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<6> scc_info_ApplyUpdate_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 6, 0, InitDefaultsscc_info_ApplyUpdate_protocol_2eproto}, {
       &scc_info_CreateSource_protocol_2eproto.base,
       &scc_info_UpdateSource_protocol_2eproto.base,
       &scc_info_CreateScene_protocol_2eproto.base,
       &scc_info_AppendChild_protocol_2eproto.base,
-      &scc_info_RemoveChild_protocol_2eproto.base,}};
+      &scc_info_RemoveChild_protocol_2eproto.base,
+      &scc_info_CommitUpdates_protocol_2eproto.base,}};
 
 static void InitDefaultsscc_info_ClientMessage_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -146,6 +153,20 @@ static void InitDefaultsscc_info_ClientMessage_protocol_2eproto() {
       &scc_info_InitRequest_protocol_2eproto.base,
       &scc_info_ApplyUpdate_protocol_2eproto.base,
       &scc_info_FindSourceRequest_protocol_2eproto.base,}};
+
+static void InitDefaultsscc_info_CommitUpdates_protocol_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::protocol::_CommitUpdates_default_instance_;
+    new (ptr) ::protocol::CommitUpdates();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::protocol::CommitUpdates::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CommitUpdates_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CommitUpdates_protocol_2eproto}, {}};
 
 static void InitDefaultsscc_info_CreateScene_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -296,7 +317,7 @@ static void InitDefaultsscc_info_UpdateSource_protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_UpdateSource_protocol_2eproto}, {
       &scc_info_ObjectValue_protocol_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protocol_2eproto[14];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_protocol_2eproto[15];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_protocol_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_protocol_2eproto = nullptr;
 
@@ -340,6 +361,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, create_scene_),
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, append_child_),
   offsetof(::protocol::ApplyUpdateDefaultTypeInternal, remove_child_),
+  offsetof(::protocol::ApplyUpdateDefaultTypeInternal, commit_updates_),
   PROTOBUF_FIELD_OFFSET(::protocol::ApplyUpdate, change_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::FindSourceRequest, _internal_metadata_),
@@ -394,6 +416,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::protocol::RemoveChild, parent_uid_),
   PROTOBUF_FIELD_OFFSET(::protocol::RemoveChild, child_uid_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::protocol::CommitUpdates, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::protocol::CommitUpdates, container_uid_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::Prop, _internal_metadata_),
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::protocol::Prop, _oneof_case_[0]),
@@ -419,15 +447,16 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 16, -1, sizeof(::protocol::InitRequest)},
   { 23, -1, sizeof(::protocol::Scene)},
   { 29, -1, sizeof(::protocol::ApplyUpdate)},
-  { 40, -1, sizeof(::protocol::FindSourceRequest)},
-  { 48, -1, sizeof(::protocol::Response)},
-  { 55, -1, sizeof(::protocol::CreateSource)},
-  { 64, -1, sizeof(::protocol::UpdateSource)},
-  { 71, -1, sizeof(::protocol::CreateScene)},
-  { 78, -1, sizeof(::protocol::AppendChild)},
-  { 85, -1, sizeof(::protocol::RemoveChild)},
-  { 92, -1, sizeof(::protocol::Prop)},
-  { 105, -1, sizeof(::protocol::ObjectValue)},
+  { 41, -1, sizeof(::protocol::FindSourceRequest)},
+  { 49, -1, sizeof(::protocol::Response)},
+  { 56, -1, sizeof(::protocol::CreateSource)},
+  { 65, -1, sizeof(::protocol::UpdateSource)},
+  { 72, -1, sizeof(::protocol::CreateScene)},
+  { 79, -1, sizeof(::protocol::AppendChild)},
+  { 86, -1, sizeof(::protocol::RemoveChild)},
+  { 93, -1, sizeof(::protocol::CommitUpdates)},
+  { 99, -1, sizeof(::protocol::Prop)},
+  { 112, -1, sizeof(::protocol::ObjectValue)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -443,6 +472,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_CreateScene_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_AppendChild_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_RemoveChild_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_CommitUpdates_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_Prop_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::protocol::_ObjectValue_default_instance_),
 };
@@ -456,38 +486,41 @@ const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "e\"B\n\rServerMessage\022&\n\010response\030\001 \001(\0132\022.p"
   "rotocol.ResponseH\000B\t\n\007message\"4\n\013InitReq"
   "uest\022\022\n\nrequest_id\030\001 \001(\t\022\021\n\tclient_id\030\002 "
-  "\001(\t\"\025\n\005Scene\022\014\n\004name\030\001 \001(\t\"\206\002\n\013ApplyUpda"
+  "\001(\t\"\025\n\005Scene\022\014\n\004name\030\001 \001(\t\"\271\002\n\013ApplyUpda"
   "te\022/\n\rcreate_source\030\001 \001(\0132\026.protocol.Cre"
   "ateSourceH\000\022/\n\rupdate_source\030\003 \001(\0132\026.pro"
   "tocol.UpdateSourceH\000\022-\n\014create_scene\030\005 \001"
   "(\0132\025.protocol.CreateSceneH\000\022-\n\014append_ch"
   "ild\030\002 \001(\0132\025.protocol.AppendChildH\000\022-\n\014re"
   "move_child\030\004 \001(\0132\025.protocol.RemoveChildH"
-  "\000B\010\n\006change\"B\n\021FindSourceRequest\022\022\n\nrequ"
-  "est_id\030\001 \001(\t\022\013\n\003uid\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\""
-  "/\n\010Response\022\022\n\nrequest_id\030\001 \001(\t\022\017\n\007succe"
-  "ss\030\002 \001(\010\"^\n\014CreateSource\022\013\n\003uid\030\001 \001(\t\022\n\n"
-  "\002id\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\'\n\010settings\030\004 \001("
-  "\0132\025.protocol.ObjectValue\"I\n\014UpdateSource"
-  "\022\013\n\003uid\030\002 \001(\t\022,\n\rchanged_props\030\003 \001(\0132\025.p"
-  "rotocol.ObjectValue\"(\n\013CreateScene\022\013\n\003ui"
-  "d\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\"4\n\013AppendChild\022\022\n\n"
-  "parent_uid\030\001 \001(\t\022\021\n\tchild_uid\030\002 \001(\t\"4\n\013R"
-  "emoveChild\022\022\n\nparent_uid\030\001 \001(\t\022\021\n\tchild_"
-  "uid\030\002 \001(\t\"\272\001\n\004Prop\022\013\n\003key\030\001 \001(\t\022\026\n\014strin"
-  "g_value\030\002 \001(\tH\000\022\023\n\tint_value\030\003 \001(\003H\000\022\025\n\013"
-  "float_value\030\004 \001(\001H\000\022\024\n\nbool_value\030\005 \001(\010H"
-  "\000\022-\n\014object_value\030\006 \001(\0132\025.protocol.Objec"
-  "tValueH\000\022\023\n\tundefined\030\007 \001(\010H\000B\007\n\005value\","
-  "\n\013ObjectValue\022\035\n\005props\030\001 \003(\0132\016.protocol."
-  "Propb\006proto3"
+  "\000\0221\n\016commit_updates\030\006 \001(\0132\027.protocol.Com"
+  "mitUpdatesH\000B\010\n\006change\"B\n\021FindSourceRequ"
+  "est\022\022\n\nrequest_id\030\001 \001(\t\022\013\n\003uid\030\002 \001(\t\022\014\n\004"
+  "name\030\003 \001(\t\"/\n\010Response\022\022\n\nrequest_id\030\001 \001"
+  "(\t\022\017\n\007success\030\002 \001(\010\"^\n\014CreateSource\022\013\n\003u"
+  "id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\'\n\010se"
+  "ttings\030\004 \001(\0132\025.protocol.ObjectValue\"I\n\014U"
+  "pdateSource\022\013\n\003uid\030\002 \001(\t\022,\n\rchanged_prop"
+  "s\030\003 \001(\0132\025.protocol.ObjectValue\"(\n\013Create"
+  "Scene\022\013\n\003uid\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\"4\n\013Appe"
+  "ndChild\022\022\n\nparent_uid\030\001 \001(\t\022\021\n\tchild_uid"
+  "\030\002 \001(\t\"4\n\013RemoveChild\022\022\n\nparent_uid\030\001 \001("
+  "\t\022\021\n\tchild_uid\030\002 \001(\t\"&\n\rCommitUpdates\022\025\n"
+  "\rcontainer_uid\030\001 \001(\t\"\272\001\n\004Prop\022\013\n\003key\030\001 \001"
+  "(\t\022\026\n\014string_value\030\002 \001(\tH\000\022\023\n\tint_value\030"
+  "\003 \001(\003H\000\022\025\n\013float_value\030\004 \001(\001H\000\022\024\n\nbool_v"
+  "alue\030\005 \001(\010H\000\022-\n\014object_value\030\006 \001(\0132\025.pro"
+  "tocol.ObjectValueH\000\022\023\n\tundefined\030\007 \001(\010H\000"
+  "B\007\n\005value\",\n\013ObjectValue\022\035\n\005props\030\001 \003(\0132"
+  "\016.protocol.Propb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protocol_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_protocol_2eproto_sccs[13] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_protocol_2eproto_sccs[14] = {
   &scc_info_AppendChild_protocol_2eproto.base,
   &scc_info_ApplyUpdate_protocol_2eproto.base,
   &scc_info_ClientMessage_protocol_2eproto.base,
+  &scc_info_CommitUpdates_protocol_2eproto.base,
   &scc_info_CreateScene_protocol_2eproto.base,
   &scc_info_CreateSource_protocol_2eproto.base,
   &scc_info_FindSourceRequest_protocol_2eproto.base,
@@ -501,10 +534,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto = {
-  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1292,
-  &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 13, 0,
+  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1383,
+  &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 14, 0,
   schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
-  file_level_metadata_protocol_2eproto, 14, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
+  file_level_metadata_protocol_2eproto, 15, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1622,6 +1655,8 @@ void ApplyUpdate::InitAsDefaultInstance() {
       ::protocol::AppendChild::internal_default_instance());
   ::protocol::_ApplyUpdate_default_instance_.remove_child_ = const_cast< ::protocol::RemoveChild*>(
       ::protocol::RemoveChild::internal_default_instance());
+  ::protocol::_ApplyUpdate_default_instance_.commit_updates_ = const_cast< ::protocol::CommitUpdates*>(
+      ::protocol::CommitUpdates::internal_default_instance());
 }
 class ApplyUpdate::_Internal {
  public:
@@ -1630,6 +1665,7 @@ class ApplyUpdate::_Internal {
   static const ::protocol::CreateScene& create_scene(const ApplyUpdate* msg);
   static const ::protocol::AppendChild& append_child(const ApplyUpdate* msg);
   static const ::protocol::RemoveChild& remove_child(const ApplyUpdate* msg);
+  static const ::protocol::CommitUpdates& commit_updates(const ApplyUpdate* msg);
 };
 
 const ::protocol::CreateSource&
@@ -1651,6 +1687,10 @@ ApplyUpdate::_Internal::append_child(const ApplyUpdate* msg) {
 const ::protocol::RemoveChild&
 ApplyUpdate::_Internal::remove_child(const ApplyUpdate* msg) {
   return *msg->change_.remove_child_;
+}
+const ::protocol::CommitUpdates&
+ApplyUpdate::_Internal::commit_updates(const ApplyUpdate* msg) {
+  return *msg->change_.commit_updates_;
 }
 void ApplyUpdate::set_allocated_create_source(::protocol::CreateSource* create_source) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
@@ -1727,6 +1767,21 @@ void ApplyUpdate::set_allocated_remove_child(::protocol::RemoveChild* remove_chi
   }
   // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.remove_child)
 }
+void ApplyUpdate::set_allocated_commit_updates(::protocol::CommitUpdates* commit_updates) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  clear_change();
+  if (commit_updates) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(commit_updates);
+    if (message_arena != submessage_arena) {
+      commit_updates = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, commit_updates, submessage_arena);
+    }
+    set_has_commit_updates();
+    change_.commit_updates_ = commit_updates;
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ApplyUpdate.commit_updates)
+}
 ApplyUpdate::ApplyUpdate(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
@@ -1756,6 +1811,10 @@ ApplyUpdate::ApplyUpdate(const ApplyUpdate& from)
     }
     case kRemoveChild: {
       _internal_mutable_remove_child()->::protocol::RemoveChild::MergeFrom(from._internal_remove_child());
+      break;
+    }
+    case kCommitUpdates: {
+      _internal_mutable_commit_updates()->::protocol::CommitUpdates::MergeFrom(from._internal_commit_updates());
       break;
     }
     case CHANGE_NOT_SET: {
@@ -1831,6 +1890,12 @@ void ApplyUpdate::clear_change() {
       }
       break;
     }
+    case kCommitUpdates: {
+      if (GetArena() == nullptr) {
+        delete change_.commit_updates_;
+      }
+      break;
+    }
     case CHANGE_NOT_SET: {
       break;
     }
@@ -1889,6 +1954,13 @@ const char* ApplyUpdate::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr = ctx->ParseMessage(_internal_mutable_create_scene(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .protocol.CommitUpdates commit_updates = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_commit_updates(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1960,6 +2032,14 @@ failure:
         5, _Internal::create_scene(this), target, stream);
   }
 
+  // .protocol.CommitUpdates commit_updates = 6;
+  if (_internal_has_commit_updates()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        6, _Internal::commit_updates(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2010,6 +2090,13 @@ size_t ApplyUpdate::ByteSizeLong() const {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *change_.remove_child_);
+      break;
+    }
+    // .protocol.CommitUpdates commit_updates = 6;
+    case kCommitUpdates: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *change_.commit_updates_);
       break;
     }
     case CHANGE_NOT_SET: {
@@ -2066,6 +2153,10 @@ void ApplyUpdate::MergeFrom(const ApplyUpdate& from) {
     }
     case kRemoveChild: {
       _internal_mutable_remove_child()->::protocol::RemoveChild::MergeFrom(from._internal_remove_child());
+      break;
+    }
+    case kCommitUpdates: {
+      _internal_mutable_commit_updates()->::protocol::CommitUpdates::MergeFrom(from._internal_commit_updates());
       break;
     }
     case CHANGE_NOT_SET: {
@@ -3948,6 +4039,215 @@ void RemoveChild::InternalSwap(RemoveChild* other) {
 
 // ===================================================================
 
+void CommitUpdates::InitAsDefaultInstance() {
+}
+class CommitUpdates::_Internal {
+ public:
+};
+
+CommitUpdates::CommitUpdates(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:protocol.CommitUpdates)
+}
+CommitUpdates::CommitUpdates(const CommitUpdates& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  container_uid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_container_uid().empty()) {
+    container_uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_container_uid(),
+      GetArena());
+  }
+  // @@protoc_insertion_point(copy_constructor:protocol.CommitUpdates)
+}
+
+void CommitUpdates::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CommitUpdates_protocol_2eproto.base);
+  container_uid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+CommitUpdates::~CommitUpdates() {
+  // @@protoc_insertion_point(destructor:protocol.CommitUpdates)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void CommitUpdates::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  container_uid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void CommitUpdates::ArenaDtor(void* object) {
+  CommitUpdates* _this = reinterpret_cast< CommitUpdates* >(object);
+  (void)_this;
+}
+void CommitUpdates::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void CommitUpdates::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const CommitUpdates& CommitUpdates::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_CommitUpdates_protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void CommitUpdates::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.CommitUpdates)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  container_uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* CommitUpdates::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string container_uid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_container_uid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.CommitUpdates.container_uid"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* CommitUpdates::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.CommitUpdates)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string container_uid = 1;
+  if (this->container_uid().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_container_uid().data(), static_cast<int>(this->_internal_container_uid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "protocol.CommitUpdates.container_uid");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_container_uid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.CommitUpdates)
+  return target;
+}
+
+size_t CommitUpdates::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.CommitUpdates)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string container_uid = 1;
+  if (this->container_uid().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_container_uid());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void CommitUpdates::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.CommitUpdates)
+  GOOGLE_DCHECK_NE(&from, this);
+  const CommitUpdates* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<CommitUpdates>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.CommitUpdates)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.CommitUpdates)
+    MergeFrom(*source);
+  }
+}
+
+void CommitUpdates::MergeFrom(const CommitUpdates& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.CommitUpdates)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.container_uid().size() > 0) {
+    _internal_set_container_uid(from._internal_container_uid());
+  }
+}
+
+void CommitUpdates::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.CommitUpdates)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CommitUpdates::CopyFrom(const CommitUpdates& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.CommitUpdates)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CommitUpdates::IsInitialized() const {
+  return true;
+}
+
+void CommitUpdates::InternalSwap(CommitUpdates* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  container_uid_.Swap(&other->container_uid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CommitUpdates::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 void Prop::InitAsDefaultInstance() {
   ::protocol::_Prop_default_instance_.string_value_.UnsafeSetDefault(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
@@ -4654,6 +4954,9 @@ template<> PROTOBUF_NOINLINE ::protocol::AppendChild* Arena::CreateMaybeMessage<
 }
 template<> PROTOBUF_NOINLINE ::protocol::RemoveChild* Arena::CreateMaybeMessage< ::protocol::RemoveChild >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::RemoveChild >(arena);
+}
+template<> PROTOBUF_NOINLINE ::protocol::CommitUpdates* Arena::CreateMaybeMessage< ::protocol::CommitUpdates >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::protocol::CommitUpdates >(arena);
 }
 template<> PROTOBUF_NOINLINE ::protocol::Prop* Arena::CreateMaybeMessage< ::protocol::Prop >(Arena* arena) {
   return Arena::CreateMessageInternal< ::protocol::Prop >(arena);

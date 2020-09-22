@@ -29,9 +29,9 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // if (counter % 2 === 0) {
-  //   return null;
-  // }
+  if (counter % 2 === 0) {
+    return null;
+  }
 
   return (
     <Scene name="React Scene">
@@ -107,12 +107,12 @@ const reconciler = Reconciler<
     return { childContext: true };
   },
 
-  prepareForCommit(containerInfo: Container): void {
+  prepareForCommit(container: Container): void {
 
   },
 
-  resetAfterCommit(containerInfo: Container): void {
-
+  resetAfterCommit(container: Container): void {
+    api.commitUpdates(container.uid);
   },
 
   createInstance(
@@ -158,7 +158,12 @@ const reconciler = Reconciler<
         throw new Error('obs_source must have a name and it must be a string');
       }
 
-      return api.createSource(props.id, props.name, props);
+      const safeProps = { ...props };
+      delete safeProps['id'];
+      delete safeProps['name'];
+      delete safeProps['children'];
+
+      return api.createSource(props.id, props.name, safeProps);
     } else if (type === 'obs_scene') {
       if (!props.name || typeof props.name !== 'string') {
         throw new Error('obs_scene must have a name and it must be a string');
@@ -195,6 +200,10 @@ const reconciler = Reconciler<
     const propChanges: PropChanges = {};
 
     Object.keys(newProps).forEach(key => {
+      if (key === 'children') {
+        return;
+      }
+
       if (oldProps[key] !== newProps[key]) {
         propChanges[key] = newProps[key];
       }
@@ -312,7 +321,8 @@ const reconciler = Reconciler<
     child: Instance | TextInstance,
     beforeChild: Instance | TextInstance
   ): void {
-
+    // TODO
+    throw new Error('Not implemented');
   },
 
   insertInContainerBefore(
@@ -320,7 +330,8 @@ const reconciler = Reconciler<
     child: Instance | TextInstance,
     beforeChild: Instance | TextInstance,
   ): void {
-
+    // TODO
+    throw new Error('Not implemented');
   },
 
   removeChild(

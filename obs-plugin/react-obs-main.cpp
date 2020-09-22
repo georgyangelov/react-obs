@@ -13,11 +13,13 @@
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("react-obs", "en-US")
 
-struct ManagedSource {
+struct ShadowSource {
     std::string uid;
     obs_source_t* source;
     YGNodeRef yoga_node;
-    bool added_as_child;
+    
+    obs_sceneitem_t* sceneitem;
+
     bool managed;
 };
 
@@ -61,6 +63,18 @@ int yoga_logger(
     return 0;
 }
 
+//void yoga_remove_child(const YGNodeRef parent, const YGNodeRef childToRemove) {
+//    auto child_count = YGNodeGetChildCount(parent);
+//
+//    for (size_t i = 0; i < child_count; i++) {
+//        auto child = YGNodeGetChild(parent, i);
+//
+//        if (child == childToRemove) {
+//            YGNodeRemoveChild(<#YGNodeRef node#>, <#YGNodeRef child#>)
+//        }
+//    }
+//}
+
 //
 // State
 //
@@ -69,7 +83,7 @@ std::thread server_thread;
 sockpp::tcp_acceptor server_acceptor;
 
 // TODO: Cleanup when reconnections happen
-std::unordered_map<std::string, ManagedSource> managed_sources;
+std::unordered_map<std::string, ShadowSource*> shadow_sources;
 
 auto yoga_config = YGConfigNew();
 
@@ -103,14 +117,105 @@ obs_scene_t* get_scene() {
 // Managed sources
 //
 
-std::optional<std::reference_wrapper<ManagedSource>> get_managed_source(const std::string &uid) {
-    auto source = managed_sources.find(uid);
+ShadowSource* get_shadow_source(const std::string &uid) {
+    auto source = shadow_sources.find(uid);
+
+    if (source == shadow_sources.end()) {
+        return nullptr;
+    }
+
+    return (*source).second;
+}
+
+ShadowSource* add_shadow_source(const std::string &uid, obs_source_t* source, bool managed) {
+    auto yoga_node = YGNodeNewWithConfig(yoga_config);
+    auto shadow_source = new ShadowSource {
+        .uid = uid,
+        .source = source,
+        .yoga_node = yoga_node,
+        .managed = managed,
+        .sceneitem = nullptr
+    };
+
+    YGNodeSetContext(yoga_node, shadow_source);
+
+    shadow_sources[uid] = shadow_source;
     
-    if (source == managed_sources.end()) {
-        return std::nullopt;
+    return shadow_source;
+}
+
+void remove_shadow_source(const std::string &uid) {
+    auto shadow_source = get_shadow_source(uid);
+
+    if (!shadow_source) {
+        return;
+    }
+
+    YGNodeSetContext(shadow_source->yoga_node, nullptr);
+
+    shadow_sources.erase(uid);
+
+    obs_source_release(shadow_source->source);
+    delete shadow_source;
+}
+
+//
+// Layout
+//
+
+void perform_layout(const std::string &root_uid) {
+    auto root = get_shadow_source(root_uid);
+    if (!root) {
+        blog(LOG_ERROR, "[react-obs] Cannot find root to layout %s", root_uid.c_str());
+        return;
     }
     
-    return (*source).second;
+    auto yoga_node = root->yoga_node;
+    
+    if (!YGNodeIsDirty(yoga_node)) {
+        blog(LOG_DEBUG, "[react-obs] No new layout, nothing to do");
+        return;
+    }
+    
+    blog(LOG_DEBUG, "[react-obs] Performing layout...");
+
+    YGNodeCalculateLayout(yoga_node, YGUndefined, YGUndefined, YGDirectionLTR);
+    YGTraversePreOrder(yoga_node, [](YGNodeRef node) {
+        if (!YGNodeGetHasNewLayout(node)) {
+            return;
+        }
+        
+        YGNodeSetHasNewLayout(node, false);
+        
+        auto shadow = (ShadowSource*)YGNodeGetContext(node);
+        auto sceneitem = shadow->sceneitem;
+        
+        if (!sceneitem) {
+            if (shadow->managed) {
+                blog(LOG_ERROR, "[react-obs] Sceneitem is not set, but yoga node is a child");
+            }
+            
+            // Can't set positioning for unmanaged nodes
+            return;
+        }
+        
+        vec2 position {
+            .x = YGNodeLayoutGetLeft(node),
+            .y = YGNodeLayoutGetTop(node)
+        };
+        
+        vec2 bounds {
+            .x = YGNodeLayoutGetWidth(node),
+            .y = YGNodeLayoutGetHeight(node)
+        };
+        
+        obs_sceneitem_defer_update_begin(sceneitem);
+        obs_sceneitem_set_pos(sceneitem, &position);
+        obs_sceneitem_set_bounds(sceneitem, &bounds);
+        obs_sceneitem_defer_update_end(sceneitem);
+    });
+    
+    blog(LOG_DEBUG, "[react-obs] Layout complete");
 }
 
 //
@@ -201,18 +306,12 @@ void create_source(const protocol::CreateSource &create_source) {
         create_source.name().c_str(),
         settings
     );
-    
-    auto uid = create_source.uid();
-    
-    managed_sources[uid] = ManagedSource {
-        .uid = uid,
-        .source = source,
-        .yoga_node = YGNodeNewWithConfig(yoga_config),
-        .added_as_child = false,
-        .managed = true
-    };
 
     obs_data_release(settings);
+
+    auto uid = create_source.uid();
+
+    add_shadow_source(uid, source, true);
 }
 
 bool register_unmanaged_source(const std::string &uid, const std::string &name) {
@@ -221,15 +320,21 @@ bool register_unmanaged_source(const std::string &uid, const std::string &name) 
         blog(LOG_ERROR, "[react-obs] Could not find source with name %s", name.c_str());
         return false;
     }
+
+    auto shadow = add_shadow_source(uid, source, false);
     
-    managed_sources[uid] = ManagedSource {
-        .uid = uid,
-        .source = source,
-        .yoga_node = YGNodeNewWithConfig(yoga_config),
-        .added_as_child = false,
-        .managed = false
-    };
+    // TODO: This is not correct. These are the dimensions of the source, not the transformed one...
+    //       This will work for top-level scenes, but will not work for other sources.
+    // TODO: Need to find a way to get the transformed width/height. Is this even possible?
+    auto source_width = obs_source_get_width(source);
+    auto source_height = obs_source_get_height(source);
     
+    auto yoga_node = shadow->yoga_node;
+    YGNodeStyleSetWidth(yoga_node, source_width);
+    YGNodeStyleSetHeight(yoga_node, source_height);
+    
+//    obs_get_signal_handler()
+
     return true;
 }
 
@@ -238,43 +343,50 @@ void append_child(const protocol::AppendChild &append_child) {
          append_child.child_uid().c_str(),
          append_child.parent_uid().c_str());
 
-    auto parent_option = get_managed_source(append_child.parent_uid());
-    if (!parent_option.has_value()) {
+    auto parent = get_shadow_source(append_child.parent_uid());
+    if (!parent) {
         blog(LOG_ERROR, "[react-obs] Cannot find parent source with uid %s", append_child.parent_uid().c_str());
         return;
     }
     
-    auto parent = parent_option->get();
-    
-    auto scene = obs_scene_from_source(parent.source);
+    if (parent->sceneitem) {
+        blog(LOG_ERROR, "[react-obs] Source already added to a scene");
+        return;
+    }
+
+    auto scene = obs_scene_from_source(parent->source);
     if (!scene) {
         blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", append_child.parent_uid().c_str());
         return;
     }
-    
-    auto child_option = get_managed_source(append_child.child_uid());
-    if (!child_option.has_value()) {
+
+    auto child = get_shadow_source(append_child.child_uid());
+    if (!child) {
         blog(LOG_ERROR, "[react-obs] Cannot find child source with uid %s", append_child.child_uid().c_str());
         return;
     }
-    
-    auto child = child_option->get();
 
-    // TODO: Keep `item` in ManagedSource so that we can remove a child by item reference
-    auto item = obs_scene_add(scene, child.source);
+    auto item = obs_scene_add(scene, child->source);
     
-    // obs_sceneitem_release(item);
+    obs_sceneitem_addref(item);
+    child->sceneitem = item;
+    
+    YGNodeInsertChild(
+        parent->yoga_node,
+        child->yoga_node,
+        YGNodeGetChildCount(parent->yoga_node)
+    );
 }
 
 void update_source(const protocol::UpdateSource &update) {
     blog(LOG_DEBUG, "[react-obs] Updating source %s", update.uid().c_str());
 
-    auto source_option = get_managed_source(update.uid());
-    if (!source_option.has_value()) {
+    auto shadow_source = get_shadow_source(update.uid());
+    if (!shadow_source) {
         blog(LOG_ERROR, "[react-obs] Cannot find source %s", update.uid().c_str());
         return;
     }
-    auto source = source_option->get().source;
+    auto source = shadow_source->source;
 
     auto settings = obs_source_get_settings(source);
     if (!settings) {
@@ -289,60 +401,63 @@ void update_source(const protocol::UpdateSource &update) {
 void create_scene(const protocol::CreateScene &create_scene) {
     auto scene = obs_scene_create_private(create_scene.name().c_str());
     auto source = obs_scene_get_source(scene);
-    
+
     auto uid = create_scene.uid();
-    
-    managed_sources[uid] = ManagedSource {
-        .uid = uid,
-        .source = source,
-        .yoga_node = YGNodeNewWithConfig(yoga_config),
-        .added_as_child = false,
-        .managed = true
-    };
-}
 
-bool enum_scene_item_remove_child(obs_scene_t* scene, obs_sceneitem_t* item, void* child_source_void) {
-    auto child_source = (obs_source_t*)child_source_void;
-
-    if (obs_sceneitem_get_source(item) == child_source) {
-        obs_sceneitem_remove(item);
-        return false;
-    }
-
-    return true;
+    add_shadow_source(uid, source, false);
 }
 
 void remove_child(const protocol::RemoveChild &remove) {
     blog(LOG_DEBUG, "[react-obs] Removing child %s", remove.child_uid().c_str());
 
-    auto parent_option = get_managed_source(remove.parent_uid());
-    if (!parent_option.has_value()) {
+    auto parent = get_shadow_source(remove.parent_uid());
+    if (!parent) {
         blog(LOG_ERROR, "[react-obs] Cannot find parent source with uid %s", remove.parent_uid().c_str());
         return;
     }
-    
-    auto parent = parent_option->get();
-    
-    auto scene = obs_scene_from_source(parent.source);
+
+    auto scene = obs_scene_from_source(parent->source);
     if (!scene) {
         blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", remove.parent_uid().c_str());
         return;
     }
-    
-    auto child_option = get_managed_source(remove.child_uid());
-    if (!child_option.has_value()) {
+
+    auto child = get_shadow_source(remove.child_uid());
+    if (!child) {
         blog(LOG_ERROR, "[react-obs] Cannot find child source with uid %s", remove.child_uid().c_str());
         return;
     }
     
-    auto child = child_option->get();
+    if (!child->sceneitem) {
+        blog(LOG_ERROR, "[react-obs] Child does not have a sceneitem set");
+        return;
+    }
     
-    obs_scene_enum_items(scene, &enum_scene_item_remove_child, (void*)child.source);
+    auto sceneitem_scene = obs_sceneitem_get_scene(child->sceneitem);
+    
+    if (sceneitem_scene != scene) {
+        blog(LOG_ERROR, "[react-obs] Child's parent and the container are different");
+        return;
+    }
+    
+    obs_sceneitem_remove(child->sceneitem);
+    obs_sceneitem_release(child->sceneitem);
+    child->sceneitem = nullptr;
 
-    // TODO: This is not exactly correct - this source may be a child of multiple scenes.
+    YGNodeRemoveChild(parent->yoga_node, child->yoga_node);
+    
+    // TODO: Should we GC the child node? Can it be added again in the future?
     // obs_source_remove(child.source);
     //
     // obs_source_release(child.source);
+}
+
+void commit_updates(const protocol::CommitUpdates &commit_updates) {
+    auto container_uid = commit_updates.container_uid();
+    
+    blog(LOG_DEBUG, "[react-obs] Commiting updates for container %s", container_uid.c_str());
+    
+    perform_layout(container_uid);
 }
 
 void apply_updates(protocol::ApplyUpdate &update) {
@@ -354,7 +469,7 @@ void apply_updates(protocol::ApplyUpdate &update) {
         case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
             update_source(update.update_source());
             break;
-            
+
         case protocol::ApplyUpdate::ChangeCase::kCreateScene:
             create_scene(update.create_scene());
             break;
@@ -365,6 +480,10 @@ void apply_updates(protocol::ApplyUpdate &update) {
 
         case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
             remove_child(update.remove_child());
+            break;
+        
+        case protocol::ApplyUpdate::ChangeCase::kCommitUpdates:
+            commit_updates(update.commit_updates());
             break;
 
         case protocol::ApplyUpdate::ChangeCase::CHANGE_NOT_SET:
@@ -386,15 +505,13 @@ enum class ReadPacketResult {
 ReadPacketResult read_packet(protocol::ClientMessage &message, sockpp::tcp_socket &socket, std::vector<unsigned char> &buffer) {
     uint32_t packet_size;
     size_t read_bytes = socket.read_n(&packet_size, sizeof(uint32_t));
-    
+
     packet_size = ntohl(packet_size);
 
     if (read_bytes <= 0) {
         return ReadPacketResult::Disconnected;
     }
 
-    // TODO: Do we need to clear? Will this resize?
-    // buffer.clear();
     buffer.reserve(packet_size);
 
     size_t read_size = 0;
@@ -421,14 +538,14 @@ void send_packet(const protocol::ServerMessage &message, sockpp::tcp_socket &soc
     auto size = message.ByteSizeLong();
     std::vector<unsigned char> buffer(size);
     buffer.reserve(size);
-    
+
     message.SerializeToArray(&buffer[0], size);
-    
+
     uint32_t packet_size = htonl(size);
     socket.write_n(&packet_size, sizeof(uint32_t));
-    
+
     auto written_size = socket.write_n(&buffer[0], size);
-    
+
     if (written_size < size) {
         blog(LOG_ERROR, "[react-obs] Written size of message to socket is less than message size");
         return;
@@ -453,14 +570,14 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 auto init_request = message.init_request();
 
                 blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
-                
+
                 protocol::ServerMessage message;
                 auto response = message.mutable_response();
                 response->set_request_id(init_request.request_id());
                 response->set_success(true);
-                
+
                 send_packet(message, socket);
-                
+
                 break;
             }
 
@@ -472,20 +589,20 @@ void client_thread_runner(sockpp::tcp_socket socket) {
 
                 break;
             }
-                
+
             case protocol::ClientMessage::MessageCase::kFindSource: {
                 auto command = message.find_source();
-                
+
                 blog(LOG_DEBUG, "[react-obs] Received find source request for name %s", command.name().c_str());
                 auto success = register_unmanaged_source(command.uid(), command.name());
-                
+
                 protocol::ServerMessage message;
                 auto response = message.mutable_response();
                 response->set_request_id(command.request_id());
                 response->set_success(success);
-                
+
                 send_packet(message, socket);
-                
+
                 break;
             }
 
@@ -574,22 +691,61 @@ void test_yoga() {
     auto child = YGNodeNewWithConfig(yoga_config);
     YGNodeStyleSetWidth(child, 800);
     YGNodeStyleSetHeight(child, 600);
-
     YGNodeInsertChild(root, child, 0);
+
+    auto child_child = YGNodeNewWithConfig(yoga_config);
+    YGNodeStyleSetWidthPercent(child_child, 50);
+    YGNodeStyleSetAspectRatio(child_child, (float)16 / 9);
+    YGNodeInsertChild(child, child_child, 0);
 
     YGNodeCalculateLayout(root, 1920, 1080, YGDirectionLTR);
 
-    auto left = YGNodeLayoutGetLeft(child);
-    auto top = YGNodeLayoutGetTop(child);
+    auto left = YGNodeLayoutGetLeft(child_child);
+    auto top = YGNodeLayoutGetTop(child_child);
 
-    auto width = YGNodeLayoutGetWidth(child);
-    auto height = YGNodeLayoutGetHeight(child);
+    auto width = YGNodeLayoutGetWidth(child_child);
+    auto height = YGNodeLayoutGetHeight(child_child);
 
     blog(LOG_INFO, "[react-obs] Calculated child dimensions: x = %f, y = %f, w = %f, h = %f",
          left,
          top,
          width,
          height);
+
+    YGTraversePreOrder(root, [](YGNodeRef node) {
+        YGNodeSetHasNewLayout(node, false);
+    });
+
+    blog(LOG_DEBUG, "[react-obs] Is dirty: root=%d, child=%d child_child=%d",
+         YGNodeIsDirty(root), YGNodeIsDirty(child), YGNodeIsDirty(child_child));
+    blog(LOG_DEBUG, "[react-obs] Has new layout: root=%d, child=%d child_child=%d",
+         YGNodeGetHasNewLayout(root), YGNodeGetHasNewLayout(child), YGNodeGetHasNewLayout(child_child));
+
+    YGNodeStyleSetWidth(child, 700);
+
+    blog(LOG_DEBUG, "[react-obs] Is dirty: root=%d, child=%d child_child=%d",
+         YGNodeIsDirty(root), YGNodeIsDirty(child), YGNodeIsDirty(child_child));
+    blog(LOG_DEBUG, "[react-obs] Has new layout: root=%d, child=%d child_child=%d",
+         YGNodeGetHasNewLayout(root), YGNodeGetHasNewLayout(child), YGNodeGetHasNewLayout(child_child));
+
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+    blog(LOG_DEBUG, "[react-obs] Is dirty: root=%d, child=%d child_child=%d",
+         YGNodeIsDirty(root), YGNodeIsDirty(child), YGNodeIsDirty(child_child));
+    blog(LOG_DEBUG, "[react-obs] Has new layout: root=%d, child=%d child_child=%d",
+         YGNodeGetHasNewLayout(root), YGNodeGetHasNewLayout(child), YGNodeGetHasNewLayout(child_child));
+
+    auto left2 = YGNodeLayoutGetLeft(child_child);
+    auto top2 = YGNodeLayoutGetTop(child_child);
+
+    auto width2 = YGNodeLayoutGetWidth(child_child);
+    auto height2 = YGNodeLayoutGetHeight(child_child);
+
+    blog(LOG_INFO, "[react-obs] Calculated child dimensions: x = %f, y = %f, w = %f, h = %f",
+         left2,
+         top2,
+         width2,
+         height2);
 
     YGNodeFreeRecursive(root);
 }
@@ -600,7 +756,7 @@ void test_yoga() {
 
 void initialize() {
     blog(LOG_INFO, "[react-obs] Initializing react-obs");
-    
+
     YGConfigSetLogger(yoga_config, yoga_logger);
 
     // obs_frontend_source_list scenes;

@@ -143,6 +143,11 @@ export class ApplyUpdate extends jspb.Message {
   getRemoveChild(): RemoveChild | undefined;
   setRemoveChild(value?: RemoveChild): void;
 
+  hasCommitUpdates(): boolean;
+  clearCommitUpdates(): void;
+  getCommitUpdates(): CommitUpdates | undefined;
+  setCommitUpdates(value?: CommitUpdates): void;
+
   getChangeCase(): ApplyUpdate.ChangeCase;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ApplyUpdate.AsObject;
@@ -161,6 +166,7 @@ export namespace ApplyUpdate {
     createScene?: CreateScene.AsObject,
     appendChild?: AppendChild.AsObject,
     removeChild?: RemoveChild.AsObject,
+    commitUpdates?: CommitUpdates.AsObject,
   }
 
   export enum ChangeCase {
@@ -170,6 +176,7 @@ export namespace ApplyUpdate {
     CREATE_SCENE = 5,
     APPEND_CHILD = 2,
     REMOVE_CHILD = 4,
+    COMMIT_UPDATES = 6,
   }
 }
 
@@ -354,6 +361,26 @@ export namespace RemoveChild {
   export type AsObject = {
     parentUid: string,
     childUid: string,
+  }
+}
+
+export class CommitUpdates extends jspb.Message {
+  getContainerUid(): string;
+  setContainerUid(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CommitUpdates.AsObject;
+  static toObject(includeInstance: boolean, msg: CommitUpdates): CommitUpdates.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CommitUpdates, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CommitUpdates;
+  static deserializeBinaryFromReader(message: CommitUpdates, reader: jspb.BinaryReader): CommitUpdates;
+}
+
+export namespace CommitUpdates {
+  export type AsObject = {
+    containerUid: string,
   }
 }
 

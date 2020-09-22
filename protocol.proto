@@ -34,6 +34,8 @@ message ApplyUpdate {
 
         AppendChild append_child = 2;
         RemoveChild remove_child = 4;
+
+        CommitUpdates commit_updates = 6;
     }
 }
 
@@ -82,6 +84,10 @@ message AppendChild {
 message RemoveChild {
     string parent_uid = 1;
     string child_uid = 2;
+}
+
+message CommitUpdates {
+    string container_uid = 1;
 }
 
 //

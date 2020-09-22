@@ -19,12 +19,14 @@ add_library(react-obs MODULE
 	)
 
 add_subdirectory(lib/sockpp)
+add_subdirectory(lib/yoga)
 
 target_link_libraries(react-obs
 	${frontend-tools_PLATFORM_LIBS}
 	obs-frontend-api
 	libobs
 	sockpp
+	yogacore
 	${PROTOBUF_LIBRARY})
 
 set_target_properties(react-obs PROPERTIES FOLDER "frontend")

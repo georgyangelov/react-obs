@@ -2,6 +2,7 @@
 #include <obs-frontend-api.h>
 #include "react-obs-main.h"
 #include <sockpp/tcp_acceptor.h>
+#include <yoga/Yoga.h>
 
 #include <thread>
 #include <vector>
@@ -83,6 +84,7 @@ std::unordered_map<std::string, protocol::Prop> as_prop_map(
     return result;
 }
 
+// TODO: Validate settings for particular source types?
 void update_settings(
     obs_data_t* settings,
     protocol::ObjectValue object
@@ -412,6 +414,79 @@ void stop_server() {
 }
 
 //
+// Test stuffs
+//
+
+int yoga_logger(
+    YGConfigRef config,
+    YGNodeRef node,
+    YGLogLevel level,
+    const char* format,
+    va_list args
+) {
+    int blog_level = LOG_ERROR;
+    
+    switch (level) {
+        case YGLogLevelVerbose:
+        case YGLogLevelDebug:
+            blog_level = LOG_DEBUG;
+            break;
+        
+        case YGLogLevelInfo:
+            blog_level = LOG_INFO;
+            break;
+        
+        case YGLogLevelWarn:
+            blog_level = LOG_WARNING;
+            break;
+        
+        case YGLogLevelError:
+        case YGLogLevelFatal:
+            blog_level = LOG_ERROR;
+            break;
+    }
+    
+    auto new_format = std::string("[react-obs] [yoga] ") + format;
+    
+    blogva(blog_level, new_format.c_str(), args);
+    
+    return 0;
+}
+
+void test_yoga() {
+    auto config = YGConfigNew();
+    YGConfigSetLogger(config, yoga_logger);
+    
+    auto root = YGNodeNew();
+    YGNodeStyleSetWidth(root, 1920);
+    YGNodeStyleSetHeight(root, 1080);
+    YGNodeStyleSetAlignItems(root, YGAlignCenter);
+    YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
+    
+    auto child = YGNodeNew();
+    YGNodeStyleSetWidth(child, 800);
+    YGNodeStyleSetHeight(child, 600);
+    
+    YGNodeInsertChild(root, child, 0);
+    
+    YGNodeCalculateLayout(root, 1920, 1080, YGDirectionLTR);
+    
+    auto left = YGNodeLayoutGetLeft(child);
+    auto top = YGNodeLayoutGetTop(child);
+    
+    auto width = YGNodeLayoutGetWidth(child);
+    auto height = YGNodeLayoutGetHeight(child);
+    
+    blog(LOG_INFO, "[react-obs] Calculated child dimenstions: x = %f, y = %f, w = %f, h = %f",
+         left,
+         top,
+         width,
+         height);
+    
+    YGNodeFreeRecursive(root);
+}
+
+//
 // Plugin API
 //
 
@@ -433,6 +508,8 @@ void initialize() {
     initialize_server();
 
     log_scene_names();
+    
+    test_yoga();
 }
 
 void shutdown() {

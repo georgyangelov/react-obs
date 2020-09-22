@@ -6,24 +6,19 @@ message ClientMessage {
     oneof message {
         InitRequest init_request = 1;
         ApplyUpdate apply_update = 2;
+        FindSourceRequest find_source = 3;
     }
 }
 
 message ServerMessage {
     oneof message {
-        InitResponse init_response = 1;
+        Response response = 1;
     }
 }
 
 message InitRequest {
-    string client_id = 1;
-}
-
-message InitResponse {
-    uint32 canvas_width = 1;
-    uint32 canvas_height = 2;
-
-    repeated Scene scenes = 3;
+    string request_id = 1;
+    string client_id = 2;
 }
 
 message Scene {
@@ -41,28 +36,45 @@ message ApplyUpdate {
 }
 
 //
+// Requests and responses
+//
+
+message FindSourceRequest {
+    string request_id = 1;
+
+    string uid = 2;
+    string name = 3;
+}
+
+message Response {
+    string request_id = 1;
+    bool success = 2;
+}
+
+//
 // Update Types
 //
 
 message CreateSource {
-    string id = 1;
-    string name = 2;
-    ObjectValue settings = 3;
+    string uid = 1;
+    string id = 2;
+    string name = 3;
+    ObjectValue settings = 4;
 }
 
 message UpdateSource {
-    string name = 2;
+    string uid = 2;
     ObjectValue changed_props = 3;
 }
 
 message AppendChild {
-    string parent_name = 1;
-    string child_name = 2;
+    string parent_uid = 1;
+    string child_uid = 2;
 }
 
 message RemoveChild {
-    string parent_name = 1;
-    string child_name = 2;
+    string parent_uid = 1;
+    string child_uid = 2;
 }
 
 //

@@ -8,8 +8,8 @@ declare global {
 
 export type Type = 'obs_source';
 export type Props = { [key: string]: string | number | boolean | Props };
-export type Container = Instance;
-export type Instance = { name: string };
+export type Container = { uid: string, unmanaged: true };
+export type Instance = { uid: string, unmanaged?: boolean };
 export type TextInstance = Instance;
 export type HydratableInstance = any;
 export type PublicInstance = Instance;

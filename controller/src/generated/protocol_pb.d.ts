@@ -14,6 +14,11 @@ export class ClientMessage extends jspb.Message {
   getApplyUpdate(): ApplyUpdate | undefined;
   setApplyUpdate(value?: ApplyUpdate): void;
 
+  hasFindSource(): boolean;
+  clearFindSource(): void;
+  getFindSource(): FindSourceRequest | undefined;
+  setFindSource(value?: FindSourceRequest): void;
+
   getMessageCase(): ClientMessage.MessageCase;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ClientMessage.AsObject;
@@ -29,20 +34,22 @@ export namespace ClientMessage {
   export type AsObject = {
     initRequest?: InitRequest.AsObject,
     applyUpdate?: ApplyUpdate.AsObject,
+    findSource?: FindSourceRequest.AsObject,
   }
 
   export enum MessageCase {
     MESSAGE_NOT_SET = 0,
     INIT_REQUEST = 1,
     APPLY_UPDATE = 2,
+    FIND_SOURCE = 3,
   }
 }
 
 export class ServerMessage extends jspb.Message {
-  hasInitResponse(): boolean;
-  clearInitResponse(): void;
-  getInitResponse(): InitResponse | undefined;
-  setInitResponse(value?: InitResponse): void;
+  hasResponse(): boolean;
+  clearResponse(): void;
+  getResponse(): Response | undefined;
+  setResponse(value?: Response): void;
 
   getMessageCase(): ServerMessage.MessageCase;
   serializeBinary(): Uint8Array;
@@ -57,16 +64,19 @@ export class ServerMessage extends jspb.Message {
 
 export namespace ServerMessage {
   export type AsObject = {
-    initResponse?: InitResponse.AsObject,
+    response?: Response.AsObject,
   }
 
   export enum MessageCase {
     MESSAGE_NOT_SET = 0,
-    INIT_RESPONSE = 1,
+    RESPONSE = 1,
   }
 }
 
 export class InitRequest extends jspb.Message {
+  getRequestId(): string;
+  setRequestId(value: string): void;
+
   getClientId(): string;
   setClientId(value: string): void;
 
@@ -82,37 +92,8 @@ export class InitRequest extends jspb.Message {
 
 export namespace InitRequest {
   export type AsObject = {
+    requestId: string,
     clientId: string,
-  }
-}
-
-export class InitResponse extends jspb.Message {
-  getCanvasWidth(): number;
-  setCanvasWidth(value: number): void;
-
-  getCanvasHeight(): number;
-  setCanvasHeight(value: number): void;
-
-  clearScenesList(): void;
-  getScenesList(): Array<Scene>;
-  setScenesList(value: Array<Scene>): void;
-  addScenes(value?: Scene, index?: number): Scene;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InitResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: InitResponse): InitResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: InitResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InitResponse;
-  static deserializeBinaryFromReader(message: InitResponse, reader: jspb.BinaryReader): InitResponse;
-}
-
-export namespace InitResponse {
-  export type AsObject = {
-    canvasWidth: number,
-    canvasHeight: number,
-    scenesList: Array<Scene.AsObject>,
   }
 }
 
@@ -185,7 +166,62 @@ export namespace ApplyUpdate {
   }
 }
 
+export class FindSourceRequest extends jspb.Message {
+  getRequestId(): string;
+  setRequestId(value: string): void;
+
+  getUid(): string;
+  setUid(value: string): void;
+
+  getName(): string;
+  setName(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): FindSourceRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: FindSourceRequest): FindSourceRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: FindSourceRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): FindSourceRequest;
+  static deserializeBinaryFromReader(message: FindSourceRequest, reader: jspb.BinaryReader): FindSourceRequest;
+}
+
+export namespace FindSourceRequest {
+  export type AsObject = {
+    requestId: string,
+    uid: string,
+    name: string,
+  }
+}
+
+export class Response extends jspb.Message {
+  getRequestId(): string;
+  setRequestId(value: string): void;
+
+  getSuccess(): boolean;
+  setSuccess(value: boolean): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Response.AsObject;
+  static toObject(includeInstance: boolean, msg: Response): Response.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Response, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Response;
+  static deserializeBinaryFromReader(message: Response, reader: jspb.BinaryReader): Response;
+}
+
+export namespace Response {
+  export type AsObject = {
+    requestId: string,
+    success: boolean,
+  }
+}
+
 export class CreateSource extends jspb.Message {
+  getUid(): string;
+  setUid(value: string): void;
+
   getId(): string;
   setId(value: string): void;
 
@@ -209,6 +245,7 @@ export class CreateSource extends jspb.Message {
 
 export namespace CreateSource {
   export type AsObject = {
+    uid: string,
     id: string,
     name: string,
     settings?: ObjectValue.AsObject,
@@ -216,8 +253,8 @@ export namespace CreateSource {
 }
 
 export class UpdateSource extends jspb.Message {
-  getName(): string;
-  setName(value: string): void;
+  getUid(): string;
+  setUid(value: string): void;
 
   hasChangedProps(): boolean;
   clearChangedProps(): void;
@@ -236,17 +273,17 @@ export class UpdateSource extends jspb.Message {
 
 export namespace UpdateSource {
   export type AsObject = {
-    name: string,
+    uid: string,
     changedProps?: ObjectValue.AsObject,
   }
 }
 
 export class AppendChild extends jspb.Message {
-  getParentName(): string;
-  setParentName(value: string): void;
+  getParentUid(): string;
+  setParentUid(value: string): void;
 
-  getChildName(): string;
-  setChildName(value: string): void;
+  getChildUid(): string;
+  setChildUid(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AppendChild.AsObject;
@@ -260,17 +297,17 @@ export class AppendChild extends jspb.Message {
 
 export namespace AppendChild {
   export type AsObject = {
-    parentName: string,
-    childName: string,
+    parentUid: string,
+    childUid: string,
   }
 }
 
 export class RemoveChild extends jspb.Message {
-  getParentName(): string;
-  setParentName(value: string): void;
+  getParentUid(): string;
+  setParentUid(value: string): void;
 
-  getChildName(): string;
-  setChildName(value: string): void;
+  getChildUid(): string;
+  setChildUid(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RemoveChild.AsObject;
@@ -284,8 +321,8 @@ export class RemoveChild extends jspb.Message {
 
 export namespace RemoveChild {
   export type AsObject = {
-    parentName: string,
-    childName: string,
+    parentUid: string,
+    childUid: string,
   }
 }
 

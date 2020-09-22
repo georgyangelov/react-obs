@@ -1,41 +1,173 @@
-import { create } from 'domain';
+import { BinaryReader } from 'google-protobuf';
 import { Socket } from 'net';
 import { v4 as uuid } from 'uuid';
-import { AppendChild, ApplyUpdate, ClientMessage, InitRequest, Prop, UpdateSource, RemoveChild, CreateSource, ObjectValue } from './generated/protocol_pb';
-import { Instance, PropChanges, Props } from './types';
+import { AppendChild, ApplyUpdate, ClientMessage, InitRequest, Prop, UpdateSource, RemoveChild, CreateSource, ObjectValue, FindSourceRequest, Response, ServerMessage } from './generated/protocol_pb';
+import { Container, Instance, PropChanges, Props } from './types';
+
+class PacketReader {
+  private readingPacket = false;
+  private currentPacketSize = 0;
+  private currentReadSize = 0;
+  private buffer = Buffer.alloc(1 * 1024 * 1024);
+
+  constructor(
+    private socket: Socket,
+    private onMessage: (message: ServerMessage) => void,
+    private onDisconnect: () => void
+  ) {}
+
+  initialize() {
+    this.socket.on('readable', () => {
+      this.readSegment();
+    });
+
+    this.socket.on('close', () => {
+      this.onDisconnect();
+    });
+  }
+
+  private readPacketFromBuffer() {
+    const reader = new BinaryReader(this.buffer, 0, this.currentReadSize);
+    const message = new ServerMessage();
+
+    ServerMessage.deserializeBinaryFromReader(message, reader);
+
+    this.onMessage(message);
+  }
+
+  private readSegment() {
+    if (this.socket.readableLength === 0) {
+      return;
+    }
+
+    if (!this.readingPacket) {
+      if (this.socket.readableLength < 4) {
+        return;
+      }
+
+      const currentBuffer = Buffer.from(this.socket.read(4));
+      this.currentPacketSize = currentBuffer.readUInt32BE(0);
+      this.currentReadSize = 0;
+      this.readingPacket = true;
+    }
+
+    const maxLengthToEndOfMessage = this.currentPacketSize - this.currentReadSize;
+    const lengthToRead = Math.min(maxLengthToEndOfMessage, this.socket.readableLength);
+
+    if (lengthToRead === 0) {
+      return;
+    }
+
+    this.resizeBufferToFit(this.currentReadSize + lengthToRead);
+
+    const currentBuffer = Buffer.from(this.socket.read(lengthToRead));
+    currentBuffer.copy(this.buffer, this.currentReadSize);
+    this.currentReadSize += lengthToRead;
+
+    if (this.currentReadSize > this.currentPacketSize) {
+      throw new Error('Error in readSegment(), currentReadSize must not be > currentPacketSize');
+    }
+
+    console.log('sizes', this.currentReadSize, this.currentPacketSize)
+
+    if (this.currentReadSize === this.currentPacketSize) {
+      this.readPacketFromBuffer();
+
+      this.readingPacket = false;
+      this.currentPacketSize = 0;
+      this.currentReadSize = 0;
+
+      this.readSegment();
+    }
+  }
+
+  private resizeBufferToFit(requiredSize: number) {
+    if (this.buffer.byteLength >= requiredSize) {
+      return;
+    }
+
+    const newBufferSize = Math.max(requiredSize, this.buffer.byteLength * 2);
+    const oldBuffer = this.buffer;
+
+    this.buffer = Buffer.alloc(newBufferSize);
+    oldBuffer.copy(this.buffer);
+  }
+}
 
 export class ServerAPI {
   private clientId: string = uuid();
+  private requests: Map<string, (error: any, response?: Response) => void> = new Map();
+  private packetReader = new PacketReader(
+    this.socket,
+    message => this.messageReceived(message),
+    () => this.disconnected()
+  );
 
   constructor(private socket: Socket) {
     this.socket.setEncoding('binary');
   }
 
-  initialize() {
+  async initialize(): Promise<void> {
     console.debug(`Connected to server as ${this.clientId}`);
 
     const initRequest = new InitRequest();
+    initRequest.setRequestId(uuid());
     initRequest.setClientId(this.clientId);
 
     const packet = new ClientMessage();
     packet.setInitRequest(initRequest);
 
-    this.send(packet);
+    this.packetReader.initialize();
 
-    this.socket.on('readable', () => {
-      if (this.socket.readableLength === 0) {
-        console.log('Socket closed. Disconnected from server');
-        return;
-      }
+    const response = await this.sendExpectingResponse(initRequest.getRequestId(), packet);
 
-      console.log('Stream is readable, received response');
-    });
+    console.log('Received response from server', response.toObject(false));
   }
 
-  createSource(id: string, namePrefix: string, props: Props): Instance {
-    const name = this.newName(namePrefix);
+  private messageReceived(message: ServerMessage) {
+    console.debug('Received message from server', message.toObject(false));
+
+    if (message.hasResponse()) {
+      const response = message.getResponse()!;
+      const request = this.requests.get(response.getRequestId());
+
+      if (!request) {
+        throw new Error('Received response but request cannot be found');
+      }
+
+      if (response.getSuccess()) {
+        request(undefined, response);
+      } else {
+        request(new Error('Unsuccessful operation'), undefined);
+      }
+    }
+  }
+
+  private disconnected() {
+    console.log('Disconnected from server');
+  }
+
+  async findUnmanagedSource(name: string): Promise<Container> {
+    const uid = uuid();
+
+    const findSourceRequest = new FindSourceRequest();
+    findSourceRequest.setRequestId(uid);
+    findSourceRequest.setUid(uid);
+    findSourceRequest.setName(name);
+
+    const packet = new ClientMessage();
+    packet.setFindSource(findSourceRequest);
+
+    await this.sendExpectingResponse(uid, packet);
+
+    return { uid, unmanaged: true };
+  }
+
+  createSource(id: string, name: string, props: Props): Instance {
+    const uid = uuid();
 
     const createSource = new CreateSource();
+    createSource.setUid(uid);
     createSource.setId(id);
     createSource.setName(name);
     createSource.setSettings(this.asObject(props));
@@ -48,12 +180,12 @@ export class ServerAPI {
 
     this.send(message);
 
-    return { name };
+    return { uid };
   }
 
   updateSource(source: Instance, propChanges: PropChanges) {
     const updateSource = new UpdateSource();
-    updateSource.setName(source.name);
+    updateSource.setUid(source.uid);
     updateSource.setChangedProps(this.asObject(propChanges));
 
     const applyUpdate = new ApplyUpdate();
@@ -67,8 +199,8 @@ export class ServerAPI {
 
   appendChild(parent: Instance, child: Instance) {
     const appendChild = new AppendChild();
-    appendChild.setParentName(parent.name);
-    appendChild.setChildName(child.name);
+    appendChild.setParentUid(parent.uid);
+    appendChild.setChildUid(child.uid);
 
     const applyUpdate = new ApplyUpdate();
     applyUpdate.setAppendChild(appendChild);
@@ -81,8 +213,8 @@ export class ServerAPI {
 
   removeChild(parent: Instance, child: Instance) {
     const removeChild = new RemoveChild();
-    removeChild.setParentName(parent.name);
-    removeChild.setChildName(child.name);
+    removeChild.setParentUid(parent.uid);
+    removeChild.setChildUid(child.uid);
 
     const applyUpdate = new ApplyUpdate();
     applyUpdate.setRemoveChild(removeChild);
@@ -128,18 +260,29 @@ export class ServerAPI {
     return objectValue;
   }
 
-  private newName(type: string) {
-    return `${type}-${uuid()}`;
-  }
-
   private send(message: ClientMessage) {
     const packetBinary = message.serializeBinary();
 
     const sizeHeader = new ArrayBuffer(4);
     const dataView = new DataView(sizeHeader);
-    dataView.setUint32(0, packetBinary.byteLength, true);
+    dataView.setUint32(0, packetBinary.byteLength);
 
     this.socket.write(new Uint8Array(sizeHeader));
     this.socket.write(packetBinary);
+  }
+
+  private sendExpectingResponse(requestId: string, packet: ClientMessage): Promise<Response> {
+    return new Promise((resolve, reject) => {
+      this.requests.set(requestId, (error, response) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(response);
+      });
+
+      this.send(packet);
+    });
   }
 };

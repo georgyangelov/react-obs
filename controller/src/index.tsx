@@ -18,8 +18,6 @@ import {
   NoTimeout, PropChanges
 } from './types';
 
-console.log('Hello world');
-
 function App() {
   const [counter, setCounter] = useState(0);
 
@@ -38,13 +36,13 @@ function App() {
   return <Text fontSize={42} fontFace="Fira Code" fontStyle="Bold">Counter: {counter}</Text>;
 }
 
-const socket = createConnection({ port: 6666 }, () => {
-  api.initialize();
+const socket = createConnection({ port: 6666 }, async () => {
+  await api.initialize();
 
-  const root = reconciler.createContainer({ name: 'react-obs' }, false, false);
-  reconciler.updateContainer(<App />, root, null, () => {
-    console.log('done mounting');
-  });
+  // const root = reconciler.createContainer({ name: 'react-obs' }, false, false);
+  // reconciler.updateContainer(<App />, root, null, () => {
+  //   console.log('done mounting');
+  // });
 });
 const api = new ServerAPI(socket);
 
@@ -146,7 +144,11 @@ const reconciler = Reconciler<
         throw new Error('obs_source must have an id and it must be a string');
       }
 
-      return api.createSource(props.id, props.id, props);
+      if (!props.name || typeof props.name !== 'string') {
+        throw new Error('obs_source must have a name and it must be a string');
+      }
+
+      return api.createSource(props.id, props.name, props);
     } else {
       throw new Error(`Unsupported obs element ${type}`);
     }
@@ -409,7 +411,8 @@ const reconciler = Reconciler<
 //   return null;
 // }
 
-function Text({ children, fontSize, fontFace, fontStyle }: {
+function Text({ name, children, fontSize, fontFace, fontStyle }: {
+  name?: string,
   children: string | number | (string | number)[],
   fontSize?: number,
   fontFace?: string,
@@ -426,6 +429,7 @@ function Text({ children, fontSize, fontFace, fontStyle }: {
   return (
     <obs_source
       id="text_ft2_source"
+      name={name}
       font={font}
       text={text} />
   );

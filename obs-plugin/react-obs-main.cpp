@@ -13,8 +13,63 @@
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("react-obs", "en-US")
 
+struct ManagedSource {
+    std::string uid;
+    obs_source_t* source;
+    YGNodeRef yoga_node;
+    bool added_as_child;
+    bool managed;
+};
+
+//
+// Yoga
+//
+
+int yoga_logger(
+    YGConfigRef config,
+    YGNodeRef node,
+    YGLogLevel level,
+    const char* format,
+    va_list args
+) {
+    int blog_level = LOG_ERROR;
+
+    switch (level) {
+        case YGLogLevelVerbose:
+        case YGLogLevelDebug:
+            blog_level = LOG_DEBUG;
+            break;
+
+        case YGLogLevelInfo:
+            blog_level = LOG_INFO;
+            break;
+
+        case YGLogLevelWarn:
+            blog_level = LOG_WARNING;
+            break;
+
+        case YGLogLevelError:
+        case YGLogLevelFatal:
+            blog_level = LOG_ERROR;
+            break;
+    }
+
+    auto new_format = std::string("[react-obs] [yoga] ") + format;
+
+    blogva(blog_level, new_format.c_str(), args);
+
+    return 0;
+}
+
+//
+// State
+//
+
 std::thread server_thread;
 sockpp::tcp_acceptor server_acceptor;
+std::unordered_map<std::string, ManagedSource> managed_sources;
+
+auto yoga_config = YGConfigNew();
 
 //
 // Utility functions
@@ -42,27 +97,18 @@ obs_scene_t* get_scene() {
     return obs_scene_from_source(obs_frontend_get_current_scene());
 }
 
+//
+// Managed sources
+//
 
-
-class PropError: public std::runtime_error {
-public:
-    PropError(const std::string& what): std::runtime_error(what) {}
-};
-
-std::string as_string(const protocol::Prop prop) {
-    if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
-        throw PropError(std::string("Prop ") + prop.key() + std::string(" must be a string"));
+std::optional<std::reference_wrapper<ManagedSource>> get_managed_source(const std::string &uid) {
+    auto source = managed_sources.find(uid);
+    
+    if (source == managed_sources.end()) {
+        return std::nullopt;
     }
-
-    return prop.string_value();
-}
-
-int64_t as_int(const protocol::Prop prop) {
-    if (prop.value_case() != protocol::Prop::ValueCase::kIntValue) {
-        throw PropError(std::string("Prop ") + prop.key() + std::string(" must be an int"));
-    }
-
-    return prop.int_value();
+    
+    return (*source).second;
 }
 
 //
@@ -139,62 +185,104 @@ void update_settings(
 //
 
 void create_source(const protocol::CreateSource &create_source) {
-    blog(LOG_DEBUG, "[react-obs] Creating source %s", create_source.name().c_str());
+    blog(LOG_DEBUG, "[react-obs] Creating source: id=%s, name=%s, uid=%s",
+         create_source.id().c_str(),
+         create_source.name().c_str(),
+         create_source.uid().c_str());
 
     auto settings = obs_data_create();
     update_settings(settings, create_source.settings());
 
-    auto source = obs_source_create(create_source.id().c_str(), create_source.name().c_str(), settings, NULL);
-
-    // TODO: Add source to internal map for tracking and GC
+    auto source = obs_source_create(
+        create_source.id().c_str(),
+        create_source.name().c_str(),
+        settings,
+        NULL
+    );
+    
+    auto uid = create_source.uid();
+    
+    managed_sources[uid] = ManagedSource {
+        .uid = uid,
+        .source = source,
+        .yoga_node = YGNodeNewWithConfig(yoga_config),
+        .added_as_child = false,
+        .managed = true
+    };
 
     obs_data_release(settings);
 }
 
+bool register_unmanaged_source(const std::string &uid, const std::string &name) {
+    auto source = obs_get_source_by_name(name.c_str());
+    if (!source) {
+        blog(LOG_ERROR, "[react-obs] Could not find source with name %s", name.c_str());
+        return false;
+    }
+    
+    managed_sources[uid] = ManagedSource {
+        .uid = uid,
+        .source = source,
+        .yoga_node = YGNodeNewWithConfig(yoga_config),
+        .added_as_child = false,
+        .managed = false
+    };
+    
+    return true;
+}
+
 void append_child(const protocol::AppendChild &append_child) {
     blog(LOG_DEBUG, "[react-obs] Appending %s to %s",
-         append_child.child_name().c_str(),
-         append_child.parent_name().c_str());
+         append_child.child_uid().c_str(),
+         append_child.parent_uid().c_str());
 
-//    auto current_scene = get_scene();
-//    if (!current_scene) {
-//        blog(LOG_ERROR, "[react-obs] Cannot find current scene");
-//        return;
-//    }
-
-    auto parent = obs_get_source_by_name(append_child.parent_name().c_str());
-    if (!parent) {
-        blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", append_child.parent_name().c_str());
+    auto parent_option = get_managed_source(append_child.parent_uid());
+    if (!parent_option.has_value()) {
+        blog(LOG_ERROR, "[react-obs] Cannot find parent source with uid %s", append_child.parent_uid().c_str());
         return;
     }
-
-    auto scene = obs_scene_from_source(parent);
+    
+    auto parent = parent_option->get();
+    
+    auto scene = obs_scene_from_source(parent.source);
     if (!scene) {
-        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", append_child.parent_name().c_str());
+        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", append_child.parent_uid().c_str());
         return;
     }
-
-    auto child_source = obs_get_source_by_name(append_child.child_name().c_str());
-    if (!child_source) {
-        blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", append_child.child_name().c_str());
+    
+    auto child_option = get_managed_source(append_child.child_uid());
+    if (!child_option.has_value()) {
+        blog(LOG_ERROR, "[react-obs] Cannot find child source with uid %s", append_child.child_uid().c_str());
         return;
     }
+    
+    auto child = child_option->get();
 
-    auto item = obs_scene_add(scene, child_source);
+    // TODO: Keep `item` in ManagedSource so that we can remove a child by item reference
+    auto item = obs_scene_add(scene, child.source);
+    
+    obs_sceneitem_release(item);
 }
 
 void update_source(const protocol::UpdateSource &update) {
-    blog(LOG_DEBUG, "[react-obs] Updating source %s", update.name().c_str());
+    blog(LOG_DEBUG, "[react-obs] Updating source %s", update.uid().c_str());
 
-    auto source = obs_get_source_by_name(update.name().c_str());
-    if (!source) {
-        blog(LOG_ERROR, "[react-obs] Cannot find source named %s", update.name().c_str());
+//    auto source = obs_get_source_by_name(update.name().c_str());
+//    if (!source) {
+//        blog(LOG_ERROR, "[react-obs] Cannot find source named %s", update.name().c_str());
+//        return;
+//    }
+    
+    auto source_option = get_managed_source(update.uid());
+    if (!source_option.has_value()) {
+        blog(LOG_ERROR, "[react-obs] Cannot find source %s", update.uid().c_str());
         return;
     }
+    auto source = source_option->get().source;
 
     auto settings = obs_source_get_settings(source);
     if (!settings) {
-        blog(LOG_ERROR, "[react-obs] Source %s does not have settings object, WTF", update.name().c_str());
+        blog(LOG_ERROR, "[react-obs] Source %s does not have settings object, WTF", update.uid().c_str());
         return;
     }
 
@@ -214,59 +302,59 @@ bool enum_scene_item_remove_child(obs_scene_t* scene, obs_sceneitem_t* item, voi
 }
 
 void remove_child(const protocol::RemoveChild &remove) {
-    blog(LOG_DEBUG, "[react-obs] Removing child %s", remove.child_name().c_str());
+    blog(LOG_DEBUG, "[react-obs] Removing child %s", remove.child_uid().c_str());
 
-    auto parent = obs_get_source_by_name(remove.parent_name().c_str());
-    if (!parent) {
-        blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", remove.parent_name().c_str());
+    auto parent_option = get_managed_source(remove.parent_uid());
+    if (!parent_option.has_value()) {
+        blog(LOG_ERROR, "[react-obs] Cannot find parent source with uid %s", remove.parent_uid().c_str());
         return;
     }
-
-    auto scene = obs_scene_from_source(parent);
+    
+    auto parent = parent_option->get();
+    
+    auto scene = obs_scene_from_source(parent.source);
     if (!scene) {
-        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", remove.parent_name().c_str());
+        blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", remove.parent_uid().c_str());
         return;
     }
-
-    auto child_source = obs_get_source_by_name(remove.child_name().c_str());
-    if (!child_source) {
-        blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", remove.child_name().c_str());
+    
+    auto child_option = get_managed_source(remove.child_uid());
+    if (!child_option.has_value()) {
+        blog(LOG_ERROR, "[react-obs] Cannot find child source with uid %s", remove.child_uid().c_str());
         return;
     }
-
-    obs_scene_enum_items(scene, &enum_scene_item_remove_child, (void*)child_source);
+    
+    auto child = child_option->get();
+    
+    obs_scene_enum_items(scene, &enum_scene_item_remove_child, (void*)child.source);
 
     // TODO: This is not exactly correct - this source may be a child of multiple scenes.
-    obs_source_remove(child_source);
-
-    obs_source_release(child_source);
+    // obs_source_remove(child.source);
+    //
+    // obs_source_release(child.source);
 }
 
 void apply_updates(protocol::ApplyUpdate &update) {
-    try {
-        switch (update.change_case()) {
-            case protocol::ApplyUpdate::ChangeCase::kCreateSource:
-                create_source(update.create_source());
-                break;
+    switch (update.change_case()) {
+        case protocol::ApplyUpdate::ChangeCase::kCreateSource:
+            create_source(update.create_source());
+            break;
 
-            case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
-                update_source(update.update_source());
-                break;
+        case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
+            update_source(update.update_source());
+            break;
 
-            case protocol::ApplyUpdate::ChangeCase::kAppendChild:
-                append_child(update.append_child());
-                break;
+        case protocol::ApplyUpdate::ChangeCase::kAppendChild:
+            append_child(update.append_child());
+            break;
 
-            case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
-                remove_child(update.remove_child());
-                break;
+        case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
+            remove_child(update.remove_child());
+            break;
 
-            case protocol::ApplyUpdate::ChangeCase::CHANGE_NOT_SET:
-                blog(LOG_ERROR, "[react-obs] Received update request with no change");
-                break;
-        }
-    } catch (PropError error) {
-        blog(LOG_ERROR, "[react-obs] Prop error: %s", error.what());
+        case protocol::ApplyUpdate::ChangeCase::CHANGE_NOT_SET:
+            blog(LOG_ERROR, "[react-obs] Received update request with no change");
+            break;
     }
 }
 
@@ -283,6 +371,8 @@ enum class ReadPacketResult {
 ReadPacketResult read_packet(protocol::ClientMessage &message, sockpp::tcp_socket &socket, std::vector<unsigned char> &buffer) {
     uint32_t packet_size;
     size_t read_bytes = socket.read_n(&packet_size, sizeof(uint32_t));
+    
+    packet_size = ntohl(packet_size);
 
     if (read_bytes <= 0) {
         return ReadPacketResult::Disconnected;
@@ -312,6 +402,24 @@ ReadPacketResult read_packet(protocol::ClientMessage &message, sockpp::tcp_socke
     return ReadPacketResult::Success;
 }
 
+void send_packet(const protocol::ServerMessage &message, sockpp::tcp_socket &socket) {
+    auto size = message.ByteSizeLong();
+    std::vector<unsigned char> buffer(size);
+    buffer.reserve(size);
+    
+    message.SerializeToArray(&buffer[0], size);
+    
+    uint32_t packet_size = htonl(size);
+    socket.write_n(&packet_size, sizeof(uint32_t));
+    
+    auto written_size = socket.write_n(&buffer[0], size);
+    
+    if (written_size < size) {
+        blog(LOG_ERROR, "[react-obs] Written size of message to socket is less than message size");
+        return;
+    }
+}
+
 // TODO: Disconnect this whenever the server stops
 void client_thread_runner(sockpp::tcp_socket socket) {
     std::vector<unsigned char> buffer;
@@ -330,6 +438,14 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 auto init_request = message.init_request();
 
                 blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
+                
+                protocol::ServerMessage message;
+                auto response = message.mutable_response();
+                response->set_request_id(init_request.request_id());
+                response->set_success(true);
+                
+                send_packet(message, socket);
+                
                 break;
             }
 
@@ -339,6 +455,22 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
                 apply_updates(command);
 
+                break;
+            }
+                
+            case protocol::ClientMessage::MessageCase::kFindSource: {
+                auto command = message.find_source();
+                
+                blog(LOG_DEBUG, "[react-obs] Received find source request for name %s", command.name().c_str());
+                auto success = register_unmanaged_source(command.uid(), command.name());
+                
+                protocol::ServerMessage message;
+                auto response = message.mutable_response();
+                response->set_request_id(command.request_id());
+                response->set_success(success);
+                
+                send_packet(message, socket);
+                
                 break;
             }
 
@@ -417,53 +549,14 @@ void stop_server() {
 // Test stuffs
 //
 
-int yoga_logger(
-    YGConfigRef config,
-    YGNodeRef node,
-    YGLogLevel level,
-    const char* format,
-    va_list args
-) {
-    int blog_level = LOG_ERROR;
-
-    switch (level) {
-        case YGLogLevelVerbose:
-        case YGLogLevelDebug:
-            blog_level = LOG_DEBUG;
-            break;
-
-        case YGLogLevelInfo:
-            blog_level = LOG_INFO;
-            break;
-
-        case YGLogLevelWarn:
-            blog_level = LOG_WARNING;
-            break;
-
-        case YGLogLevelError:
-        case YGLogLevelFatal:
-            blog_level = LOG_ERROR;
-            break;
-    }
-
-    auto new_format = std::string("[react-obs] [yoga] ") + format;
-
-    blogva(blog_level, new_format.c_str(), args);
-
-    return 0;
-}
-
 void test_yoga() {
-    auto config = YGConfigNew();
-    YGConfigSetLogger(config, yoga_logger);
-
-    auto root = YGNodeNew();
+    auto root = YGNodeNewWithConfig(yoga_config);
     YGNodeStyleSetWidth(root, 1920);
     YGNodeStyleSetHeight(root, 1080);
     YGNodeStyleSetAlignItems(root, YGAlignCenter);
     YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
 
-    auto child = YGNodeNew();
+    auto child = YGNodeNewWithConfig(yoga_config);
     YGNodeStyleSetWidth(child, 800);
     YGNodeStyleSetHeight(child, 600);
 
@@ -477,7 +570,7 @@ void test_yoga() {
     auto width = YGNodeLayoutGetWidth(child);
     auto height = YGNodeLayoutGetHeight(child);
 
-    blog(LOG_INFO, "[react-obs] Calculated child dimenstions: x = %f, y = %f, w = %f, h = %f",
+    blog(LOG_INFO, "[react-obs] Calculated child dimensions: x = %f, y = %f, w = %f, h = %f",
          left,
          top,
          width,
@@ -492,6 +585,8 @@ void test_yoga() {
 
 void initialize() {
     blog(LOG_INFO, "[react-obs] Initializing react-obs");
+    
+    YGConfigSetLogger(yoga_config, yoga_logger);
 
     // obs_frontend_source_list scenes;
     // obs_frontend_get_scenes(&scenes);

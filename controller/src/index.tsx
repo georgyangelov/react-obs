@@ -177,13 +177,13 @@ const reconciler = Reconciler<
     const propChanges: PropChanges = {};
 
     Object.keys(newProps).forEach(key => {
-    //   propChanges.push({ key, value: newProps[key] });
-      propChanges[key] = newProps[key];
+      if (oldProps[key] !== newProps[key]) {
+        propChanges[key] = newProps[key];
+      }
     });
 
     Object.keys(oldProps).forEach(key => {
       if (newProps[key] === undefined || newProps[key] === null) {
-    //     propChanges.push({ key, value: undefined });
         propChanges[key] = undefined;
       }
     });

@@ -53,7 +53,7 @@ std::string as_string(const protocol::Prop prop) {
     if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
         throw PropError(std::string("Prop ") + prop.key() + std::string(" must be a string"));
     }
-    
+
     return prop.string_value();
 }
 
@@ -61,7 +61,7 @@ int64_t as_int(const protocol::Prop prop) {
     if (prop.value_case() != protocol::Prop::ValueCase::kIntValue) {
         throw PropError(std::string("Prop ") + prop.key() + std::string(" must be an int"));
     }
-    
+
     return prop.int_value();
 }
 
@@ -74,13 +74,13 @@ std::unordered_map<std::string, protocol::Prop> as_prop_map(
     const T &props
 ) {
     std::unordered_map<std::string, protocol::Prop> result;
-    
+
     for (int i = 0; i < props.size(); i++) {
         auto prop = props[i];
-        
+
         result[prop.key()] = prop;
     }
-    
+
     return result;
 }
 
@@ -90,32 +90,32 @@ void update_settings(
     protocol::ObjectValue object
 ) {
     auto props = object.props();
-    
+
     for (int i = 0; i < props.size(); i++) {
         protocol::Prop prop = props[i];
         const char* key = prop.key().c_str();
-        
+
         switch (prop.value_case()) {
             case protocol::Prop::ValueCase::kUndefined:
                 obs_data_unset_user_value(settings, key);
                 break;
-                
+
             case protocol::Prop::ValueCase::kBoolValue:
                 obs_data_set_bool(settings, key, prop.bool_value());
                 break;
-                
+
             case protocol::Prop::ValueCase::kIntValue:
                 obs_data_set_int(settings, key, prop.int_value());
                 break;
-                
+
             case protocol::Prop::ValueCase::kFloatValue:
                 obs_data_set_double(settings, key, prop.float_value());
                 break;
-                
+
             case protocol::Prop::ValueCase::kStringValue:
                 obs_data_set_string(settings, key, prop.string_value().c_str());
                 break;
-                
+
             case protocol::Prop::ValueCase::kObjectValue: {
                 auto object = obs_data_get_obj(settings, key);
                 if (!object) {
@@ -123,11 +123,11 @@ void update_settings(
                     obs_data_set_obj(settings, key, object);
                     obs_data_release(object);
                 }
-                
+
                 update_settings(object, prop.object_value());
                 break;
             }
-            
+
             default:
                 blog(LOG_ERROR, "[react-obs] Unsupported prop type");
         }
@@ -140,14 +140,14 @@ void update_settings(
 
 void create_source(const protocol::CreateSource &create_source) {
     blog(LOG_DEBUG, "[react-obs] Creating source %s", create_source.name().c_str());
-    
+
     auto settings = obs_data_create();
     update_settings(settings, create_source.settings());
-    
+
     auto source = obs_source_create(create_source.id().c_str(), create_source.name().c_str(), settings, NULL);
-    
+
     // TODO: Add source to internal map for tracking and GC
-    
+
     obs_data_release(settings);
 }
 
@@ -155,87 +155,87 @@ void append_child(const protocol::AppendChild &append_child) {
     blog(LOG_DEBUG, "[react-obs] Appending %s to %s",
          append_child.child_name().c_str(),
          append_child.parent_name().c_str());
-    
+
 //    auto current_scene = get_scene();
 //    if (!current_scene) {
 //        blog(LOG_ERROR, "[react-obs] Cannot find current scene");
 //        return;
 //    }
-    
+
     auto parent = obs_get_source_by_name(append_child.parent_name().c_str());
     if (!parent) {
         blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", append_child.parent_name().c_str());
         return;
     }
-    
+
     auto scene = obs_scene_from_source(parent);
     if (!scene) {
         blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", append_child.parent_name().c_str());
         return;
     }
-    
+
     auto child_source = obs_get_source_by_name(append_child.child_name().c_str());
     if (!child_source) {
         blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", append_child.child_name().c_str());
         return;
     }
-    
+
     auto item = obs_scene_add(scene, child_source);
 }
 
 void update_source(const protocol::UpdateSource &update) {
     blog(LOG_DEBUG, "[react-obs] Updating source %s", update.name().c_str());
-    
+
     auto source = obs_get_source_by_name(update.name().c_str());
     if (!source) {
         blog(LOG_ERROR, "[react-obs] Cannot find source named %s", update.name().c_str());
         return;
     }
-    
+
     auto settings = obs_source_get_settings(source);
     if (!settings) {
         blog(LOG_ERROR, "[react-obs] Source %s does not have settings object, WTF", update.name().c_str());
         return;
     }
-    
+
     update_settings(settings, update.changed_props());
     obs_source_update(source, settings);
 }
 
 bool enum_scene_item_remove_child(obs_scene_t* scene, obs_sceneitem_t* item, void* child_source_void) {
     auto child_source = (obs_source_t*)child_source_void;
-    
+
     if (obs_sceneitem_get_source(item) == child_source) {
         obs_sceneitem_remove(item);
         return false;
     }
-    
+
     return true;
 }
 
 void remove_child(const protocol::RemoveChild &remove) {
     blog(LOG_DEBUG, "[react-obs] Removing child %s", remove.child_name().c_str());
-    
+
     auto parent = obs_get_source_by_name(remove.parent_name().c_str());
     if (!parent) {
         blog(LOG_ERROR, "[react-obs] Cannot find parent source named %s", remove.parent_name().c_str());
         return;
     }
-    
+
     auto scene = obs_scene_from_source(parent);
     if (!scene) {
         blog(LOG_ERROR, "[react-obs] Parent source %s is not a scene", remove.parent_name().c_str());
         return;
     }
-    
+
     auto child_source = obs_get_source_by_name(remove.child_name().c_str());
     if (!child_source) {
         blog(LOG_ERROR, "[react-obs] Cannot find child source named %s", remove.child_name().c_str());
         return;
     }
-    
+
     obs_scene_enum_items(scene, &enum_scene_item_remove_child, (void*)child_source);
-    
+
     // TODO: This is not exactly correct - this source may be a child of multiple scenes.
     obs_source_remove(child_source);
 
@@ -248,15 +248,15 @@ void apply_updates(protocol::ApplyUpdate &update) {
             case protocol::ApplyUpdate::ChangeCase::kCreateSource:
                 create_source(update.create_source());
                 break;
-                
+
             case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
                 update_source(update.update_source());
                 break;
-                
+
             case protocol::ApplyUpdate::ChangeCase::kAppendChild:
                 append_child(update.append_child());
                 break;
-                
+
             case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
                 remove_child(update.remove_child());
                 break;
@@ -332,13 +332,13 @@ void client_thread_runner(sockpp::tcp_socket socket) {
                 blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
                 break;
             }
-                
+
             case protocol::ClientMessage::MessageCase::kApplyUpdate: {
                 auto command = message.apply_update();
-                
+
                 blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
                 apply_updates(command);
-                
+
                 break;
             }
 
@@ -369,12 +369,12 @@ void start_server() {
     blog(LOG_INFO, "[react-obs] Created TCP acceptor, listening on %i", port);
 
     while (true) {
-		sockpp::inet_address peer;
+        sockpp::inet_address peer;
 
-		// Accept a new client connection
-		sockpp::tcp_socket socket = server_acceptor.accept(&peer);
+        // Accept a new client connection
+        sockpp::tcp_socket socket = server_acceptor.accept(&peer);
 
-		if (!socket) {
+        if (!socket) {
             if (!server_acceptor.is_open()) {
                 // Server stopped, probably due to `server_acceptor.close()`
                 break;
@@ -386,7 +386,7 @@ void start_server() {
                 server_acceptor.last_error_str().c_str()
             );
             continue;
-		}
+        }
 
         blog(
             LOG_DEBUG,
@@ -397,7 +397,7 @@ void start_server() {
         // Create a thread and transfer the new stream to it.
         std::thread client_thread(client_thread_runner, std::move(socket));
         client_thread.detach();
-	}
+    }
 
     blog(LOG_INFO, "[react-obs] Stopped listening for connections");
 }
@@ -425,64 +425,64 @@ int yoga_logger(
     va_list args
 ) {
     int blog_level = LOG_ERROR;
-    
+
     switch (level) {
         case YGLogLevelVerbose:
         case YGLogLevelDebug:
             blog_level = LOG_DEBUG;
             break;
-        
+
         case YGLogLevelInfo:
             blog_level = LOG_INFO;
             break;
-        
+
         case YGLogLevelWarn:
             blog_level = LOG_WARNING;
             break;
-        
+
         case YGLogLevelError:
         case YGLogLevelFatal:
             blog_level = LOG_ERROR;
             break;
     }
-    
+
     auto new_format = std::string("[react-obs] [yoga] ") + format;
-    
+
     blogva(blog_level, new_format.c_str(), args);
-    
+
     return 0;
 }
 
 void test_yoga() {
     auto config = YGConfigNew();
     YGConfigSetLogger(config, yoga_logger);
-    
+
     auto root = YGNodeNew();
     YGNodeStyleSetWidth(root, 1920);
     YGNodeStyleSetHeight(root, 1080);
     YGNodeStyleSetAlignItems(root, YGAlignCenter);
     YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
-    
+
     auto child = YGNodeNew();
     YGNodeStyleSetWidth(child, 800);
     YGNodeStyleSetHeight(child, 600);
-    
+
     YGNodeInsertChild(root, child, 0);
-    
+
     YGNodeCalculateLayout(root, 1920, 1080, YGDirectionLTR);
-    
+
     auto left = YGNodeLayoutGetLeft(child);
     auto top = YGNodeLayoutGetTop(child);
-    
+
     auto width = YGNodeLayoutGetWidth(child);
     auto height = YGNodeLayoutGetHeight(child);
-    
+
     blog(LOG_INFO, "[react-obs] Calculated child dimenstions: x = %f, y = %f, w = %f, h = %f",
          left,
          top,
          width,
          height);
-    
+
     YGNodeFreeRecursive(root);
 }
 
@@ -508,7 +508,7 @@ void initialize() {
     initialize_server();
 
     log_scene_names();
-    
+
     test_yoga();
 }
 
@@ -542,9 +542,9 @@ static void OBSEvent(enum obs_frontend_event event, void *) {
 }
 
 bool obs_module_load(void) {
-	obs_frontend_add_event_callback(OBSEvent, nullptr);
+    obs_frontend_add_event_callback(OBSEvent, nullptr);
 
-	return true;
+    return true;
 }
 
 void obs_module_unload(void) {

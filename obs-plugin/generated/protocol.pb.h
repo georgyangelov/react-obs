@@ -47,7 +47,7 @@ struct TableStruct_protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -64,6 +64,9 @@ extern ApplyUpdateDefaultTypeInternal _ApplyUpdate_default_instance_;
 class ClientMessage;
 class ClientMessageDefaultTypeInternal;
 extern ClientMessageDefaultTypeInternal _ClientMessage_default_instance_;
+class CreateScene;
+class CreateSceneDefaultTypeInternal;
+extern CreateSceneDefaultTypeInternal _CreateScene_default_instance_;
 class CreateSource;
 class CreateSourceDefaultTypeInternal;
 extern CreateSourceDefaultTypeInternal _CreateSource_default_instance_;
@@ -99,6 +102,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::protocol::AppendChild* Arena::CreateMaybeMessage<::protocol::AppendChild>(Arena*);
 template<> ::protocol::ApplyUpdate* Arena::CreateMaybeMessage<::protocol::ApplyUpdate>(Arena*);
 template<> ::protocol::ClientMessage* Arena::CreateMaybeMessage<::protocol::ClientMessage>(Arena*);
+template<> ::protocol::CreateScene* Arena::CreateMaybeMessage<::protocol::CreateScene>(Arena*);
 template<> ::protocol::CreateSource* Arena::CreateMaybeMessage<::protocol::CreateSource>(Arena*);
 template<> ::protocol::FindSourceRequest* Arena::CreateMaybeMessage<::protocol::FindSourceRequest>(Arena*);
 template<> ::protocol::InitRequest* Arena::CreateMaybeMessage<::protocol::InitRequest>(Arena*);
@@ -827,6 +831,7 @@ class ApplyUpdate PROTOBUF_FINAL :
   enum ChangeCase {
     kCreateSource = 1,
     kUpdateSource = 3,
+    kCreateScene = 5,
     kAppendChild = 2,
     kRemoveChild = 4,
     CHANGE_NOT_SET = 0,
@@ -911,6 +916,7 @@ class ApplyUpdate PROTOBUF_FINAL :
   enum : int {
     kCreateSourceFieldNumber = 1,
     kUpdateSourceFieldNumber = 3,
+    kCreateSceneFieldNumber = 5,
     kAppendChildFieldNumber = 2,
     kRemoveChildFieldNumber = 4,
   };
@@ -949,6 +955,24 @@ class ApplyUpdate PROTOBUF_FINAL :
   void unsafe_arena_set_allocated_update_source(
       ::protocol::UpdateSource* update_source);
   ::protocol::UpdateSource* unsafe_arena_release_update_source();
+
+  // .protocol.CreateScene create_scene = 5;
+  bool has_create_scene() const;
+  private:
+  bool _internal_has_create_scene() const;
+  public:
+  void clear_create_scene();
+  const ::protocol::CreateScene& create_scene() const;
+  ::protocol::CreateScene* release_create_scene();
+  ::protocol::CreateScene* mutable_create_scene();
+  void set_allocated_create_scene(::protocol::CreateScene* create_scene);
+  private:
+  const ::protocol::CreateScene& _internal_create_scene() const;
+  ::protocol::CreateScene* _internal_mutable_create_scene();
+  public:
+  void unsafe_arena_set_allocated_create_scene(
+      ::protocol::CreateScene* create_scene);
+  ::protocol::CreateScene* unsafe_arena_release_create_scene();
 
   // .protocol.AppendChild append_child = 2;
   bool has_append_child() const;
@@ -993,6 +1017,7 @@ class ApplyUpdate PROTOBUF_FINAL :
   class _Internal;
   void set_has_create_source();
   void set_has_update_source();
+  void set_has_create_scene();
   void set_has_append_child();
   void set_has_remove_child();
 
@@ -1006,6 +1031,7 @@ class ApplyUpdate PROTOBUF_FINAL :
     ChangeUnion() {}
     ::protocol::CreateSource* create_source_;
     ::protocol::UpdateSource* update_source_;
+    ::protocol::CreateScene* create_scene_;
     ::protocol::AppendChild* append_child_;
     ::protocol::RemoveChild* remove_child_;
   } change_;
@@ -1715,6 +1741,168 @@ class UpdateSource PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class CreateScene PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.CreateScene) */ {
+ public:
+  inline CreateScene() : CreateScene(nullptr) {}
+  virtual ~CreateScene();
+
+  CreateScene(const CreateScene& from);
+  CreateScene(CreateScene&& from) noexcept
+    : CreateScene() {
+    *this = ::std::move(from);
+  }
+
+  inline CreateScene& operator=(const CreateScene& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CreateScene& operator=(CreateScene&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CreateScene& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CreateScene* internal_default_instance() {
+    return reinterpret_cast<const CreateScene*>(
+               &_CreateScene_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(CreateScene& a, CreateScene& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CreateScene* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CreateScene* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CreateScene* New() const final {
+    return CreateMaybeMessage<CreateScene>(nullptr);
+  }
+
+  CreateScene* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CreateScene>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CreateScene& from);
+  void MergeFrom(const CreateScene& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CreateScene* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "protocol.CreateScene";
+  }
+  protected:
+  explicit CreateScene(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_protocol_2eproto);
+    return ::descriptor_table_protocol_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUidFieldNumber = 1,
+    kNameFieldNumber = 2,
+  };
+  // string uid = 1;
+  void clear_uid();
+  const std::string& uid() const;
+  void set_uid(const std::string& value);
+  void set_uid(std::string&& value);
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  std::string* mutable_uid();
+  std::string* release_uid();
+  void set_allocated_uid(std::string* uid);
+  private:
+  const std::string& _internal_uid() const;
+  void _internal_set_uid(const std::string& value);
+  std::string* _internal_mutable_uid();
+  public:
+
+  // string name = 2;
+  void clear_name();
+  const std::string& name() const;
+  void set_name(const std::string& value);
+  void set_name(std::string&& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  std::string* mutable_name();
+  std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // @@protoc_insertion_point(class_scope:protocol.CreateScene)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class AppendChild PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:protocol.AppendChild) */ {
  public:
@@ -1757,7 +1945,7 @@ class AppendChild PROTOBUF_FINAL :
                &_AppendChild_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(AppendChild& a, AppendChild& b) {
     a.Swap(&b);
@@ -1919,7 +2107,7 @@ class RemoveChild PROTOBUF_FINAL :
                &_RemoveChild_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(RemoveChild& a, RemoveChild& b) {
     a.Swap(&b);
@@ -2091,7 +2279,7 @@ class Prop PROTOBUF_FINAL :
                &_Prop_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(Prop& a, Prop& b) {
     a.Swap(&b);
@@ -2348,7 +2536,7 @@ class ObjectValue PROTOBUF_FINAL :
                &_ObjectValue_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(ObjectValue& a, ObjectValue& b) {
     a.Swap(&b);
@@ -3117,6 +3305,79 @@ inline ::protocol::UpdateSource* ApplyUpdate::_internal_mutable_update_source() 
 inline ::protocol::UpdateSource* ApplyUpdate::mutable_update_source() {
   // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.update_source)
   return _internal_mutable_update_source();
+}
+
+// .protocol.CreateScene create_scene = 5;
+inline bool ApplyUpdate::_internal_has_create_scene() const {
+  return change_case() == kCreateScene;
+}
+inline bool ApplyUpdate::has_create_scene() const {
+  return _internal_has_create_scene();
+}
+inline void ApplyUpdate::set_has_create_scene() {
+  _oneof_case_[0] = kCreateScene;
+}
+inline void ApplyUpdate::clear_create_scene() {
+  if (_internal_has_create_scene()) {
+    if (GetArena() == nullptr) {
+      delete change_.create_scene_;
+    }
+    clear_has_change();
+  }
+}
+inline ::protocol::CreateScene* ApplyUpdate::release_create_scene() {
+  // @@protoc_insertion_point(field_release:protocol.ApplyUpdate.create_scene)
+  if (_internal_has_create_scene()) {
+    clear_has_change();
+      ::protocol::CreateScene* temp = change_.create_scene_;
+    if (GetArena() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    change_.create_scene_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::protocol::CreateScene& ApplyUpdate::_internal_create_scene() const {
+  return _internal_has_create_scene()
+      ? *change_.create_scene_
+      : *reinterpret_cast< ::protocol::CreateScene*>(&::protocol::_CreateScene_default_instance_);
+}
+inline const ::protocol::CreateScene& ApplyUpdate::create_scene() const {
+  // @@protoc_insertion_point(field_get:protocol.ApplyUpdate.create_scene)
+  return _internal_create_scene();
+}
+inline ::protocol::CreateScene* ApplyUpdate::unsafe_arena_release_create_scene() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.ApplyUpdate.create_scene)
+  if (_internal_has_create_scene()) {
+    clear_has_change();
+    ::protocol::CreateScene* temp = change_.create_scene_;
+    change_.create_scene_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ApplyUpdate::unsafe_arena_set_allocated_create_scene(::protocol::CreateScene* create_scene) {
+  clear_change();
+  if (create_scene) {
+    set_has_create_scene();
+    change_.create_scene_ = create_scene;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.ApplyUpdate.create_scene)
+}
+inline ::protocol::CreateScene* ApplyUpdate::_internal_mutable_create_scene() {
+  if (!_internal_has_create_scene()) {
+    clear_change();
+    set_has_create_scene();
+    change_.create_scene_ = CreateMaybeMessage< ::protocol::CreateScene >(GetArena());
+  }
+  return change_.create_scene_;
+}
+inline ::protocol::CreateScene* ApplyUpdate::mutable_create_scene() {
+  // @@protoc_insertion_point(field_mutable:protocol.ApplyUpdate.create_scene)
+  return _internal_mutable_create_scene();
 }
 
 // .protocol.AppendChild append_child = 2;
@@ -3974,6 +4235,134 @@ inline void UpdateSource::set_allocated_changed_props(::protocol::ObjectValue* c
 
 // -------------------------------------------------------------------
 
+// CreateScene
+
+// string uid = 1;
+inline void CreateScene::clear_uid() {
+  uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& CreateScene::uid() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateScene.uid)
+  return _internal_uid();
+}
+inline void CreateScene::set_uid(const std::string& value) {
+  _internal_set_uid(value);
+  // @@protoc_insertion_point(field_set:protocol.CreateScene.uid)
+}
+inline std::string* CreateScene::mutable_uid() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateScene.uid)
+  return _internal_mutable_uid();
+}
+inline const std::string& CreateScene::_internal_uid() const {
+  return uid_.Get();
+}
+inline void CreateScene::_internal_set_uid(const std::string& value) {
+  
+  uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void CreateScene::set_uid(std::string&& value) {
+  
+  uid_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:protocol.CreateScene.uid)
+}
+inline void CreateScene::set_uid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:protocol.CreateScene.uid)
+}
+inline void CreateScene::set_uid(const char* value,
+    size_t size) {
+  
+  uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:protocol.CreateScene.uid)
+}
+inline std::string* CreateScene::_internal_mutable_uid() {
+  
+  return uid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* CreateScene::release_uid() {
+  // @@protoc_insertion_point(field_release:protocol.CreateScene.uid)
+  return uid_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void CreateScene::set_allocated_uid(std::string* uid) {
+  if (uid != nullptr) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateScene.uid)
+}
+
+// string name = 2;
+inline void CreateScene::clear_name() {
+  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& CreateScene::name() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateScene.name)
+  return _internal_name();
+}
+inline void CreateScene::set_name(const std::string& value) {
+  _internal_set_name(value);
+  // @@protoc_insertion_point(field_set:protocol.CreateScene.name)
+}
+inline std::string* CreateScene::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateScene.name)
+  return _internal_mutable_name();
+}
+inline const std::string& CreateScene::_internal_name() const {
+  return name_.Get();
+}
+inline void CreateScene::_internal_set_name(const std::string& value) {
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void CreateScene::set_name(std::string&& value) {
+  
+  name_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:protocol.CreateScene.name)
+}
+inline void CreateScene::set_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:protocol.CreateScene.name)
+}
+inline void CreateScene::set_name(const char* value,
+    size_t size) {
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:protocol.CreateScene.name)
+}
+inline std::string* CreateScene::_internal_mutable_name() {
+  
+  return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* CreateScene::release_name() {
+  // @@protoc_insertion_point(field_release:protocol.CreateScene.name)
+  return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void CreateScene::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateScene.name)
+}
+
+// -------------------------------------------------------------------
+
 // AppendChild
 
 // string parent_uid = 1;
@@ -4668,6 +5057,8 @@ ObjectValue::props() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

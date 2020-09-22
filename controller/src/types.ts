@@ -2,11 +2,12 @@ declare global {
   namespace JSX {
     interface IntrinsicElements {
       obs_source: any;
+      obs_scene: any;
     }
   }
 }
 
-export type Type = 'obs_source';
+export type Type = 'obs_source' | 'obs_scene';
 export type Props = { [key: string]: string | number | boolean | Props };
 export type Container = { uid: string, unmanaged: true };
 export type Instance = { uid: string, unmanaged?: boolean };

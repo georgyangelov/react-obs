@@ -67,6 +67,8 @@ int yoga_logger(
 
 std::thread server_thread;
 sockpp::tcp_acceptor server_acceptor;
+
+// TODO: Cleanup when reconnections happen
 std::unordered_map<std::string, ManagedSource> managed_sources;
 
 auto yoga_config = YGConfigNew();
@@ -193,11 +195,11 @@ void create_source(const protocol::CreateSource &create_source) {
     auto settings = obs_data_create();
     update_settings(settings, create_source.settings());
 
-    auto source = obs_source_create(
+    // TODO: private or non-private?
+    auto source = obs_source_create_private(
         create_source.id().c_str(),
         create_source.name().c_str(),
-        settings,
-        NULL
+        settings
     );
     
     auto uid = create_source.uid();
@@ -261,18 +263,12 @@ void append_child(const protocol::AppendChild &append_child) {
     // TODO: Keep `item` in ManagedSource so that we can remove a child by item reference
     auto item = obs_scene_add(scene, child.source);
     
-    obs_sceneitem_release(item);
+    // obs_sceneitem_release(item);
 }
 
 void update_source(const protocol::UpdateSource &update) {
     blog(LOG_DEBUG, "[react-obs] Updating source %s", update.uid().c_str());
 
-//    auto source = obs_get_source_by_name(update.name().c_str());
-//    if (!source) {
-//        blog(LOG_ERROR, "[react-obs] Cannot find source named %s", update.name().c_str());
-//        return;
-//    }
-    
     auto source_option = get_managed_source(update.uid());
     if (!source_option.has_value()) {
         blog(LOG_ERROR, "[react-obs] Cannot find source %s", update.uid().c_str());
@@ -288,6 +284,21 @@ void update_source(const protocol::UpdateSource &update) {
 
     update_settings(settings, update.changed_props());
     obs_source_update(source, settings);
+}
+
+void create_scene(const protocol::CreateScene &create_scene) {
+    auto scene = obs_scene_create_private(create_scene.name().c_str());
+    auto source = obs_scene_get_source(scene);
+    
+    auto uid = create_scene.uid();
+    
+    managed_sources[uid] = ManagedSource {
+        .uid = uid,
+        .source = source,
+        .yoga_node = YGNodeNewWithConfig(yoga_config),
+        .added_as_child = false,
+        .managed = true
+    };
 }
 
 bool enum_scene_item_remove_child(obs_scene_t* scene, obs_sceneitem_t* item, void* child_source_void) {
@@ -342,6 +353,10 @@ void apply_updates(protocol::ApplyUpdate &update) {
 
         case protocol::ApplyUpdate::ChangeCase::kUpdateSource:
             update_source(update.update_source());
+            break;
+            
+        case protocol::ApplyUpdate::ChangeCase::kCreateScene:
+            create_scene(update.create_scene());
             break;
 
         case protocol::ApplyUpdate::ChangeCase::kAppendChild:

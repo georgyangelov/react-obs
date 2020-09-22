@@ -33,16 +33,26 @@ function App() {
   //   return null;
   // }
 
-  return <Text fontSize={42} fontFace="Fira Code" fontStyle="Bold">Counter: {counter}</Text>;
+  return (
+    <Scene name="React Scene">
+      <Text
+        name="React Text"
+        fontSize={42}
+        fontFace="Fira Code"
+        fontStyle="Bold">Counter: {counter}</Text>
+    </Scene>
+  );
 }
 
 const socket = createConnection({ port: 6666 }, async () => {
   await api.initialize();
 
-  // const root = reconciler.createContainer({ name: 'react-obs' }, false, false);
-  // reconciler.updateContainer(<App />, root, null, () => {
-  //   console.log('done mounting');
-  // });
+  const scene = await api.findUnmanagedSource('react-obs');
+
+  const root = reconciler.createContainer(scene, false, false);
+  reconciler.updateContainer(<App />, root, null, () => {
+    console.log('done mounting');
+  });
 });
 const api = new ServerAPI(socket);
 
@@ -149,6 +159,12 @@ const reconciler = Reconciler<
       }
 
       return api.createSource(props.id, props.name, props);
+    } else if (type === 'obs_scene') {
+      if (!props.name || typeof props.name !== 'string') {
+        throw new Error('obs_scene must have a name and it must be a string');
+      }
+
+      return api.createScene(props.name);
     } else {
       throw new Error(`Unsupported obs element ${type}`);
     }
@@ -278,10 +294,16 @@ const reconciler = Reconciler<
     newProps: Props,
     internalInstanceHandle: OpaqueHandle,
   ): void {
+    if (Object.keys(updatePayload.propChanges).length === 0) {
+      // No changes, nothing to update
+      return;
+    }
+
     if (type === 'obs_source') {
       api.updateSource(instance, updatePayload.propChanges);
     } else {
-      throw new Error('Unsupported element type');
+      console.error('Unsupported element for update');
+      // throw new Error('Unsupported element type');
     }
   },
 
@@ -411,8 +433,15 @@ const reconciler = Reconciler<
 //   return null;
 // }
 
+function Scene({ name, children }: {
+  name: string,
+  children: ReactNode
+}) {
+  return <obs_scene name={name}>{children}</obs_scene>
+}
+
 function Text({ name, children, fontSize, fontFace, fontStyle }: {
-  name?: string,
+  name: string,
   children: string | number | (string | number)[],
   fontSize?: number,
   fontFace?: string,

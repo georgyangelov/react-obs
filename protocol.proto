@@ -30,6 +30,8 @@ message ApplyUpdate {
         CreateSource create_source = 1;
         UpdateSource update_source = 3;
 
+        CreateScene create_scene = 5;
+
         AppendChild append_child = 2;
         RemoveChild remove_child = 4;
     }
@@ -65,6 +67,11 @@ message CreateSource {
 message UpdateSource {
     string uid = 2;
     ObjectValue changed_props = 3;
+}
+
+message CreateScene {
+    string uid = 1;
+    string name = 2;
 }
 
 message AppendChild {

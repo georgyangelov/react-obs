@@ -128,6 +128,11 @@ export class ApplyUpdate extends jspb.Message {
   getUpdateSource(): UpdateSource | undefined;
   setUpdateSource(value?: UpdateSource): void;
 
+  hasCreateScene(): boolean;
+  clearCreateScene(): void;
+  getCreateScene(): CreateScene | undefined;
+  setCreateScene(value?: CreateScene): void;
+
   hasAppendChild(): boolean;
   clearAppendChild(): void;
   getAppendChild(): AppendChild | undefined;
@@ -153,6 +158,7 @@ export namespace ApplyUpdate {
   export type AsObject = {
     createSource?: CreateSource.AsObject,
     updateSource?: UpdateSource.AsObject,
+    createScene?: CreateScene.AsObject,
     appendChild?: AppendChild.AsObject,
     removeChild?: RemoveChild.AsObject,
   }
@@ -161,6 +167,7 @@ export namespace ApplyUpdate {
     CHANGE_NOT_SET = 0,
     CREATE_SOURCE = 1,
     UPDATE_SOURCE = 3,
+    CREATE_SCENE = 5,
     APPEND_CHILD = 2,
     REMOVE_CHILD = 4,
   }
@@ -275,6 +282,30 @@ export namespace UpdateSource {
   export type AsObject = {
     uid: string,
     changedProps?: ObjectValue.AsObject,
+  }
+}
+
+export class CreateScene extends jspb.Message {
+  getUid(): string;
+  setUid(value: string): void;
+
+  getName(): string;
+  setName(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateScene.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateScene): CreateScene.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CreateScene, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateScene;
+  static deserializeBinaryFromReader(message: CreateScene, reader: jspb.BinaryReader): CreateScene;
+}
+
+export namespace CreateScene {
+  export type AsObject = {
+    uid: string,
+    name: string,
   }
 }
 

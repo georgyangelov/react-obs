@@ -17,7 +17,7 @@
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AppendChild_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<6> scc_info_ApplyUpdate_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CommitUpdates_protocol_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CreateScene_protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateScene_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateSource_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_FindSourceRequest_protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_protocol_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_InitRequest_protocol_2eproto;
@@ -179,8 +179,9 @@ static void InitDefaultsscc_info_CreateScene_protocol_2eproto() {
   ::protocol::CreateScene::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CreateScene_protocol_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CreateScene_protocol_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_CreateScene_protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_CreateScene_protocol_2eproto}, {
+      &scc_info_ObjectValue_protocol_2eproto.base,}};
 
 static void InitDefaultsscc_info_CreateSource_protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -401,6 +402,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_protocol_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::protocol::CreateScene, uid_),
   PROTOBUF_FIELD_OFFSET(::protocol::CreateScene, name_),
+  PROTOBUF_FIELD_OFFSET(::protocol::CreateScene, props_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::protocol::AppendChild, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -452,11 +454,11 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 56, -1, sizeof(::protocol::CreateSource)},
   { 65, -1, sizeof(::protocol::UpdateSource)},
   { 72, -1, sizeof(::protocol::CreateScene)},
-  { 79, -1, sizeof(::protocol::AppendChild)},
-  { 86, -1, sizeof(::protocol::RemoveChild)},
-  { 93, -1, sizeof(::protocol::CommitUpdates)},
-  { 99, -1, sizeof(::protocol::Prop)},
-  { 112, -1, sizeof(::protocol::ObjectValue)},
+  { 80, -1, sizeof(::protocol::AppendChild)},
+  { 87, -1, sizeof(::protocol::RemoveChild)},
+  { 94, -1, sizeof(::protocol::CommitUpdates)},
+  { 100, -1, sizeof(::protocol::Prop)},
+  { 113, -1, sizeof(::protocol::ObjectValue)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -501,18 +503,19 @@ const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\'\n\010se"
   "ttings\030\004 \001(\0132\025.protocol.ObjectValue\"I\n\014U"
   "pdateSource\022\013\n\003uid\030\002 \001(\t\022,\n\rchanged_prop"
-  "s\030\003 \001(\0132\025.protocol.ObjectValue\"(\n\013Create"
-  "Scene\022\013\n\003uid\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\"4\n\013Appe"
-  "ndChild\022\022\n\nparent_uid\030\001 \001(\t\022\021\n\tchild_uid"
-  "\030\002 \001(\t\"4\n\013RemoveChild\022\022\n\nparent_uid\030\001 \001("
-  "\t\022\021\n\tchild_uid\030\002 \001(\t\"&\n\rCommitUpdates\022\025\n"
-  "\rcontainer_uid\030\001 \001(\t\"\272\001\n\004Prop\022\013\n\003key\030\001 \001"
-  "(\t\022\026\n\014string_value\030\002 \001(\tH\000\022\023\n\tint_value\030"
-  "\003 \001(\003H\000\022\025\n\013float_value\030\004 \001(\001H\000\022\024\n\nbool_v"
-  "alue\030\005 \001(\010H\000\022-\n\014object_value\030\006 \001(\0132\025.pro"
-  "tocol.ObjectValueH\000\022\023\n\tundefined\030\007 \001(\010H\000"
-  "B\007\n\005value\",\n\013ObjectValue\022\035\n\005props\030\001 \003(\0132"
-  "\016.protocol.Propb\006proto3"
+  "s\030\003 \001(\0132\025.protocol.ObjectValue\"N\n\013Create"
+  "Scene\022\013\n\003uid\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022$\n\005prop"
+  "s\030\003 \001(\0132\025.protocol.ObjectValue\"4\n\013Append"
+  "Child\022\022\n\nparent_uid\030\001 \001(\t\022\021\n\tchild_uid\030\002"
+  " \001(\t\"4\n\013RemoveChild\022\022\n\nparent_uid\030\001 \001(\t\022"
+  "\021\n\tchild_uid\030\002 \001(\t\"&\n\rCommitUpdates\022\025\n\rc"
+  "ontainer_uid\030\001 \001(\t\"\272\001\n\004Prop\022\013\n\003key\030\001 \001(\t"
+  "\022\026\n\014string_value\030\002 \001(\tH\000\022\023\n\tint_value\030\003 "
+  "\001(\003H\000\022\025\n\013float_value\030\004 \001(\001H\000\022\024\n\nbool_val"
+  "ue\030\005 \001(\010H\000\022-\n\014object_value\030\006 \001(\0132\025.proto"
+  "col.ObjectValueH\000\022\023\n\tundefined\030\007 \001(\010H\000B\007"
+  "\n\005value\",\n\013ObjectValue\022\035\n\005props\030\001 \003(\0132\016."
+  "protocol.Propb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_protocol_2eproto_deps[1] = {
 };
@@ -534,7 +537,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_protocol_2eproto = {
-  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1383,
+  false, false, descriptor_table_protodef_protocol_2eproto, "protocol.proto", 1421,
   &descriptor_table_protocol_2eproto_once, descriptor_table_protocol_2eproto_sccs, descriptor_table_protocol_2eproto_deps, 14, 0,
   schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
   file_level_metadata_protocol_2eproto, 15, file_level_enum_descriptors_protocol_2eproto, file_level_service_descriptors_protocol_2eproto,
@@ -3299,11 +3302,18 @@ void UpdateSource::InternalSwap(UpdateSource* other) {
 // ===================================================================
 
 void CreateScene::InitAsDefaultInstance() {
+  ::protocol::_CreateScene_default_instance_._instance.get_mutable()->props_ = const_cast< ::protocol::ObjectValue*>(
+      ::protocol::ObjectValue::internal_default_instance());
 }
 class CreateScene::_Internal {
  public:
+  static const ::protocol::ObjectValue& props(const CreateScene* msg);
 };
 
+const ::protocol::ObjectValue&
+CreateScene::_Internal::props(const CreateScene* msg) {
+  return *msg->props_;
+}
 CreateScene::CreateScene(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
@@ -3323,6 +3333,11 @@ CreateScene::CreateScene(const CreateScene& from)
     name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_name(),
       GetArena());
   }
+  if (from._internal_has_props()) {
+    props_ = new ::protocol::ObjectValue(*from.props_);
+  } else {
+    props_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:protocol.CreateScene)
 }
 
@@ -3330,6 +3345,7 @@ void CreateScene::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CreateScene_protocol_2eproto.base);
   uid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  props_ = nullptr;
 }
 
 CreateScene::~CreateScene() {
@@ -3342,6 +3358,7 @@ void CreateScene::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   uid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete props_;
 }
 
 void CreateScene::ArenaDtor(void* object) {
@@ -3367,6 +3384,10 @@ void CreateScene::Clear() {
 
   uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  if (GetArena() == nullptr && props_ != nullptr) {
+    delete props_;
+  }
+  props_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3393,6 +3414,13 @@ const char* CreateScene::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           auto str = _internal_mutable_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.CreateScene.name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .protocol.ObjectValue props = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_props(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3444,6 +3472,14 @@ failure:
         2, this->_internal_name(), target);
   }
 
+  // .protocol.ObjectValue props = 3;
+  if (this->has_props()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::props(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3472,6 +3508,13 @@ size_t CreateScene::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_name());
+  }
+
+  // .protocol.ObjectValue props = 3;
+  if (this->has_props()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *props_);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3511,6 +3554,9 @@ void CreateScene::MergeFrom(const CreateScene& from) {
   if (from.name().size() > 0) {
     _internal_set_name(from._internal_name());
   }
+  if (from.has_props()) {
+    _internal_mutable_props()->::protocol::ObjectValue::MergeFrom(from._internal_props());
+  }
 }
 
 void CreateScene::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -3536,6 +3582,7 @@ void CreateScene::InternalSwap(CreateScene* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   uid_.Swap(&other->uid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(props_, other->props_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata CreateScene::GetMetadata() const {

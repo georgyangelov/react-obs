@@ -8,6 +8,8 @@
 #include <vector>
 #include <optional>
 #include <variant>
+#include <functional>
+#include <unordered_map>
 #include "generated/protocol.pb.h"
 
 OBS_DECLARE_MODULE()
@@ -195,7 +197,7 @@ void perform_layout(const std::string &root_uid) {
                 blog(LOG_ERROR, "[react-obs] Sceneitem is not set, but yoga node is a child");
             }
             
-            // Can't set positioning for unmanaged nodes
+            // Can't set positioning or sizing for unmanaged nodes
             return;
         }
         
@@ -219,11 +221,13 @@ void perform_layout(const std::string &root_uid) {
 }
 
 //
-// Element settings
+// Props
 //
 
+using PropMap = std::unordered_map<std::string, protocol::Prop>;
+
 template <class T>
-std::unordered_map<std::string, protocol::Prop> as_prop_map(
+PropMap as_prop_map(
     const T &props
 ) {
     std::unordered_map<std::string, protocol::Prop> result;
@@ -237,10 +241,78 @@ std::unordered_map<std::string, protocol::Prop> as_prop_map(
     return result;
 }
 
-// TODO: Validate settings for particular source types?
+std::optional<std::string> as_string(const protocol::Prop &prop) {
+    if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
+        return {};
+    }
+    
+    return prop.string_value();
+}
+
+std::optional<int64_t> as_int(const protocol::Prop &prop) {
+    if (prop.value_case() != protocol::Prop::ValueCase::kIntValue) {
+        return {};
+    }
+    
+    return prop.int_value();
+}
+
+template <class T>
+void assign_prop(
+    const PropMap &props,
+    const char* name,
+    std::function<std::optional<T>(const protocol::Prop &prop)> converter,
+    std::function<void(const T&)> apply,
+    std::function<void()> reset
+) {
+    auto propFind = props.find(name);
+    if (propFind == props.end()) {
+        reset();
+        return;
+    }
+    
+    auto prop = propFind->second;
+    auto value = converter(prop);
+    
+    if (value.has_value()) {
+        apply(*value);
+    } else {
+        blog(LOG_ERROR, "[react-obs] Property %s is of the wrong type", name);
+    }
+}
+
+//
+// Update functions
+//
+
+void update_layout_props(const std::string &uid, const protocol::ObjectValue &propsObject) {
+    auto props = as_prop_map(propsObject.props());
+    auto shadow = get_shadow_source(uid);
+    auto yoga_node = shadow->yoga_node;
+
+    // TODO: Set aspect ratio based on some heuristic
+    YGNodeStyleSetWidth(shadow->yoga_node, obs_source_get_width(shadow->source));
+    YGNodeStyleSetHeight(shadow->yoga_node, obs_source_get_height(shadow->source));
+    
+    assign_prop<std::string>(props, "flexDirection", as_string, [yoga_node](auto value) {
+        if (value == "row") {
+            YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionRow);
+        } else if (value == "column") {
+            YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionColumn);
+        } else if (value == "row-reverse") {
+            YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionRowReverse);
+        } else if (value == "column-reverse") {
+            YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionColumnReverse);
+        }
+    }, [yoga_node]() {
+        YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionColumn);
+    });
+}
+
+// TODO: Exclude props which are used elsewhere (e.g. styling, name)
 void update_settings(
     obs_data_t* settings,
-    protocol::ObjectValue object
+    const protocol::ObjectValue& object
 ) {
     auto props = object.props();
 
@@ -312,6 +384,7 @@ void create_source(const protocol::CreateSource &create_source) {
     auto uid = create_source.uid();
 
     add_shadow_source(uid, source, true);
+    update_layout_props(uid, create_source.settings());
 }
 
 bool register_unmanaged_source(const std::string &uid, const std::string &name) {
@@ -323,7 +396,7 @@ bool register_unmanaged_source(const std::string &uid, const std::string &name) 
 
     auto shadow = add_shadow_source(uid, source, false);
     
-    // TODO: This is not correct. These are the dimensions of the source, not the transformed one...
+    // TODO: This may not be correct. These are the dimensions of the source, not the transformed one...
     //       This will work for top-level scenes, but will not work for other sources.
     // TODO: Need to find a way to get the transformed width/height. Is this even possible?
     auto source_width = obs_source_get_width(source);
@@ -333,7 +406,9 @@ bool register_unmanaged_source(const std::string &uid, const std::string &name) 
     YGNodeStyleSetWidth(yoga_node, source_width);
     YGNodeStyleSetHeight(yoga_node, source_height);
     
-//    obs_get_signal_handler()
+    // TODO: Attach to signal of parent scene and listen for transform changes
+    
+    // blog(LOG_DEBUG, "[react-obs] Container dimensions are %dx%d", source_width, source_height);
 
     return true;
 }
@@ -395,7 +470,14 @@ void update_source(const protocol::UpdateSource &update) {
     }
 
     update_settings(settings, update.changed_props());
+    
+    // TODO: This is probably not instantaneous. Is there a signal for this?
+    // See obs_source_deferred_update.
+    // I may need to wait for the next frame and update it then...
     obs_source_update(source, settings);
+    
+    // TODO: This doesn't catch updates to width of 3 texts until a next update. Why?
+    update_layout_props(shadow_source->uid, update.changed_props());
 }
 
 void create_scene(const protocol::CreateScene &create_scene) {
@@ -404,7 +486,8 @@ void create_scene(const protocol::CreateScene &create_scene) {
 
     auto uid = create_scene.uid();
 
-    add_shadow_source(uid, source, false);
+    add_shadow_source(uid, source, true);
+    update_layout_props(uid, create_scene.props());
 }
 
 void remove_child(const protocol::RemoveChild &remove) {
@@ -540,7 +623,7 @@ void send_packet(const protocol::ServerMessage &message, sockpp::tcp_socket &soc
     buffer.reserve(size);
 
     message.SerializeToArray(&buffer[0], size);
-
+ 
     uint32_t packet_size = htonl(size);
     socket.write_n(&packet_size, sizeof(uint32_t));
 
@@ -750,6 +833,17 @@ void test_yoga() {
     YGNodeFreeRecursive(root);
 }
 
+void log_signal_callback(void *context, const char *signal_name, calldata_t *data) {
+    blog(LOG_DEBUG, "[react-obs] Signal %s", signal_name);
+}
+
+void test_events() {
+    auto source = obs_get_source_by_name("react-obs");
+    auto signal_handler = obs_source_get_signal_handler(source);
+    
+    signal_handler_connect_global(signal_handler, log_signal_callback, nullptr);
+}
+
 //
 // Plugin API
 //
@@ -773,9 +867,11 @@ void initialize() {
 
     initialize_server();
 
-    log_scene_names();
+    // log_scene_names();
 
-    test_yoga();
+    // test_yoga();
+    
+    // test_events();
 }
 
 void shutdown() {

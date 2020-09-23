@@ -51,16 +51,21 @@ function Countdown({ startTime, duration }) {
   }
 
   return (
-    <Text fontColor="#00ff00">Counting down: {timeLeft}s</Text>
+    <Text fontColor="#00ff00">
+      Counting down: {Math.ceil(timeLeft / 1000)}s
+    </Text>
   );
 }
 
-ReactOBS.connect('localhost', 6666);
+(async function() {
+  const obs = await ReactOBS.connect('localhost', 6666);
+  const scene = await obs.findScene('countdown');
 
-ReactOBS.render(
-  ReactOBS.findScene('countdown'),
-  <Countdown startTime={new Date()} duration={60 * 1000} />
-);
+  obs.render(
+    scene,
+    <Countdown startTime={new Date()} duration={60 * 1000} />
+  );
+})();
 ```
 
 ## How does it work?

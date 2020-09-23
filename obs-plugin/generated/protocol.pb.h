@@ -1882,6 +1882,7 @@ class CreateScene PROTOBUF_FINAL :
   enum : int {
     kUidFieldNumber = 1,
     kNameFieldNumber = 2,
+    kPropsFieldNumber = 3,
   };
   // string uid = 1;
   void clear_uid();
@@ -1915,6 +1916,24 @@ class CreateScene PROTOBUF_FINAL :
   std::string* _internal_mutable_name();
   public:
 
+  // .protocol.ObjectValue props = 3;
+  bool has_props() const;
+  private:
+  bool _internal_has_props() const;
+  public:
+  void clear_props();
+  const ::protocol::ObjectValue& props() const;
+  ::protocol::ObjectValue* release_props();
+  ::protocol::ObjectValue* mutable_props();
+  void set_allocated_props(::protocol::ObjectValue* props);
+  private:
+  const ::protocol::ObjectValue& _internal_props() const;
+  ::protocol::ObjectValue* _internal_mutable_props();
+  public:
+  void unsafe_arena_set_allocated_props(
+      ::protocol::ObjectValue* props);
+  ::protocol::ObjectValue* unsafe_arena_release_props();
+
   // @@protoc_insertion_point(class_scope:protocol.CreateScene)
  private:
   class _Internal;
@@ -1924,6 +1943,7 @@ class CreateScene PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::protocol::ObjectValue* props_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
 };
@@ -4602,6 +4622,89 @@ inline void CreateScene::set_allocated_name(std::string* name) {
   name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
       GetArena());
   // @@protoc_insertion_point(field_set_allocated:protocol.CreateScene.name)
+}
+
+// .protocol.ObjectValue props = 3;
+inline bool CreateScene::_internal_has_props() const {
+  return this != internal_default_instance() && props_ != nullptr;
+}
+inline bool CreateScene::has_props() const {
+  return _internal_has_props();
+}
+inline void CreateScene::clear_props() {
+  if (GetArena() == nullptr && props_ != nullptr) {
+    delete props_;
+  }
+  props_ = nullptr;
+}
+inline const ::protocol::ObjectValue& CreateScene::_internal_props() const {
+  const ::protocol::ObjectValue* p = props_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::protocol::ObjectValue*>(
+      &::protocol::_ObjectValue_default_instance_);
+}
+inline const ::protocol::ObjectValue& CreateScene::props() const {
+  // @@protoc_insertion_point(field_get:protocol.CreateScene.props)
+  return _internal_props();
+}
+inline void CreateScene::unsafe_arena_set_allocated_props(
+    ::protocol::ObjectValue* props) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(props_);
+  }
+  props_ = props;
+  if (props) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.CreateScene.props)
+}
+inline ::protocol::ObjectValue* CreateScene::release_props() {
+  
+  ::protocol::ObjectValue* temp = props_;
+  props_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::protocol::ObjectValue* CreateScene::unsafe_arena_release_props() {
+  // @@protoc_insertion_point(field_release:protocol.CreateScene.props)
+  
+  ::protocol::ObjectValue* temp = props_;
+  props_ = nullptr;
+  return temp;
+}
+inline ::protocol::ObjectValue* CreateScene::_internal_mutable_props() {
+  
+  if (props_ == nullptr) {
+    auto* p = CreateMaybeMessage<::protocol::ObjectValue>(GetArena());
+    props_ = p;
+  }
+  return props_;
+}
+inline ::protocol::ObjectValue* CreateScene::mutable_props() {
+  // @@protoc_insertion_point(field_mutable:protocol.CreateScene.props)
+  return _internal_mutable_props();
+}
+inline void CreateScene::set_allocated_props(::protocol::ObjectValue* props) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete props_;
+  }
+  if (props) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(props);
+    if (message_arena != submessage_arena) {
+      props = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, props, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  props_ = props;
+  // @@protoc_insertion_point(field_set_allocated:protocol.CreateScene.props)
 }
 
 // -------------------------------------------------------------------

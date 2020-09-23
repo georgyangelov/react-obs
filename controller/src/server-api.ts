@@ -210,12 +210,13 @@ export class ServerAPI {
     this.send(message);
   }
 
-  createScene(name: string): Instance {
+  createScene(name: string, props: Props): Instance {
     const uid = uuid();
 
     const createScene = new CreateScene();
     createScene.setUid(uid);
     createScene.setName(name);
+    createScene.setProps(this.asObject(props));
 
     const applyUpdate = new ApplyUpdate();
     applyUpdate.setCreateScene(createScene);

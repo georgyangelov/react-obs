@@ -299,6 +299,11 @@ export class CreateScene extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
+  hasProps(): boolean;
+  clearProps(): void;
+  getProps(): ObjectValue | undefined;
+  setProps(value?: ObjectValue): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateScene.AsObject;
   static toObject(includeInstance: boolean, msg: CreateScene): CreateScene.AsObject;
@@ -313,6 +318,7 @@ export namespace CreateScene {
   export type AsObject = {
     uid: string,
     name: string,
+    props?: ObjectValue.AsObject,
   }
 }
 

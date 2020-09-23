@@ -2333,7 +2333,8 @@ proto.protocol.CreateScene.prototype.toObject = function(opt_includeInstance) {
 proto.protocol.CreateScene.toObject = function(includeInstance, msg) {
   var f, obj = {
     uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 2, "")
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    props: (f = msg.getProps()) && proto.protocol.ObjectValue.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2378,6 +2379,11 @@ proto.protocol.CreateScene.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
+    case 3:
+      var value = new proto.protocol.ObjectValue;
+      reader.readMessage(value,proto.protocol.ObjectValue.deserializeBinaryFromReader);
+      msg.setProps(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2421,6 +2427,14 @@ proto.protocol.CreateScene.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getProps();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.protocol.ObjectValue.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -2457,6 +2471,43 @@ proto.protocol.CreateScene.prototype.getName = function() {
  */
 proto.protocol.CreateScene.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional ObjectValue props = 3;
+ * @return {?proto.protocol.ObjectValue}
+ */
+proto.protocol.CreateScene.prototype.getProps = function() {
+  return /** @type{?proto.protocol.ObjectValue} */ (
+    jspb.Message.getWrapperField(this, proto.protocol.ObjectValue, 3));
+};
+
+
+/**
+ * @param {?proto.protocol.ObjectValue|undefined} value
+ * @return {!proto.protocol.CreateScene} returns this
+*/
+proto.protocol.CreateScene.prototype.setProps = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.protocol.CreateScene} returns this
+ */
+proto.protocol.CreateScene.prototype.clearProps = function() {
+  return this.setProps(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.protocol.CreateScene.prototype.hasProps = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

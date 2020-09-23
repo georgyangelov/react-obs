@@ -7,6 +7,7 @@ include_directories(${PROTOBUF_INCLUDE_DIR})
 set(react-obs_HEADERS
 	${react-obs_HEADERS}
 	react-obs-main.h
+	api-server.hpp
 	)
 set(react-obs_SOURCES
 	react-obs-main.cpp

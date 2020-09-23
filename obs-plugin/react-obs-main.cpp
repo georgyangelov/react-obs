@@ -10,7 +10,8 @@
 #include <variant>
 #include <functional>
 #include <unordered_map>
-#include "generated/protocol.pb.h"
+
+#include "api-server.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("react-obs", "en-US")
@@ -19,7 +20,7 @@ struct ShadowSource {
     std::string uid;
     obs_source_t* source;
     YGNodeRef yoga_node;
-    
+
     obs_sceneitem_t* sceneitem;
 
     bool managed;
@@ -81,8 +82,7 @@ int yoga_logger(
 // State
 //
 
-std::thread server_thread;
-sockpp::tcp_acceptor server_acceptor;
+// void message_received_from_client(const ClientConnection&, const protocol::ClientMessage&);
 
 // TODO: Cleanup when reconnections happen
 std::unordered_map<std::string, ShadowSource*> shadow_sources;
@@ -142,7 +142,7 @@ ShadowSource* add_shadow_source(const std::string &uid, obs_source_t* source, bo
     YGNodeSetContext(yoga_node, shadow_source);
 
     shadow_sources[uid] = shadow_source;
-    
+
     return shadow_source;
 }
 
@@ -171,14 +171,14 @@ void perform_layout(const std::string &root_uid) {
         blog(LOG_ERROR, "[react-obs] Cannot find root to layout %s", root_uid.c_str());
         return;
     }
-    
+
     auto yoga_node = root->yoga_node;
-    
+
     if (!YGNodeIsDirty(yoga_node)) {
         blog(LOG_DEBUG, "[react-obs] No new layout, nothing to do");
         return;
     }
-    
+
     blog(LOG_DEBUG, "[react-obs] Performing layout...");
 
     YGNodeCalculateLayout(yoga_node, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -186,37 +186,37 @@ void perform_layout(const std::string &root_uid) {
         if (!YGNodeGetHasNewLayout(node)) {
             return;
         }
-        
+
         YGNodeSetHasNewLayout(node, false);
-        
+
         auto shadow = (ShadowSource*)YGNodeGetContext(node);
         auto sceneitem = shadow->sceneitem;
-        
+
         if (!sceneitem) {
             if (shadow->managed) {
                 blog(LOG_ERROR, "[react-obs] Sceneitem is not set, but yoga node is a child");
             }
-            
+
             // Can't set positioning or sizing for unmanaged nodes
             return;
         }
-        
+
         vec2 position {
             .x = YGNodeLayoutGetLeft(node),
             .y = YGNodeLayoutGetTop(node)
         };
-        
+
         vec2 bounds {
             .x = YGNodeLayoutGetWidth(node),
             .y = YGNodeLayoutGetHeight(node)
         };
-        
+
         obs_sceneitem_defer_update_begin(sceneitem);
         obs_sceneitem_set_pos(sceneitem, &position);
         obs_sceneitem_set_bounds(sceneitem, &bounds);
         obs_sceneitem_defer_update_end(sceneitem);
     });
-    
+
     blog(LOG_DEBUG, "[react-obs] Layout complete");
 }
 
@@ -245,7 +245,7 @@ std::optional<std::string> as_string(const protocol::Prop &prop) {
     if (prop.value_case() != protocol::Prop::ValueCase::kStringValue) {
         return {};
     }
-    
+
     return prop.string_value();
 }
 
@@ -253,7 +253,7 @@ std::optional<int64_t> as_int(const protocol::Prop &prop) {
     if (prop.value_case() != protocol::Prop::ValueCase::kIntValue) {
         return {};
     }
-    
+
     return prop.int_value();
 }
 
@@ -270,10 +270,10 @@ void assign_prop(
         reset();
         return;
     }
-    
+
     auto prop = propFind->second;
     auto value = converter(prop);
-    
+
     if (value.has_value()) {
         apply(*value);
     } else {
@@ -293,7 +293,7 @@ void update_layout_props(const std::string &uid, const protocol::ObjectValue &pr
     // TODO: Set aspect ratio based on some heuristic
     YGNodeStyleSetWidth(shadow->yoga_node, obs_source_get_width(shadow->source));
     YGNodeStyleSetHeight(shadow->yoga_node, obs_source_get_height(shadow->source));
-    
+
     assign_prop<std::string>(props, "flexDirection", as_string, [yoga_node](auto value) {
         if (value == "row") {
             YGNodeStyleSetFlexDirection(yoga_node, YGFlexDirectionRow);
@@ -395,19 +395,19 @@ bool register_unmanaged_source(const std::string &uid, const std::string &name) 
     }
 
     auto shadow = add_shadow_source(uid, source, false);
-    
+
     // TODO: This may not be correct. These are the dimensions of the source, not the transformed one...
     //       This will work for top-level scenes, but will not work for other sources.
     // TODO: Need to find a way to get the transformed width/height. Is this even possible?
     auto source_width = obs_source_get_width(source);
     auto source_height = obs_source_get_height(source);
-    
+
     auto yoga_node = shadow->yoga_node;
     YGNodeStyleSetWidth(yoga_node, source_width);
     YGNodeStyleSetHeight(yoga_node, source_height);
-    
+
     // TODO: Attach to signal of parent scene and listen for transform changes
-    
+
     // blog(LOG_DEBUG, "[react-obs] Container dimensions are %dx%d", source_width, source_height);
 
     return true;
@@ -423,7 +423,7 @@ void append_child(const protocol::AppendChild &append_child) {
         blog(LOG_ERROR, "[react-obs] Cannot find parent source with uid %s", append_child.parent_uid().c_str());
         return;
     }
-    
+
     if (parent->sceneitem) {
         blog(LOG_ERROR, "[react-obs] Source already added to a scene");
         return;
@@ -442,10 +442,10 @@ void append_child(const protocol::AppendChild &append_child) {
     }
 
     auto item = obs_scene_add(scene, child->source);
-    
+
     obs_sceneitem_addref(item);
     child->sceneitem = item;
-    
+
     YGNodeInsertChild(
         parent->yoga_node,
         child->yoga_node,
@@ -470,12 +470,12 @@ void update_source(const protocol::UpdateSource &update) {
     }
 
     update_settings(settings, update.changed_props());
-    
+
     // TODO: This is probably not instantaneous. Is there a signal for this?
     // See obs_source_deferred_update.
     // I may need to wait for the next frame and update it then...
     obs_source_update(source, settings);
-    
+
     // TODO: This doesn't catch updates to width of 3 texts until a next update. Why?
     update_layout_props(shadow_source->uid, update.changed_props());
 }
@@ -510,25 +510,25 @@ void remove_child(const protocol::RemoveChild &remove) {
         blog(LOG_ERROR, "[react-obs] Cannot find child source with uid %s", remove.child_uid().c_str());
         return;
     }
-    
+
     if (!child->sceneitem) {
         blog(LOG_ERROR, "[react-obs] Child does not have a sceneitem set");
         return;
     }
-    
+
     auto sceneitem_scene = obs_sceneitem_get_scene(child->sceneitem);
-    
+
     if (sceneitem_scene != scene) {
         blog(LOG_ERROR, "[react-obs] Child's parent and the container are different");
         return;
     }
-    
+
     obs_sceneitem_remove(child->sceneitem);
     obs_sceneitem_release(child->sceneitem);
     child->sceneitem = nullptr;
 
     YGNodeRemoveChild(parent->yoga_node, child->yoga_node);
-    
+
     // TODO: Should we GC the child node? Can it be added again in the future?
     // obs_source_remove(child.source);
     //
@@ -537,9 +537,9 @@ void remove_child(const protocol::RemoveChild &remove) {
 
 void commit_updates(const protocol::CommitUpdates &commit_updates) {
     auto container_uid = commit_updates.container_uid();
-    
+
     blog(LOG_DEBUG, "[react-obs] Commiting updates for container %s", container_uid.c_str());
-    
+
     perform_layout(container_uid);
 }
 
@@ -564,7 +564,7 @@ void apply_updates(protocol::ApplyUpdate &update) {
         case protocol::ApplyUpdate::ChangeCase::kRemoveChild:
             remove_child(update.remove_child());
             break;
-        
+
         case protocol::ApplyUpdate::ChangeCase::kCommitUpdates:
             commit_updates(update.commit_updates());
             break;
@@ -579,186 +579,64 @@ void apply_updates(protocol::ApplyUpdate &update) {
 // Server API
 //
 
-enum class ReadPacketResult {
-    Success,
-    Error,
-    Disconnected
-};
+void message_received_from_client(
+    ClientConnection& client,
+    const protocol::ClientMessage& message
+) {
+    switch (message.message_case()) {
+        case protocol::ClientMessage::MessageCase::kInitRequest: {
+            auto init_request = message.init_request();
 
-ReadPacketResult read_packet(protocol::ClientMessage &message, sockpp::tcp_socket &socket, std::vector<unsigned char> &buffer) {
-    uint32_t packet_size;
-    size_t read_bytes = socket.read_n(&packet_size, sizeof(uint32_t));
+            blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
 
-    packet_size = ntohl(packet_size);
+            protocol::ServerMessage message;
+            auto response = message.mutable_response();
+            response->set_request_id(init_request.request_id());
+            response->set_success(true);
 
-    if (read_bytes <= 0) {
-        return ReadPacketResult::Disconnected;
-    }
+            client.send(message);
 
-    buffer.reserve(packet_size);
-
-    size_t read_size = 0;
-
-    while (read_size < packet_size) {
-        size_t read_now_size = socket.read_n(&buffer[0] + read_size, packet_size - read_size);
-        read_size += read_now_size;
-
-        if (read_now_size <= 0) {
-            blog(LOG_DEBUG, "[react-obs] Client disconnected mid-packet");
-            return ReadPacketResult::Disconnected;
-        }
-    }
-
-    if (!message.ParseFromArray(&buffer[0], packet_size)) {
-        blog(LOG_ERROR, "[react-obs] Could not parse protobuf message");
-        return ReadPacketResult::Error;
-    }
-
-    return ReadPacketResult::Success;
-}
-
-void send_packet(const protocol::ServerMessage &message, sockpp::tcp_socket &socket) {
-    auto size = message.ByteSizeLong();
-    std::vector<unsigned char> buffer(size);
-    buffer.reserve(size);
-
-    message.SerializeToArray(&buffer[0], size);
- 
-    uint32_t packet_size = htonl(size);
-    socket.write_n(&packet_size, sizeof(uint32_t));
-
-    auto written_size = socket.write_n(&buffer[0], size);
-
-    if (written_size < size) {
-        blog(LOG_ERROR, "[react-obs] Written size of message to socket is less than message size");
-        return;
-    }
-}
-
-// TODO: Disconnect this whenever the server stops
-void client_thread_runner(sockpp::tcp_socket socket) {
-    std::vector<unsigned char> buffer;
-    protocol::ClientMessage message;
-    bool keep_running = true;
-
-    while (keep_running) {
-        auto result = read_packet(message, socket, buffer);
-
-        if (result != ReadPacketResult::Success) {
             break;
         }
 
-        switch (message.message_case()) {
-            case protocol::ClientMessage::MessageCase::kInitRequest: {
-                auto init_request = message.init_request();
+        case protocol::ClientMessage::MessageCase::kApplyUpdate: {
+            auto command = message.apply_update();
 
-                blog(LOG_DEBUG, "[react-obs] Received init request from %s", init_request.client_id().c_str());
+            blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
+            apply_updates(command);
 
-                protocol::ServerMessage message;
-                auto response = message.mutable_response();
-                response->set_request_id(init_request.request_id());
-                response->set_success(true);
-
-                send_packet(message, socket);
-
-                break;
-            }
-
-            case protocol::ClientMessage::MessageCase::kApplyUpdate: {
-                auto command = message.apply_update();
-
-                blog(LOG_DEBUG, "[react-obs] Received update request: %s", command.DebugString().c_str());
-                apply_updates(command);
-
-                break;
-            }
-
-            case protocol::ClientMessage::MessageCase::kFindSource: {
-                auto command = message.find_source();
-
-                blog(LOG_DEBUG, "[react-obs] Received find source request for name %s", command.name().c_str());
-                auto success = register_unmanaged_source(command.uid(), command.name());
-
-                protocol::ServerMessage message;
-                auto response = message.mutable_response();
-                response->set_request_id(command.request_id());
-                response->set_success(success);
-
-                send_packet(message, socket);
-
-                break;
-            }
-
-            case protocol::ClientMessage::MessageCase::MESSAGE_NOT_SET:
-                blog(LOG_ERROR, "[react-obs] Empty message with no cases received");
-                keep_running = false;
-                break;
-
-            default:
-                blog(LOG_ERROR, "[react-obs] Unknown client message received");
-                keep_running = false;
-                break;
-        }
-    }
-
-    blog(LOG_INFO, "[react-obs] Stopped client handler");
-}
-
-void start_server() {
-    int16_t port = 6666;
-    server_acceptor = sockpp::tcp_acceptor(port);
-
-    if (!server_acceptor) {
-        blog(LOG_ERROR, "[react-obs] Cannot create TCP acceptor");
-        return;
-    }
-
-    blog(LOG_INFO, "[react-obs] Created TCP acceptor, listening on %i", port);
-
-    while (true) {
-        sockpp::inet_address peer;
-
-        // Accept a new client connection
-        sockpp::tcp_socket socket = server_acceptor.accept(&peer);
-
-        if (!socket) {
-            if (!server_acceptor.is_open()) {
-                // Server stopped, probably due to `server_acceptor.close()`
-                break;
-            }
-
-            blog(
-                LOG_DEBUG,
-                "[react-obs] Error accepting incoming connection: %s\n",
-                server_acceptor.last_error_str().c_str()
-            );
-            continue;
+            break;
         }
 
-        blog(
-            LOG_DEBUG,
-            "[react-obs] Received a connection request from %s\n",
-            peer.to_string().c_str()
-        );
+        case protocol::ClientMessage::MessageCase::kFindSource: {
+            auto command = message.find_source();
 
-        // Create a thread and transfer the new stream to it.
-        std::thread client_thread(client_thread_runner, std::move(socket));
-        client_thread.detach();
+            blog(LOG_DEBUG, "[react-obs] Received find source request for name %s", command.name().c_str());
+            auto success = register_unmanaged_source(command.uid(), command.name());
+
+            protocol::ServerMessage message;
+            auto response = message.mutable_response();
+            response->set_request_id(command.request_id());
+            response->set_success(success);
+
+            client.send(message);
+
+            break;
+        }
+
+        case protocol::ClientMessage::MessageCase::MESSAGE_NOT_SET:
+            blog(LOG_ERROR, "[react-obs] Empty message with no cases received");
+            client.disconnect();
+            break;
+
+        default:
+            blog(LOG_ERROR, "[react-obs] Unknown client message received");
+            client.disconnect();
+            break;
     }
-
-    blog(LOG_INFO, "[react-obs] Stopped listening for connections");
 }
 
-void initialize_server() {
-    std::thread thread(start_server);
-
-    server_thread.swap(thread);
-}
-
-void stop_server() {
-    server_acceptor.close();
-    server_thread.join();
-}
+ApiServer api_server(6666, message_received_from_client);
 
 //
 // Test stuffs
@@ -840,7 +718,7 @@ void log_signal_callback(void *context, const char *signal_name, calldata_t *dat
 void test_events() {
     auto source = obs_get_source_by_name("react-obs");
     auto signal_handler = obs_source_get_signal_handler(source);
-    
+
     signal_handler_connect_global(signal_handler, log_signal_callback, nullptr);
 }
 
@@ -865,17 +743,17 @@ void initialize() {
     //
     // obs_frontend_source_list_free(&scenes);
 
-    initialize_server();
+    api_server.start();
 
     // log_scene_names();
 
     // test_yoga();
-    
+
     // test_events();
 }
 
 void shutdown() {
-    stop_server();
+    api_server.stop();
 }
 
 //

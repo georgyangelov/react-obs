@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
+import { SourceStyle } from '../types';
 
-export function Text({ name, children, fontSize, fontFace, fontStyle }: {
+export function Text({ name, style, children, fontSize, fontFace, fontStyle }: {
   name: string,
   children: string | number | (string | number)[],
   fontSize?: number,
   fontFace?: string,
-  fontStyle?: string
+  fontStyle?: string,
+  style?: SourceStyle
 }) {
   const text = children instanceof Array ? children.join('') : children;
 
@@ -20,6 +22,7 @@ export function Text({ name, children, fontSize, fontFace, fontStyle }: {
       id="text_ft2_source"
       name={name}
       font={font}
-      text={text} />
+      text={text}
+      style={style} />
   );
 }

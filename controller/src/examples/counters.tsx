@@ -3,6 +3,16 @@ import { ReactOBS } from '..';
 import { Scene } from '../components/scene';
 import { Text } from '../components/text';
 
+const styles = {
+  root: {
+    flexDirection: 'row'
+  },
+
+  centerText: {
+    flexGrow: 1
+  }
+} as const;
+
 function App() {
   const [counter, setCounter] = useState(0);
 
@@ -19,7 +29,7 @@ function App() {
   // }
 
   return (
-    <Scene name="React Scene">
+    <Scene name="React Scene" style={styles.root}>
       <Text
         name="React Text"
         fontSize={42}
@@ -27,6 +37,7 @@ function App() {
         fontStyle="Bold">Counter: {counter}</Text>
 
       <Text
+        style={styles.centerText}
         name="React Text"
         fontSize={42}
         fontFace="Fira Code"

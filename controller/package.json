@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:counters": "ts-node src/examples/counters.tsx"
+    "start:counters": "ts-node src/examples/counters.tsx",
+    "start:dvd": "ts-node src/examples/dvd.tsx"
   },
   "author": "",
   "license": "ISC",

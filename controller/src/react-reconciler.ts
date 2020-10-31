@@ -33,7 +33,7 @@ export const reconciler = (api: ServerAPI) => Reconciler<
   ChildSet,
   TimeoutHandle,
   NoTimeout
->(traceWrap({
+>({
   now: performance.now,
 
   getPublicInstance(instance: Instance | TextInstance): PublicInstance {
@@ -160,6 +160,10 @@ export const reconciler = (api: ServerAPI) => Reconciler<
     });
 
     Object.keys(oldProps).forEach(key => {
+      if (oldProps[key] === newProps[key]) {
+        return;
+      }
+
       if (newProps[key] === undefined || newProps[key] === null) {
         propChanges[key] = undefined;
       }
@@ -257,6 +261,8 @@ export const reconciler = (api: ServerAPI) => Reconciler<
       // No changes, nothing to update
       return;
     }
+
+    // console.log('Update', instance, updatePayload.propChanges);
 
     if (type === 'obs_source') {
       api.updateSource(instance, updatePayload.propChanges);
@@ -386,4 +392,4 @@ export const reconciler = (api: ServerAPI) => Reconciler<
   //     parentInstance: Instance,
   //     text: string,
   // ): void;
-}));
+});

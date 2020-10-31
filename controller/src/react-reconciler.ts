@@ -63,7 +63,7 @@ export const reconciler = (api: ServerAPI) => Reconciler<
   createInstance(
     type: Type,
     props: Props,
-    rootContainerInstance: Container,
+    container: Container,
     hostContext: HostContext,
     internalInstanceHandle: OpaqueHandle,
   ): Instance {
@@ -108,7 +108,7 @@ export const reconciler = (api: ServerAPI) => Reconciler<
       delete safeProps['name'];
       delete safeProps['children'];
 
-      return api.createSource(props.id, props.name, safeProps);
+      return api.createSource(container, props.id, props.name, safeProps);
     } else if (type === 'obs_scene') {
       if (!props.name || typeof props.name !== 'string') {
         throw new Error('obs_scene must have a name and it must be a string');
@@ -119,7 +119,7 @@ export const reconciler = (api: ServerAPI) => Reconciler<
       delete safeProps['children'];
 
       // TODO: safeProps
-      return api.createScene(props.name, safeProps);
+      return api.createScene(container, props.name, safeProps);
     } else {
       throw new Error(`Unsupported obs element ${type}`);
     }

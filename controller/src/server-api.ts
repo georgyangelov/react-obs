@@ -147,16 +147,33 @@ export class ServerAPI {
     console.log('Disconnected from server');
   }
 
-  async findUnmanagedSource(name: string): Promise<Container> {
+  // TODO: Clean up containers which are no longer used
+  async findContainer(name: string): Promise<Container> {
     const uid = uuid();
 
-    const findSourceRequest = new FindSourceRequest();
-    findSourceRequest.setRequestId(uid);
-    findSourceRequest.setUid(uid);
-    findSourceRequest.setName(name);
+    const request = new FindSourceRequest();
+    request.setRequestId(uid);
+    request.setUid(uid);
+    request.setName(name);
 
     const packet = new ClientMessage();
-    packet.setFindSource(findSourceRequest);
+    packet.setFindSource(request);
+
+    await this.sendExpectingResponse(uid, packet);
+
+    return { uid, container: true };
+  }
+
+  async findUnmanagedSource(name: string): Promise<Instance> {
+    const uid = uuid();
+
+    const request = new FindSourceRequest();
+    request.setRequestId(uid);
+    request.setUid(uid);
+    request.setName(name);
+
+    const packet = new ClientMessage();
+    packet.setFindSource(request);
 
     await this.sendExpectingResponse(uid, packet);
 
@@ -176,11 +193,12 @@ export class ServerAPI {
     this.send(message);
   }
 
-  createSource(id: string, name: string, props: Props): Instance {
+  createSource(container: Container, id: string, name: string, props: Props): Instance {
     const uid = uuid();
 
     const createSource = new CreateSource();
     createSource.setUid(uid);
+    createSource.setContainerUid(container.uid);
     createSource.setId(id);
     createSource.setName(name);
     createSource.setSettings(this.asObject(props));
@@ -210,11 +228,12 @@ export class ServerAPI {
     this.send(message);
   }
 
-  createScene(name: string, props: Props): Instance {
+  createScene(container: Container, name: string, props: Props): Instance {
     const uid = uuid();
 
     const createScene = new CreateScene();
     createScene.setUid(uid);
+    createScene.setContainerUid(container.uid);
     createScene.setName(name);
     createScene.setProps(this.asObject(props));
 

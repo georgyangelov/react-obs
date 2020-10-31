@@ -36,6 +36,6 @@ export class ReactOBS {
   }
 
   findScene(name: string): Promise<Container> {
-    return this.api.findUnmanagedSource(name);
+    return this.api.findContainer(name);
   }
 }

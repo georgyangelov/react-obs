@@ -9,7 +9,7 @@ declare global {
 
 export type Type = 'obs_source' | 'obs_scene';
 export type Props = { [key: string]: string | number | boolean | Props };
-export type Container = { uid: string, unmanaged: true };
+export type Container = { uid: string, container: true };
 export type Instance = { uid: string, unmanaged?: boolean };
 export type TextInstance = Instance;
 export type HydratableInstance = any;

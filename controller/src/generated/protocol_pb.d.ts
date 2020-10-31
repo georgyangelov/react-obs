@@ -236,6 +236,9 @@ export class CreateSource extends jspb.Message {
   getUid(): string;
   setUid(value: string): void;
 
+  getContainerUid(): string;
+  setContainerUid(value: string): void;
+
   getId(): string;
   setId(value: string): void;
 
@@ -260,6 +263,7 @@ export class CreateSource extends jspb.Message {
 export namespace CreateSource {
   export type AsObject = {
     uid: string,
+    containerUid: string,
     id: string,
     name: string,
     settings?: ObjectValue.AsObject,
@@ -296,6 +300,9 @@ export class CreateScene extends jspb.Message {
   getUid(): string;
   setUid(value: string): void;
 
+  getContainerUid(): string;
+  setContainerUid(value: string): void;
+
   getName(): string;
   setName(value: string): void;
 
@@ -317,6 +324,7 @@ export class CreateScene extends jspb.Message {
 export namespace CreateScene {
   export type AsObject = {
     uid: string,
+    containerUid: string,
     name: string,
     props?: ObjectValue.AsObject,
   }

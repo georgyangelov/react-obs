@@ -1911,6 +1911,7 @@ proto.protocol.CreateSource.prototype.toObject = function(opt_includeInstance) {
 proto.protocol.CreateSource.toObject = function(includeInstance, msg) {
   var f, obj = {
     uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    containerUid: jspb.Message.getFieldWithDefault(msg, 5, ""),
     id: jspb.Message.getFieldWithDefault(msg, 2, ""),
     name: jspb.Message.getFieldWithDefault(msg, 3, ""),
     settings: (f = msg.getSettings()) && proto.protocol.ObjectValue.toObject(includeInstance, f)
@@ -1953,6 +1954,10 @@ proto.protocol.CreateSource.deserializeBinaryFromReader = function(msg, reader) 
     case 1:
       var value = /** @type {string} */ (reader.readString());
       msg.setUid(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setContainerUid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -2003,6 +2008,13 @@ proto.protocol.CreateSource.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
+  f = message.getContainerUid();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
   f = message.getId();
   if (f.length > 0) {
     writer.writeString(
@@ -2043,6 +2055,24 @@ proto.protocol.CreateSource.prototype.getUid = function() {
  */
 proto.protocol.CreateSource.prototype.setUid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string container_uid = 5;
+ * @return {string}
+ */
+proto.protocol.CreateSource.prototype.getContainerUid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.protocol.CreateSource} returns this
+ */
+proto.protocol.CreateSource.prototype.setContainerUid = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -2333,6 +2363,7 @@ proto.protocol.CreateScene.prototype.toObject = function(opt_includeInstance) {
 proto.protocol.CreateScene.toObject = function(includeInstance, msg) {
   var f, obj = {
     uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    containerUid: jspb.Message.getFieldWithDefault(msg, 4, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     props: (f = msg.getProps()) && proto.protocol.ObjectValue.toObject(includeInstance, f)
   };
@@ -2374,6 +2405,10 @@ proto.protocol.CreateScene.deserializeBinaryFromReader = function(msg, reader) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
       msg.setUid(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setContainerUid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -2420,6 +2455,13 @@ proto.protocol.CreateScene.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getContainerUid();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
   f = message.getName();
   if (f.length > 0) {
     writer.writeString(
@@ -2453,6 +2495,24 @@ proto.protocol.CreateScene.prototype.getUid = function() {
  */
 proto.protocol.CreateScene.prototype.setUid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string container_uid = 4;
+ * @return {string}
+ */
+proto.protocol.CreateScene.prototype.getContainerUid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.protocol.CreateScene} returns this
+ */
+proto.protocol.CreateScene.prototype.setContainerUid = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

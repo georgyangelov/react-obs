@@ -10,4 +10,6 @@ BUILD_DIR=build-xcode CI/build-xcode-project.sh
 brew install protobuf
 ```
 
-# Installing yoga
+# Installing dependencies
+
+Download `sockpp` and `yoga`, then paste their folders into the `lib/sockpp` and `lib/yoga/yoga` folders respectively.

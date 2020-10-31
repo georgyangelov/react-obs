@@ -61,6 +61,7 @@ message Response {
 
 message CreateSource {
     string uid = 1;
+    string container_uid = 5;
     string id = 2;
     string name = 3;
     ObjectValue settings = 4;
@@ -73,6 +74,7 @@ message UpdateSource {
 
 message CreateScene {
     string uid = 1;
+    string container_uid = 4;
     string name = 2;
     ObjectValue props = 3;
 }

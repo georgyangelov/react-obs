@@ -45,6 +45,9 @@ int yoga_logger(
     const char* format,
     va_list args
 ) {
+    UNUSED_PARAMETER(config);
+    UNUSED_PARAMETER(node);
+    
     int blog_level = LOG_ERROR;
 
     switch (level) {
@@ -99,7 +102,6 @@ static pthread_mutex_t render_mutex = PTHREAD_MUTEX_INITIALIZER;
 std::vector<ShadowSource*> shadow_sources;
 std::set<ShadowSource*> containers;
 std::unordered_map<std::string, ShadowSource*> shadow_sources_by_uid;
-std::unordered_map<const obs_source_t*, ShadowSource*> shadow_sources_by_source;
 
 auto yoga_config = YGConfigNew();
 
@@ -138,19 +140,6 @@ ShadowSource* get_shadow_source(const std::string &uid) {
     auto shadow = shadow_sources_by_uid.find(uid);
 
     if (shadow == shadow_sources_by_uid.end()) {
-        pthread_mutex_unlock(&shadow_sources_mutex);
-        return nullptr;
-    }
-
-    pthread_mutex_unlock(&shadow_sources_mutex);
-    return shadow->second;
-}
-
-ShadowSource* get_shadow_source_by_source(const obs_source_t* source) {
-    pthread_mutex_lock(&shadow_sources_mutex);
-    auto shadow = shadow_sources_by_source.find(source);
-
-    if (shadow == shadow_sources_by_source.end()) {
         pthread_mutex_unlock(&shadow_sources_mutex);
         return nullptr;
     }
@@ -199,12 +188,13 @@ ShadowSource* add_shadow_source(const std::string &uid, obs_source_t* source, bo
     pthread_mutex_lock(&shadow_sources_mutex);
     shadow_sources.push_back(shadow);
     shadow_sources_by_uid[uid] = shadow;
-    shadow_sources_by_source[shadow->source] = shadow;
     refresh_containers();
     pthread_mutex_unlock(&shadow_sources_mutex);
 
     if (measured_externally) {
-        blog(LOG_DEBUG, "Adding externally measured node %s", uid.c_str());
+        if (DEBUG_LAYOUT) {
+            blog(LOG_DEBUG, "[react-obs] [layout] Adding externally measured node %s", uid.c_str());
+        }
 
         YGNodeSetMeasureFunc(yoga_node, yoga_measure_function);
     }
@@ -223,7 +213,6 @@ void remove_shadow_source(const std::string &uid) {
     YGNodeSetContext(shadow->yoga_node, nullptr);
 
     shadow_sources_by_uid.erase(uid);
-    shadow_sources_by_source.erase(shadow->source);
 
     shadow_sources.erase(std::remove(shadow_sources.begin(), shadow_sources.end(), shadow), shadow_sources.end());
 
@@ -264,43 +253,6 @@ YGSize yoga_measure_function(
         .height = measured_height
     };
 }
-
-//
-// Signal handler - source update tracking
-//
-
-//void track_source_updates_signal_handler(void *context, const char *signal_name_str, calldata_t *data) {
-//    blog(LOG_DEBUG, "[react-obs] Signal %s", signal_name_str);
-//
-//    std::string signal_name(signal_name_str);
-//
-//    if (signal_name == "item_transform") {
-//        auto sceneitem = (obs_sceneitem_t *)calldata_ptr(data, "item");
-//        auto source = obs_sceneitem_get_source(sceneitem);
-//        auto shadow = get_shadow_source_by_source(source);
-//
-//        if (!shadow) {
-//            // Transform was not on an item we managed by us
-//            return;
-//        }
-//
-// //        YGNodeMarkDirty(shadow->yoga_node);
-//
-//        blog(LOG_DEBUG, "[react-obs] Detected transform of sceneitem %s", shadow->uid.c_str());
-//    }
-//}
-//
-//void start_tracking_source_updates(ShadowSource* shadow) {
-// //    auto signal_handler = obs_source_get_signal_handler(source);
-// //
-// //    signal_handler_connect_global(signal_handler, track_source_updates_signal_handler, nullptr);
-//}
-//
-//void stop_tracking_source_updates(ShadowSource* source) {
-//    auto signal_handler = obs_source_get_signal_handler(source);
-//
-//    signal_handler_disconnect_global(signal_handler, track_source_updates_signal_handler, nullptr);
-//}
 
 void perform_layout(ShadowSource* container) {
     auto yoga_node = container->yoga_node;

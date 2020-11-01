@@ -8,6 +8,12 @@ set(react-obs_HEADERS
 	${react-obs_HEADERS}
 	react-obs-main.h
 	api-server.hpp
+	experiments.hpp
+	layout.hpp
+	obs-adapter.hpp
+	props.hpp
+	shadow-sources.hpp
+	yoga-logger.hpp
 	)
 set(react-obs_SOURCES
 	react-obs-main.cpp
